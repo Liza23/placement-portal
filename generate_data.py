@@ -4,6 +4,8 @@
 # Updated On: 20-04-2022 8:00 PM IST
 
 from __future__ import print_function
+import mailbox
+from eth_typing import ContractName
 import numpy as np
 from openpyxl import load_workbook
 from shutil import copy2, make_archive
@@ -11,36 +13,60 @@ import atexit, os
 from os import path
 from json import dumps, loads
 
+
+
 import random, string
 
+# ENTITY 1 : COORDINATOR ==============================
 
-# COORDINATOR   
+# define a class for coordinators
 class Coordie:
-    def __init__(self, id, pswd, name, mail, cntct):
-        self.id = id
-        self.pswd = pswd
+    def __init__(self, name, mail, cntct):
         self.name = name
         self.mail = mail
         self.cntct = cntct
-N = 20 # number of placement coordinators
-X0 = [''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(16)) for i in range(N)]
-X1 = ["Aditya Badola", "Advait Kumar", "Anurag Kr Gupta", "Baksheesh Sachar", "Jasleen Kaur", "Nikhil Parpay", "Pradeep Chudsama", "Ravindra Girase", "Sanjna Mohan", "Suyash Kadam", "Kunal Jain", "Tushar Dhingra", "Pushpendra Singh Jadoun", "Tarunsai Goddu", "Utkarsh Sahu", "Ayush Aditya", "Govind Rajhans Jadhav", "Pasunuri Prathiba", "Rajib Chatterjee", "Mohammed Riyaz"]
-X2 = ["190050006@iitb.ac.in", "18D070003@iitb.ac.in", "203186001@iitb.ac.in", "21f468004@iitb.ac.in", "215280046@iitb.ac.in", "213100079@iitb.ac.in", "21370111@iitb.ac.in", "213020004@iitb.ac.in", "20305r006@iitb.ac.in", "190020118@iitb.ac.in", "kunaljain@iitb.ac.in", "190110099@iitb.ac.in", "190040082@iitb.ac.in", "190070024@iitb.ac.in", "180100120@iitb.ac.in", "21f468009@iitb.ac.in", "20307r004@iitb.ac.in", "203070024@iitb.ac.in", "20307r005@iitb.ac.in", "213110053@iitb.ac.in"]
-X3 = ["8529295025", "9773817417", "9136824962", "9667640017", "9855591548", "8275233411", "9354816573", "8600154174", "9847051590", "9307135660", "7734006476", "7999004202", "8079046720", "6304713048", "6263905277", "7093195305", "8237566400", "6301832970", "7003035535", "9480216652"]
+
+coordies = [Coordie("Aditya Badola", "190050006@iitb.ac.in", "8529295025"),
+            Coordie("Advait Kumar", "18D070003@iitb.ac.in", "9773817417"),
+            Coordie("Anurag Kr Gupta", "203186001@iitb.ac.in", "9136824962"),
+            Coordie("Baksheesh Sachar", "21f468004@iitb.ac.in", "9667640017"),
+            Coordie("Jasleen Kaur", "215280046@iitb.ac.in", "9855591548"),
+            Coordie("Nikhil Parpay", "213100079@iitb.ac.in", "8275233411"),
+            Coordie("Pradeep Chudsama", "21370111@iitb.ac.in", "9354816573"),
+            Coordie("Ravindra Girase", "213020004@iitb.ac.in", "8600154174"),
+            Coordie("Sanjna Mohan", "20305r006@iitb.ac.in", "9847051590"),
+            Coordie("Suyash Kadam", "190020118@iitb.ac.in", "9307135660"),
+            Coordie("Kunal Jain", "kunaljain@iitb.ac.in", "7734006476", ),
+            Coordie("Tushar Dhingra", "190110099@iitb.ac.in", "7999004202"),
+            Coordie("Pushpendra Singh Jadoun", "190040082@iitb.ac.in", "8079046720"),
+            Coordie("Tarunsai Goddu", "190070024@iitb.ac.in", "6304713048"),
+            Coordie("Utkarsh Sahu", "180100120@iitb.ac.in", "6263905277"),
+            Coordie("Ayush Aditya", "21f468009@iitb.ac.in", "7093195305"),
+            Coordie("Govind Rajhans Jadhav", "20307r004@iitb.ac.in", "8237566400"),
+            Coordie("Pasunuri Prathiba", "203070024@iitb.ac.in", "6301832970"),
+            Coordie("Rajib Chatterjee", "20307r005@iitb.ac.in", "7003035535"),
+            Coordie("Mohammed Riyaz", "213110053@iitb.ac.in", "9480216652")]
+coordies.sort(key=lambda x: x.name)
+pswds = [''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(16)) for i in range(len(coordies))]
+
+# write the data of coordinators to a .csv file
 f = open("coordinators.csv", 'w')
-for i in range(N):
-    f.write(f"{i+1}, {X0[i]}, {X1[i]}, {X2[i]}, {X3[i]}\n")
+f.write("coordinator_id, coordinator_password, coordinator_name, coordinator_email, coordinator_contact\n")
+for i in range(len(coordies)):
+    f.write(f"{i+1}, {pswds[i]}, {coordies[i].name}, {coordies[i].mail}, {coordies[i].cntct}\n")
 f.close()
 
 
-# PROGRAM
+# ENTITY 2 : PROGRAM ==============================
+
+# define a class for programs
 class Prog:
     def __init__(self, id, name, dur, lvl):
         self.id = id
         self.name = name
         self.dur = dur
         self.lvl = lvl
-        
+ 
 progs = [Prog(1, "B.Tech.", 4, "UG"),
          Prog(2, "Dual Degree", 5, "UG"),
          Prog(3, "B.S.", 4, "UG"),
@@ -53,13 +79,18 @@ progs = [Prog(1, "B.Tech.", 4, "UG"),
          Prog(10, "MPP", 2, "PG"),
          Prog(11, "M.S. by Research", 2, "PG"),
          Prog(12, "Ph.D.", 6, "PhD")]
+
+# write the data of programs to a .csv file
 f = open("programs.csv", 'w')
+f.write("program_id, program_name, program_duration, program_level\n")
 for prog in progs:
     f.write(f"{prog.id}, {prog.name}, {prog.dur}, {prog.lvl}\n")
 f.close()
 
 
-# DEPARTMENT
+# ENTITY 3 : DEPARTMENT ==============================
+
+# define a class for departments
 class Dept:
     def __init__(self, name, code):
         self.name = name
@@ -90,14 +121,112 @@ depts = [Dept("Aerospace Engineering", "AE"),
          Dept("Centre for Machine Intelligence and Data Science", "C-MInDS"), 
          Dept("Centre of Studies in Resources Engineering", "CSRE")]
 depts.sort(key=lambda x: x.name)
+
+# write the data of departments to a .csv file
 f = open("departments.csv", 'w')
+f.write("department_id, department_name\n")
 for dept in depts:
     f.write(f"{dept.code}, {dept.name}\n")
 f.close()
 
 
-# PROFILE
+# ENTITY 4 : PROFILE ==============================
 
+# define a class for profiles
+class Profile:
+    def __init__(self, name, descrip):
+        self.name = name
+        self.descrip = descrip
+
+profs = [Profile("Consultant", "Consulting covers an incredibly broad range of topics, organizations, clients, and industries. A consultant can work independently or as part of a consulting firm, specializing in any given field of expertise. Essentially, consultants are hired to share their expertise and knowledge to help businesses attain goals and solve problems. Sometimes, companies bring on consultants to perform day-to-day work and augment or supplement staff—and save the fixed overhead costs associated with a full-time employee. Other times, they're brought on board for a specialized purpose: to troubleshoot, tackle a specific challenge, optimize something specific, spin off a successful business unit, revive a failing business, etc."),
+         Profile("Business Analyst", "Business analysts play a key role in the success of so many organizations. Acting as communicators, facilitators, and mediators, these flexible professionals seek out the best ways to improve processes and increase effectiveness through technology, strategy, analytic solutions, and more. With organizational and project goals lighting the way, business analysts are meticulous in their documentation and evaluation of potential solutions—always working to bridge the gap among departments with improved technical efficiency and productivity."),
+         Profile("Operations", "Operations managers oversee the organizational activities of businesses, government agencies, non-profit groups, and other organizations. These professionals are talented managers and leaders. They might support operational leadership in a variety of departments — from finance and IT to human resources and accounts payable. At both large and small organizations, operations managers supervise, hire, and train employees, manage quality assurance programs, strategize process improvements, and more. Operations managers are ultimately responsible for maintaining and increasing the efficiency of a business, agency, or organization."),
+         Profile("Associate Product Manager", "Within many industries, product managers are responsible for guaranteeing the success of a specific product or product line. These extreme doers are product experts with a powerful capability to make strategic decisions based on market and competitor analyses. Prior to production, they create the roadmap to guide a product from conception through design and into wide release. Product managers bridge the gap among the different departments involved in successfully bringing your product(s) to market, including R&D, engineering, manufacturing, marketing, sales, and customer support. Their ultimate goal is the creation and launch of products that meet consumers' needs — growing market share and success."),
+         Profile("Finance", "Financial analysts are fundamental contributors to the fiscal health and success of many types of organizations. From banks and pension and mutual funds, to securities firms and insurance companies, these highly adept people evaluate economic data and trends, determine financial status and value, and help guide investment decisions. Financial analysts — sometimes referred to as securities or investment analysts — often specialize in specific industries, products, or geographic regions. On both the buy-side and sell-side of the financial landscape, they may work as portfolio or fund managers, ratings analysts, risk analysts, and more."),
+         Profile("Data Scientist", "A data scientist knows how to extract meaning from and interpret data. This unique skill set requires the aid of statistical methods and machinery, but largely relies on analytical brain power. Because raw data can rarely be utilized reliably, businesses in a variety of industries look to these technical experts to collect, clean, and validate their data. This meticulous process requires persistence and software engineering skills—expertise that's integral to understanding data bias and to debug output from code. In simpler terms, data scientists find patterns and use the knowledge to build and improve."),
+         Profile("Quantitative Trading", "Quantitative trading (also called quant trading) involves the use of computer algorithms and programs—based on simple or complex mathematical models—to identify and capitalize on available trading opportunities. Quant trading also involves research work on historical data with an aim to identify profit opportunities."),
+         Profile("IT Software", "In our digital world, organizations have to stay connected at all costs. The role of information technology, or IT, is integral to implementing and maintaining the infrastructure and solutions that will continue to move the business forward. The IT department is there to assist as computer issues arise, software needs updating, or networks require fixing. In general, the IT department is responsible for implementing infrastructure automation, governing the use of network and operating systems, and optimizing functionality. At one point or another, he or she will typically save the day by recovering a crucial document—or preventing a systemwide cybersecurity breach, or keeping such a breach from spreading."),
+         Profile("Core", "Department-wise core profile"),
+         Profile("FMCG", "FMCG covers a range of sectors and job titles within retail. You could work as a Sales Assistant on the shop floor, boss people around in Management or work behind the scenes as a Buyer or Merchandiser. Each of these has very difficult responsibilities, but can all sell FMCG. Although daily duties are different for every role you're likely to start out as a Sales Assistant on the shop floor. Spending a lot of time on your feet, the job involves: Serving customers, Displaying products, Overseeing deliveries, Handling payments, Helping with special promotions")]
+profs.sort(key=lambda x: x.name)
+
+# write the data of profiles to a .csv file
+f = open("profiles.csv", 'w')
+f.write("profile_id, profile_name, profile_description\n")
+for i in range(len(profs)):
+    f.write(f"{i+1}, {profs[i].name}, {profs[i].descrip}\n")
+f.close()
+
+
+# ENTITY 5 : COMPANY ==============================
+
+# countries of origin
+C = ["India", "United States", "Japan", "Hong Kong", "South Korea"]
+
+# write the data of companies to a .csv file
+firmNames = []
+f1 = open("firmNameDataset.txt", 'r')
+for line in f1:
+    firmNames.append(line.strip())
+numCompanies = len(firmNames)
+f2 = open("companies.csv", 'w')
+f2.write("company_id, company_name, company_origin, company_coordinator\n")
+i = 0
+for i in range(numCompanies):
+    r = np.random.random()
+    if r < 0.85:
+        f2.write(f"{i+1}, {firmNames[i]}, {C[0]}, {i%20 + 1}\n")
+    elif r < 0.9:
+        f2.write(f"{i+1}, {firmNames[i]}, {C[1]}, {i%20 + 1}\n")
+    elif r < 0.95:
+        f2.write(f"{i+1}, {firmNames[i]}, {C[2]}, {i%20 + 1}\n")
+    elif r < 0.975:
+        f2.write(f"{i+1}, {firmNames[i]}, {C[3]}, {i%20 + 1}\n")
+    else:
+        f2.write(f"{i+1}, {firmNames[i]}, {C[4]}, {i%20 + 1}\n")
+    i += 1
+f1.close()
+f2.close()
+
+
+# UTILITY FUNCTIONS : randomised contacts and names ==============================
+
+def randPhNo():
+    ph_no = ""
+    ph_no += str(np.random.randint(7,10))
+    for i in range(1,10):
+        ph_no += str(np.random.randint(0,10))
+    return ph_no
+
+firstNames = []
+f1 = open("firstNameDataset.txt", 'r')
+for line in f1:
+    firstNames.append(line.strip().split()[0])
+f1.close()
+
+lastNames = []
+f2 = open("lastNameDataset.txt", 'r')
+for line in f2:
+    lastNames.append(line.strip().split()[0])
+f2.close()
+
+
+# ENTITY 6 : RECRUITER ==============================
+
+numRecrtrs = int(numCompanies*1.05)
+recrtrs = []
+pswds = [''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(16)) for _ in range(numRecrtrs)]
+rcrtrFirstName = np.random.choice(firstNames, numRecrtrs)
+rcrtrLastName = np.random.choice(lastNames, numRecrtrs)
+cntcts = [randPhNo() for _ in range(numRecrtrs)]
+I = [i for i in range(numRecrtrs)]
+random.shuffle(I)
+
+f3 = open("recruiters.csv", 'w')
+f3.write("recruiter_id, recruiter_password, recruiter_name, recruiter_contact, recruiter_email, recruiter_company\n")
+for i in range(numRecrtrs):
+    f3.write(f"{i+1}, {pswds[i]}, {rcrtrFirstName[i]} {rcrtrLastName[i]}, {cntcts[i]}, {rcrtrFirstName[i].lower()}.{rcrtrLastName[i].lower()}{np.random.randint(1,99)}@{firmNames[I[i]%numCompanies].lower().split()[0]}.com, {I[i]%numCompanies+1}\n")
+f3.close()
 
 # def read_counter():
 #     return loads(open("counter.json", "r").read()) + 1 if path.exists("counter.json") else 0
@@ -109,12 +238,6 @@ f.close()
 # counter = read_counter()
 # atexit.register(write_counter)
 
-# def randPhNo():
-#     ph_no = ""
-#     ph_no += str(np.random.randint(7,10))
-#     for i in range(1,10):
-#         ph_no += str(np.random.randint(0,10))
-#     return ph_no
 
 # def randGender():
 #     p = np.random.rand()
@@ -136,8 +259,6 @@ f.close()
 # numAPC = 20     # total APCs
 # numPOC = 36     # total ComPOCs
 
-# f1 = open("firstNameDataset.txt", 'r')
-# f2 = open("lastNameDataset.txt", 'r')
 # f3 = open("firmNameDataset.txt", 'r')
 
 # C1 = []
@@ -153,18 +274,6 @@ f.close()
 #     C3.append(ws.cell(row=i, column=4).value)
 # wb.save('IPT Contacts 2021-22.xlsx')
 
-# D1 = []
-# D2 = []
-# D3 = []
-
-# for line in f1:
-#     D1.append(line.strip().split()[0])
-
-# for line in f2:
-#     D2.append(line.strip().split()[0])
-
-# for line in f3:
-#     D3.append(line.strip())
 
 # br = "--------------------------------------------------------------------"
 # print(br)
