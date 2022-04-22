@@ -5,6 +5,7 @@
 
 from __future__ import print_function
 import mailbox
+from operator import inv
 from eth_typing import ContractName
 import numpy as np
 from openpyxl import load_workbook
@@ -143,19 +144,22 @@ profs = [Profile("Consultant", "Consulting covers an incredibly broad range of t
          Profile("Operations", "Operations managers oversee the organizational activities of businesses, government agencies, non-profit groups, and other organizations. These professionals are talented managers and leaders. They might support operational leadership in a variety of departments — from finance and IT to human resources and accounts payable. At both large and small organizations, operations managers supervise, hire, and train employees, manage quality assurance programs, strategize process improvements, and more. Operations managers are ultimately responsible for maintaining and increasing the efficiency of a business, agency, or organization."),
          Profile("Associate Product Manager", "Within many industries, product managers are responsible for guaranteeing the success of a specific product or product line. These extreme doers are product experts with a powerful capability to make strategic decisions based on market and competitor analyses. Prior to production, they create the roadmap to guide a product from conception through design and into wide release. Product managers bridge the gap among the different departments involved in successfully bringing your product(s) to market, including R&D, engineering, manufacturing, marketing, sales, and customer support. Their ultimate goal is the creation and launch of products that meet consumers' needs — growing market share and success."),
          Profile("Finance", "Financial analysts are fundamental contributors to the fiscal health and success of many types of organizations. From banks and pension and mutual funds, to securities firms and insurance companies, these highly adept people evaluate economic data and trends, determine financial status and value, and help guide investment decisions. Financial analysts — sometimes referred to as securities or investment analysts — often specialize in specific industries, products, or geographic regions. On both the buy-side and sell-side of the financial landscape, they may work as portfolio or fund managers, ratings analysts, risk analysts, and more."),
-         Profile("Data Scientist", "A data scientist knows how to extract meaning from and interpret data. This unique skill set requires the aid of statistical methods and machinery, but largely relies on analytical brain power. Because raw data can rarely be utilized reliably, businesses in a variety of industries look to these technical experts to collect, clean, and validate their data. This meticulous process requires persistence and software engineering skills—expertise that's integral to understanding data bias and to debug output from code. In simpler terms, data scientists find patterns and use the knowledge to build and improve."),
+         Profile("Data Science/Analytics", "A data scientist knows how to extract meaning from and interpret data. This unique skill set requires the aid of statistical methods and machinery, but largely relies on analytical brain power. Because raw data can rarely be utilized reliably, businesses in a variety of industries look to these technical experts to collect, clean, and validate their data. This meticulous process requires persistence and software engineering skills—expertise that's integral to understanding data bias and to debug output from code. In simpler terms, data scientists find patterns and use the knowledge to build and improve."),
          Profile("Quantitative Trading", "Quantitative trading (also called quant trading) involves the use of computer algorithms and programs—based on simple or complex mathematical models—to identify and capitalize on available trading opportunities. Quant trading also involves research work on historical data with an aim to identify profit opportunities."),
          Profile("IT Software", "In our digital world, organizations have to stay connected at all costs. The role of information technology, or IT, is integral to implementing and maintaining the infrastructure and solutions that will continue to move the business forward. The IT department is there to assist as computer issues arise, software needs updating, or networks require fixing. In general, the IT department is responsible for implementing infrastructure automation, governing the use of network and operating systems, and optimizing functionality. At one point or another, he or she will typically save the day by recovering a crucial document—or preventing a systemwide cybersecurity breach, or keeping such a breach from spreading."),
          Profile("Core", "Department-wise core profile"),
-         Profile("FMCG", "FMCG covers a range of sectors and job titles within retail. You could work as a Sales Assistant on the shop floor, boss people around in Management or work behind the scenes as a Buyer or Merchandiser. Each of these has very difficult responsibilities, but can all sell FMCG. Although daily duties are different for every role you're likely to start out as a Sales Assistant on the shop floor. Spending a lot of time on your feet, the job involves: Serving customers, Displaying products, Overseeing deliveries, Handling payments, Helping with special promotions")]
-profs.sort(key=lambda x: x.name)
+         Profile("FMCG", "FMCG covers a range of sectors and job titles within retail. You could work as a Sales Assistant on the shop floor, boss people around in Management or work behind the scenes as a Buyer or Merchandiser. Each of these has very difficult responsibilities, but can all sell FMCG. Although daily duties are different for every role you're likely to start out as a Sales Assistant on the shop floor. Spending a lot of time on your feet, the job involves: Serving customers, Displaying products, Overseeing deliveries, Handling payments, Helping with special promotions"),
+         Profile("Design", "Depending on the medium, a designer might use two-dimensional, three-dimensional, and/or graphic art to create visual concepts and products. Layout design, formatting, organization, and prioritization of materials, topics, images, and text are frequently part of their work; often, the resulting concepts or products aim to communicate a central message or theme. Designers work across a wide range of industries, disciplines, and roles, from in-house to agency or freelance design. They also work with an extensive variety of media, tools, techniques, and technologies.")]
+idToProfile = dict()
 
 # write the data of profiles to a .csv file
 f = open("profiles.csv", 'w')
-f.write("profile_id, profile_name, profile_description\n")
+f.write("profile_id\tprofile_name\tprofile_description\n")
 for i in range(len(profs)):
-    f.write(f"{i+1}, {profs[i].name}, {profs[i].descrip}\n")
+    idToProfile[i+1] = profs[i].name
+    f.write(f"{i+1}\t{profs[i].name}\t{profs[i].descrip}\n")
 f.close()
+profileToId = {v: k for k, v in idToProfile.items()}
 
 
 # ENTITY 5 : COMPANY ==============================
@@ -163,16 +167,20 @@ f.close()
 # countries of origin
 C = ["India", "United States", "Japan", "Hong Kong", "South Korea"]
 
-# write the data of companies to a .csv file
 firmNames = []
 f1 = open("firmNameDataset.txt", 'r')
 for line in f1:
     firmNames.append(line.strip())
+f1.close()
+idToFirm = dict()
 numCompanies = len(firmNames)
+
+# write the data of companies to a .csv file
 f2 = open("companies.csv", 'w')
 f2.write("company_id, company_name, company_origin, company_coordinator\n")
 i = 0
 for i in range(numCompanies):
+    idToFirm[i+1] = firmNames[i]
     r = np.random.random()
     if r < 0.85:
         f2.write(f"{i+1}, {firmNames[i]}, {C[0]}, {i%20 + 1}\n")
@@ -185,8 +193,8 @@ for i in range(numCompanies):
     else:
         f2.write(f"{i+1}, {firmNames[i]}, {C[4]}, {i%20 + 1}\n")
     i += 1
-f1.close()
 f2.close()
+firmToId = {v: k for k, v in idToFirm.items()}
 
 
 # UTILITY FUNCTIONS : randomised contacts and names ==============================
@@ -219,6 +227,7 @@ pswds = [''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase +
 rcrtrFirstName = np.random.choice(firstNames, numRecrtrs)
 rcrtrLastName = np.random.choice(lastNames, numRecrtrs)
 cntcts = [randPhNo() for _ in range(numRecrtrs)]
+
 I = [i for i in range(numRecrtrs)]
 random.shuffle(I)
 
@@ -227,6 +236,26 @@ f3.write("recruiter_id, recruiter_password, recruiter_name, recruiter_contact, r
 for i in range(numRecrtrs):
     f3.write(f"{i+1}, {pswds[i]}, {rcrtrFirstName[i]} {rcrtrLastName[i]}, {cntcts[i]}, {rcrtrFirstName[i].lower()}.{rcrtrLastName[i].lower()}{np.random.randint(1,99)}@{firmNames[I[i]%numCompanies].lower().split()[0]}.com, {I[i]%numCompanies+1}\n")
 f3.close()
+
+
+# ENTITY 7 : JAF ==============================
+
+# define a class for jaf
+class JAF:
+    def __init__(self, company_id, title, profile_id):
+        self.cid = company_id
+        self.title = title
+        self.pid = profile_id
+
+jafs = []
+f1 = open("jobs.tsv", 'r')
+r = 0
+for line in f1:
+    if r != 0:
+        jaf = line.strip().split('\t')
+        jafs.append(JAF(firmToId[jaf[0]], jaf[1], profileToId[jaf[2]]))
+    r += 1
+f1.close()
 
 # def read_counter():
 #     return loads(open("counter.json", "r").read()) + 1 if path.exists("counter.json") else 0
