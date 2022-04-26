@@ -1,0 +1,13 @@
+program_id,program_name,program_duration,program_level
+1,B.Tech.,4,UnderGrad
+2,Dual Degree,5,UnderGrad
+3,B.S.,4,UnderGrad
+4,B.Des.,4,UnderGrad
+5,M.Sc.,2,PostGrad
+6,M.Tech. (TA),2,PostGrad
+7,M.Tech. (RA),3,PostGrad
+8,M.Des.,2,PostGrad
+9,M.Phil.,2,PostGrad
+10,MPP,2,PostGrad
+11,M.S. by Research,2,PostGrad
+12,Ph.D.,6,PhD
