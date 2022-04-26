@@ -1,0 +1,363 @@
+company_id, company_name, company_origin, company_coordinator
+1, Company, India, 1
+2, Aarti Industries, India, 2
+3, Abacus.AI, India, 3
+4, Accelaero, India, 4
+5, Accenture, India, 5
+6, Accenture Japan Ltd, India, 6
+7, Adloid Technologies Pvt Ltd, India, 7
+8, Adobe, India, 8
+9, Advanced Structural Engineering Consultants India LLP, India, 9
+10, Agnikul Cosmos Private Limited, India, 10
+11, Agri Process Innovations Technologies, India, 11
+12, AI & Robotics Venture, India, 12
+13, Airbus, India, 13
+14, Al Tebah General Contracting Company, India, 14
+15, AlphaGrep Securities, India, 15
+16, Alvarez & Marsal, India, 16
+17, Amagi Media Labs Pvt Ltd, India, 17
+18, Amazon Development Centre, India, 18
+19, Amazon Development Centre (India) Pvt Ltd, India, 19
+20, AMD India Pvt Ltd, India, 20
+21, American Express, India, 1
+22, Amnex Infotechnologies P Limited, India, 2
+23, Applied Materials, India, 3
+24, APT Portfolio Pvt Ld, India, 4
+25, APTIV, India, 5
+26, Arjunaa Academy for Achievers, India, 6
+27, Arpwood Capital, India, 7
+28, Arthur D. Little, India, 8
+29, Astrome Technologies Private Limited, India, 9
+30, Atlassian, India, 10
+31, Atomberg Technologies, India, 11
+32, Atyati Technologies Pvt Ltd, India, 12
+33, AU Small Finance Bank, India, 13
+34, Auctus Advisors Pvt Ltd, India, 14
+35, Aura Semiconductor Pvt Ltd, Hong Kong, 15
+36, Aurigene Discovery Technologies Ltd, United States, 16
+37, Auronova Consulting, India, 17
+38, Autolytics Technology Pvt Ltd, India, 18
+39, AVA Retail Inc., Hong Kong, 19
+40, Axtria India Pvt Ltd, India, 20
+41, Axxela Advisory Services, India, 1
+42, Bain & Company, India, 2
+43, Bajaj Auto Ltd, United States, 3
+44, Bank of America, India, 4
+45, Barclays India, India, 5
+46, BeeHyv, India, 6
+47, Blackstone, India, 7
+48, Blume Global India Pvt Ltd, Hong Kong, 8
+49, Bombinate Technologies (Koo), India, 9
+50, Boston Consulting Group, India, 10
+51, Brigosha, India, 11
+52, BRND Studio, India, 12
+53, BrowserStack, India, 13
+54, Bukukas, India, 14
+55, BYJU'S - The Learning App, India, 15
+56, Cadence, India, 16
+57, Cairn Oil & Gas, Vedanta Limited, India, 17
+58, Calance Software Private Limited, India, 18
+59, Capgemini Technology Services India Limited, India, 19
+60, Capital Group, India, 20
+61, CarDekho, India, 1
+62, Cargill, Japan, 2
+63, Centre For Computational Technologies, India, 3
+64, Ceremorphic India Pvt Ltd, India, 4
+65, Chalo, Japan, 5
+66, Cirel Systems Pvt Ltd, India, 6
+67, Citi, United States, 7
+68, Citymall, India, 8
+69, Cogo Freight Pvt Ltd, Hong Kong, 9
+70, Cohesity, India, 10
+71, CoinDCX, India, 11
+72, Colortokens, United States, 12
+73, Corning Technologies India Pvt Ltd, India, 13
+74, Coupa Software India Pvt Ltd, India, 14
+75, Cubastion Consulting Pvt Ltd, India, 15
+76, Curadev Pharma Private Limited, South Korea, 16
+77, Cyber Tech Ltd, United States, 17
+78, Decimal Technologies Pvt Ltd, India, 18
+79, Delightful Gourmet, Japan, 19
+80, Deutsche CIB Centre Private Limited, India, 20
+81, Dhani Loans and Services Ltd, India, 1
+82, DHL, India, 2
+83, Digit Insurance, India, 3
+84, Doubtnut, Japan, 4
+85, DPWORLD, India, 5
+86, Dr Reddy Laboratories, Japan, 6
+87, Dream 11, India, 7
+88, Dremio India Software Pvt Ltd, India, 8
+89, Dynamic Technology Lab Pte Ltd, South Korea, 9
+90, Eaton, India, 10
+91, Edge Focus Partners, India, 11
+92, Edgeverve Systems, India, 12
+93, EDUHAP Learning Media Pvt Ltd, India, 13
+94, Eightfold.AI, India, 14
+95, Enphase Energy, United States, 15
+96, ESRI, United States, 16
+97, Eversana, India, 17
+98, ExamRoom.AI, India, 18
+99, EXL Decision Analytics, India, 19
+100, ExxonMobil India, India, 20
+101, FactWise (FactWise Tech. Pvt Ltd), India, 1
+102, Falkonry, India, 2
+103, Famic Technologies Pvt Ltd, India, 3
+104, FanCode, India, 4
+105, Fare Labs, India, 5
+106, FAST RETAILING CO., LTD., India, 6
+107, FCS Limited, India, 7
+108, FIITJEE LTD, India, 8
+109, FinIQ Consulting, India, 9
+110, FinMechanics India Pvt Ltd, Japan, 10
+111, First Principle Labs Pvt Ltd, India, 11
+112, FIS, India, 12
+113, Fiserv India Pvt Ltd, India, 13
+114, Flipkart, India, 14
+115, Flow Traders, India, 15
+116, FlyFin, United States, 16
+117, FN Mathlogic Consulting Services Pvt Ltd, India, 17
+118, FSG Advisory Services Pvt Ltd, United States, 18
+119, Fuji Electric India Pvt Ltd, India, 19
+120, Fujitsu Research and Development India, Japan, 20
+121, Fundwave, India, 1
+122, Futures First, India, 2
+123, Games24x7 Pvt Ltd, India, 3
+124, General Electric Bangalore, India, 4
+125, General Mills, India, 5
+126, Genpact Pvt Ltd, India, 6
+127, Glean, India, 7
+128, Goldman Sachs, India, 8
+129, Google India Pvt Ltd, India, 9
+130, Graphene, India, 10
+131, Graviton Research Capital LLP, India, 11
+132, Groupon Shared Services Private Limited, Japan, 12
+133, Groww, India, 13
+134, GulfTalent, South Korea, 14
+135, HCL Technologies Ltd, India, 15
+136, HDFC Life Insurance, India, 16
+137, Helium Consulting, India, 17
+138, HERE Technologies, India, 18
+139, HFCL, India, 19
+140, HiLabs Inc., India, 20
+141, Hilti Technology Solutions India, India, 1
+142, Hind Rectifiers Ltd, India, 2
+143, Hindustan Unilever Limited, India, 3
+144, Hitachi India Pvt Ltd, India, 4
+145, HOC India Private Limited, United States, 5
+146, Honda R&D, India, 6
+147, Honeywell, India, 7
+148, HSBC Bangalore, India, 8
+149, Huawei Technologies, Japan, 9
+150, i3Systems, India, 10
+151, IBM India, India, 11
+152, ICF Consulting, India, 12
+153, ICICI Lombard GIC Ltd, India, 13
+154, Idam Infrastructure Advisory Pvt Ltd, India, 14
+155, IDFC First Bank, India, 15
+156, IFM Engineering Private Limited, South Korea, 16
+157, Ikigai Labs, Inc., India, 17
+158, Impact Analytics, India, 18
+159, Indeed, India, 19
+160, Indian Political Action Committee (I-PAC), India, 20
+161, IndianOil Total Pvt Ltd, India, 1
+162, Indus Insights, India, 2
+163, Infogen Labs, India, 3
+164, Infosys Ltd, India, 4
+165, Infurnia Technologies, India, 5
+166, Ingram Micro Inc, India, 6
+167, Innominds Software Pvt Ltd, Hong Kong, 7
+168, Intel, Hong Kong, 8
+169, Invygo, South Korea, 9
+170, iRageCapital Advisory Pvt Ltd, Hong Kong, 10
+171, Itiviti India Pvt Ltd, South Korea, 11
+172, Jaguar Land Rover India Limited, India, 12
+173, Jaro Education, India, 13
+174, Javis Technologies Pvt Ltd, South Korea, 14
+175, Jay Chemicals, India, 15
+176, Jaymahesh Auto Mall India Limited, India, 16
+177, John Deere India Pvt Ltd, India, 17
+178, Johnson controls, India, 18
+179, Josh Technology Group, India, 19
+180, JP Morgan Chase & Co, India, 20
+181, JSR Dynamics Private Limited, India, 1
+182, Kanan Park Technologies LLP, India, 2
+183, Karza, India, 3
+184, Kearney, India, 4
+185, Kepler Cannon, Japan, 5
+186, KLA Tencor, India, 6
+187, Komprise India Private Limited, India, 7
+188, Kotak Securities, India, 8
+189, krista software inc, India, 9
+190, Kubric (now Mason), India, 10
+191, Kylas, Japan, 11
+192, L.E.K. Consulting India Pvt Ltd, United States, 12
+193, Lambda Supply Chain Solutions Pvt Ltd, Japan, 13
+194, Legato Health Technologies, India, 14
+195, Leo Burnett, India, 15
+196, Linecraft AI Ltd, Hong Kong, 16
+197, LinkStaff, India, 17
+198, Logixal Cloud Solutions, India, 18
+199, Lowe's India Pvt Ltd, India, 19
+200, Mace Group, India, 20
+201, MAQ Software, India, 1
+202, Mastercard, India, 2
+203, Mathworks India Private Limited, India, 3
+204, Matrimony.com, India, 4
+205, Mavenir Systems Private Ltd India, South Korea, 5
+206, Maverick Derivatives, South Korea, 6
+207, McKinley & Rice, India, 7
+208, McKinsey & Company, India, 8
+209, McKinsey Knowledge Center, India, 9
+210, Media.Net, India, 10
+211, Mediatek Tech Ltd, India, 11
+212, MediBuddy, India, 12
+213, Meesho, India, 13
+214, Meghe Group, India, 14
+215, Menon & Menon Limited, India, 15
+216, Mentor Graphics - A Siemens Business, India, 16
+217, Mercedes Benz, India, 17
+218, Merilytics, India, 18
+219, Micron Technologies Operation India LLP, India, 19
+220, Microsoft India Pvt Ltd, India, 20
+221, Millennium Management, India, 1
+222, MindTickle, United States, 2
+223, Morgan Stanley, India, 3
+224, MRF LIMITED, India, 4
+225, Mu Sigma, India, 5
+226, Murata Manufacturing Co. Ltd, India, 6
+227, MX Player, India, 7
+228, Myntra, United States, 8
+229, Napcloud India Pvt Ltd, India, 9
+230, Nation with Namo, India, 10
+231, Navi Technologies Pvt Ltd, United States, 11
+232, NEC, India, 12
+233, Netcracker Technology, Japan, 13
+234, Newzera, India, 14
+235, Niyo Solutions Inc, India, 15
+236, NK Securities, India, 16
+237, NoBroker Technologies, South Korea, 17
+238, NTT Data Services Pvt Ltd, India, 18
+239, Numadic, India, 19
+240, NVIDIA, India, 20
+241, NXP Semiconductors, India, 1
+242, O9 solutions, India, 2
+243, OLA, India, 3
+244, OLX, India, 4
+245, One97 Communications Ltd (Paytm), India, 5
+246, Oneshot.AI, India, 6
+247, OPPO Mobiles India Pvt Ltd (parent company of OnePlus), Hong Kong, 7
+248, Optym, India, 8
+249, Oracle, India, 9
+250, Orbees Business Solutions, India, 10
+251, ORMAE LLP, United States, 11
+252, Pandit Deendayal Petroleum University, India, 12
+253, Paperpedia Pvt Ltd, India, 13
+254, PayPal India, India, 14
+255, Pepperfry, India, 15
+256, Perceptive Analytics, India, 16
+257, Phable Care, United States, 17
+258, Pingahla Solutions Private Limited, India, 18
+259, Piramal, India, 19
+260, Plutus Research Private Limited, India, 20
+261, Praxis Global Alliance, India, 1
+262, PricewaterhouseCoopers Service Delivery Center (Bangalore) Pvt Ltd - MC Analytics, India, 2
+263, Pristine Retail Solutions Private Limited, India, 3
+264, Property Pistol Realty Pvt Ltd, India, 4
+265, Quadeye (QE Securities LLP), India, 5
+266, Qualcomm, India, 6
+267, QuantBox Research Pvt Ltd, India, 7
+268, Quasistatics Inc (10xAR), Japan, 8
+269, Quicksell, India, 9
+270, QuillBot, India, 10
+271, Quintics Management Consultancies Pvt Ltd (Sutra Management), India, 11
+272, Rakuten Main, India, 12
+273, Rakuten Mobile, India, 13
+274, Rakuten Securities, South Korea, 14
+275, Rambus Chip Technologies, India, 15
+276, Razorpay, India, 16
+277, Rebel Foods, India, 17
+278, Reliance Industries Limited, India, 18
+279, Reliance Jio, India, 19
+280, Ria Insure, India, 20
+281, Richpanel, United States, 1
+282, Rippling, India, 2
+283, Robert Bosch Engineering and Business Solutions Private Limited, India, 3
+284, Rupeek Fintech Pvt Ltd, United States, 4
+285, Saavn Media Limited, India, 5
+286, Safe Security, India, 6
+287, Samsung Delhi, Hong Kong, 7
+288, Samsung Semiconductor, India, 8
+289, Sandvine, India, 9
+290, SAP Labs India, India, 10
+291, Schlumberger, India, 11
+292, Searce Cosourcing Services Private Limited (Searce), India, 12
+293, Sedemac Mechatronics Pvt Ltd, India, 13
+294, Seimens Healthineers, India, 14
+295, Selec Controls Pvt Ltd, India, 15
+296, ShareChat, India, 16
+297, Shell India Markets Private Limited, India, 17
+298, Siemens Ltd, India, 18
+299, Sigmoid Analytics, India, 19
+300, Silabs India Private Limited (Silicon Labs company), India, 20
+301, Skeps, India, 1
+302, Slice, India, 2
+303, Snapwiz Edutec India Private Limited, India, 3
+304, Sony Japan, Japan, 4
+305, spacexview.earth, Hong Kong, 5
+306, SPECTRUM Techno Consultants Pvt Ltd, India, 6
+307, Sprinklr, India, 7
+308, Standard Chartered GBS, India, 8
+309, Steradian Semiconductors, India, 9
+310, Stride.AI, India, 10
+311, Subedar Inderjit Singh Medico Valley Foundation, India, 11
+312, Sulzer India Pvt Ltd (Chemtech Division), India, 12
+313, Swiggy, India, 13
+314, Synergy Marine Group, India, 14
+315, Sysmex Corporation, India, 15
+316, Taiwan Semiconductor Manufacturing Company, India, 16
+317, Tata Consultancy Services, India, 17
+318, TATA Projects, India, 18
+319, Tata Unistore Limited, India, 19
+320, TCS CSR, India, 20
+321, Teachmint, India, 1
+322, Technoforte Software Pvt Ltd, India, 2
+323, Teradata, India, 3
+324, Testbook, India, 4
+325, Texas Instruments, India, 5
+326, The ICFAI University Tripura, India, 6
+327, ThirdAI Corp, India, 7
+328, ThreeSides corporation, Japan, 8
+329, Times Internet, India, 9
+330, Toddle Pvt Ltd, India, 10
+331, Trantor Software Private Limited, India, 11
+332, Trident Analytical Solutions Pvt Ltd, United States, 12
+333, Trilogy Innovations, India, 13
+334, True North, India, 14
+335, Truminds Software Systems, India, 15
+336, Tvarit GmbH, India, 16
+337, Uber India Systems Pvt LTD, India, 17
+338, Ubisoft, India, 18
+339, Udaan, India, 19
+340, UiPath, India, 20
+341, Unacademy, South Korea, 1
+342, Uniorbit Technologies Private Limited, India, 2
+343, Unistring Tech Solutions Private Limited, India, 3
+344, Uolo EdTech Pvt Ltd, India, 4
+345, UPL Ltd, India, 5
+346, Upstox, India, 6
+347, Vamstar, India, 7
+348, Vantage Research, India, 8
+349, Vimaan Robotics India Private Limited, India, 9
+350, Virohan, India, 10
+351, VMware, India, 11
+352, Vvf India Ltd, India, 12
+353, Walmart Global Tech India, India, 13
+354, WCB Robotics India Pvt Ltd, India, 14
+355, Wells Fargo, India, 15
+356, WinZO Games, India, 16
+357, Wipro, India, 17
+358, World Wide Technology, India, 18
+359, WorldQuant Research (India) Private Limited, India, 19
+360, Xilinx India Technology Services Pvt Ltd, South Korea, 20
+361, Zoomifier Corporation, India, 1
+362, ZS Associates, Japan, 2

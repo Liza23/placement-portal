@@ -1,8 +1,6 @@
-from compileall import compile_path
 import numpy as np
 import random, string
 from datetime import datetime, timedelta
-
 
 # GLOBAL VARIABLES ==============================
 numStudents = 2000
@@ -107,13 +105,13 @@ def randPhNo():
     return ph_no
 
 firstNames = []
-f1 = open("firstNameDataset.txt", 'r')
+f1 = open("data/firstNameDataset.txt", 'r')
 for line in f1:
     firstNames.append(line.strip().split()[0])
 f1.close()
 
 lastNames = []
-f2 = open("lastNameDataset.txt", 'r')
+f2 = open("data/lastNameDataset.txt", 'r')
 for line in f2:
     lastNames.append(line.strip().split()[0])
 f2.close()
@@ -132,16 +130,26 @@ end = datetime.strptime('04/20/2021 11:59 PM', '%m/%d/%Y %I:%M %p')
 delta = end - start
 int_delta = (delta.days * 24 * 60 * 60) + delta.seconds
 def getJafTime():
-    opened_on = random.randrange(int_delta)
-    closed_on = opened_on + round(abs(np.random.normal(20,10)))*3600 + round(np.random.normal(30,30))
+    opened_on = start + timedelta(seconds=random.randint(1, int(int_delta/4)))
+    closed_on = opened_on + timedelta(seconds=(round(abs(np.random.normal(36,12)*3600))))
+    assert(closed_on > opened_on)
     r = np.random.random()
-    if r < 0.75:
-        if r < 0.55:
+    if r < 0.55:
+        if r < 0.55:    # 0.1
             return opened_on, closed_on
         else:
             return opened_on, "NULL"
     else:
         return "NULL", "NULL"
+
+def getTime(start, end):
+    delta = end - start
+    int_delta = (delta.days * 24 * 60 * 60) + delta.seconds
+    try:
+        assert(int_delta > 0)
+    except:
+        print("\n\nwhat the hell!\n\n")
+    return start + timedelta(seconds=random.randint(1, int(int_delta/2)))
 
 def getDob(pid):
     if pid < 5:
@@ -158,7 +166,7 @@ def getDob(pid):
 def getAllocJaf():
     r = np.random.random()
     if r < 0.1:
-        return random.randint(1, numJAFS), getJafTime()[0]
+        return random.randint(1, numJafs), getJafTime()[0]
     else:
         return "NULL", "NULL"
 
@@ -188,7 +196,7 @@ coordies = [Coordie("Aditya Badola", "190050006@iitb.ac.in", "8529295025"),
 pswds = [''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(16)) for _ in range(len(coordies))]
 
 # write the data of coordinators to a .csv file
-f = open("coordinators.csv", 'w')
+f = open("data/coordinators.csv", 'w')
 f.write("coordinator_id, coordinator_password, coordinator_name, coordinator_email, coordinator_contact\n")
 for i in range(len(coordies)):
     f.write(f"{i+1}, {pswds[i]}, {coordies[i].name}, {coordies[i].mail}, {coordies[i].cntct}\n")
@@ -211,7 +219,7 @@ progs = [Prog(1, "B.Tech.", 4, "UG"),
          Prog(12, "Ph.D.", 6, "PhD")]
 
 # write the data of programs to a .csv file
-f = open("programs.csv", 'w')
+f = open("data/programs.csv", 'w')
 f.write("program_id, program_name, program_duration, program_level\n")
 for prog in progs:
     f.write(f"{prog.id}, {prog.name}, {prog.dur}, {prog.lvl}\n")
@@ -247,7 +255,7 @@ depts = [Dept("Aerospace Engineering", "AE"),
 depts.sort(key=lambda x: x.name)
 
 # write the data of departments to a .csv file
-f = open("departments.csv", 'w')
+f = open("data/departments.csv", 'w')
 f.write("department_id, department_name\n")
 for dept in depts:
     f.write(f"{dept.code}, {dept.name}\n")
@@ -270,7 +278,7 @@ profs = [Profile("Consultant", "Consulting covers an incredibly broad range of t
 idToProfile = dict()
 
 # write the data of profiles to a .csv file
-f = open("profiles.csv", 'w')
+f = open("data/profiles.csv", 'w')
 f.write("profile_id, profile_name, profile_description\n")
 for i in range(len(profs)):
     idToProfile[i+1] = profs[i].name
@@ -289,13 +297,13 @@ countries = [Country("India", "INR", 1),
              Country("South Korea", "KRW", 0.06)]
 
 firmNames = []
-f0 = open("firmNameDataset.txt", 'r')
+f0 = open("data/firmNameDataset.txt", 'r')
 for line in f0:
     firmNames.append(line.strip())
 f0.close()
 
 firmToSlot = dict()
-f1 = open("slots.csv", 'r')
+f1 = open("data/slots.csv", 'r')
 r = 0
 for line in f1:
     if r != 0:
@@ -312,7 +320,7 @@ idToFirm = dict()
 firmToCO = dict()
 
 # write the data of companies to a .csv file
-f2 = open("companies.csv", 'w')
+f2 = open("data/companies.csv", 'w')
 f2.write("company_id, company_name, company_origin, company_coordinator\n")
 for i in range(numCompanies):
     idToFirm[i+1] = firmNames[i]
@@ -347,7 +355,7 @@ cntcts = [randPhNo() for _ in range(numRecrtrs)]
 I = [i for i in range(numRecrtrs)]
 random.shuffle(I)
 
-f = open("recruiters.csv", 'w')
+f = open("data/recruiters.csv", 'w')
 f.write("recruiter_id, recruiter_password, recruiter_name, recruiter_contact, recruiter_email, recruiter_company\n")
 for i in range(numRecrtrs):
     f.write(f"{i+1}, {pswds[i]}, {rcrtrFirstName[i]} {rcrtrLastName[i]}, {cntcts[i]}, {rcrtrFirstName[i].lower()}.{rcrtrLastName[i].lower()}{np.random.randint(1,99)}@{firmNames[I[i]%numCompanies].lower().split()[0]}.com, {I[i]%numCompanies+1}\n")
@@ -357,8 +365,8 @@ f.close()
 # ENTITY 7 : JAF ==============================
 
 jafs = []
-f1 = open("jobs.tsv", 'r')
-f2 = open("jafs.csv", 'w')
+f1 = open("data/jobs.tsv", 'r')
+f2 = open("data/jafs.csv", 'w')
 f2.write("jaf_id\tprofile_id\tcompany_id\tjaf_jd\tjaf_bond_duration\tjaf_location_of_posting\tjaf_currency\tjaf_ctc\tjaf_gross\tjaf_cpi\tjaf_bonus_allowed\tjaf_opened_on\tjaf_closed_on\tjaf_slot\n")
 r = 0
 for line in f1:
@@ -391,7 +399,7 @@ for line in f1:
         jafs.append(JAF(firmToId[jaf[0]], profileToId[jaf[2]], jaf[1], jd, getBondDur(), lop, cur, ctc, gross, getCpiCutoff(), getBonus(), d1, d2, firmToSlot[jaf[0]]))
         f2.write(f"{r}\t{jafs[-1].pid}\t{jafs[-1].cid}\t{jafs[-1].jd}\t{jafs[-1].bond_dur}\t{jafs[-1].lop}\t{jafs[-1].curr}\t{jafs[-1].ctc}\t{jafs[-1].gross}\t{jafs[-1].cpi}\t{jafs[-1].bonus}\t{jafs[-1].opened_on}\t{jafs[-1].closed_on}\t{jafs[-1].slot}\n")
     r += 1
-numJAFS = r
+numJafs = r-1
 f1.close()
 f2.close()
 
@@ -403,21 +411,86 @@ stdntFirstName = np.random.choice(firstNames, numStudents)
 stdntLastName = np.random.choice(lastNames, numStudents)
 cntcts = [randPhNo() for _ in range(numStudents)]
 
-f = open("students.csv", 'w')
-f.write("student_rno, student_password, student_name, student_gender, student_dob, student_email, student_contact, year_of_enrollment, student_current_year, student_cpi, student_incentive_points, department_id, program_id, allocated_jaf, allocated_time\n")
 for i in range(numStudents):
     pid = getProg()
     curr_yr = int(progs[pid-1].dur)
     yr_enrl = 23 - curr_yr
-    allocJaf, allocTime = getAllocJaf()
-    students.append(Student(int(yr_enrl*1e7+i+1), pswds[i], stdntFirstName[i] + ' ' + stdntLastName[i], getGender(), getDob(pid), stdntFirstName[i].lower() + "." + stdntLastName[i].lower() + str(np.random.randint(1,99)) + "@iitb.ac.in", cntcts[i], 2000 + yr_enrl, curr_yr, getStudCPI(), getIP(), getDept(), pid, allocJaf, allocTime))
-    f.write(f"{students[i].rno}, {students[i].pswd}, {students[i].name}, {students[i].gndr}, {students[i].dob}, {students[i].mail}, {students[i].cntct}, {students[i].yr_enrl}, {students[i].curr_yr}, {students[i].cpi}, {students[i].ip}, {students[i].dept_id}, {students[i].prog_id}, {students[i].allocJaf}, {students[i].allocTime}\n")
-f.close()
+    # allocJaf, allocTime = getAllocJaf()
+    students.append(Student(int(yr_enrl*1e7+i+1), pswds[i], stdntFirstName[i] + ' ' + stdntLastName[i], getGender(), getDob(pid), stdntFirstName[i].lower() + "." + stdntLastName[i].lower() + str(np.random.randint(1,99)) + "@iitb.ac.in", cntcts[i], 2000 + yr_enrl, curr_yr, getStudCPI(), getIP(), getDept(), pid, "NULL", "NULL"))
 
 
 # ENTITY 9 : RESUME ==============================
 
+studToResume = dict()
+f = open("data/resumes.csv", 'w')
+sno = 0
+for i in range(numStudents):
+    nresumes = random.choice([1,2,3])
+    for j in range(nresumes):
+        f.write(f"{sno}, https://drive.google.com/file/d/1-p1f8Sj4tK6Vq9DFOaFiFrQHLCzeA8r8/view?usp=sharing, {random.choice([1,2])}, {students[i].rno}")
+        if i not in studToResume:
+            studToResume[i] = []
+        studToResume[i].append(sno)
+        sno += 1
+f.close()
 
+
+# ENTITY 10 : ELIGIBLE ==============================
+
+deptToJaf = dict()
+progToJaf = dict()
+f = open("data/eligible.csv", 'w')
+f.write("jaf_id, department_id, program_id\n")
+for i in range(numJafs):
+    for j in range(len(depts)):
+        for k in range(len(progs)):
+            r = random.random()
+            if r > 0.4:
+                f.write(f"{i+1}, {depts[j].code}, {progs[k].id}\n")
+                if j not in deptToJaf:
+                    deptToJaf[j] = []
+                deptToJaf[j].append(i)
+                if k not in progToJaf:
+                    progToJaf[k] = []
+                progToJaf[k].append(i)
+f.close()
+
+
+# ENTITY 11 : APPLIES_FOR ==============================
+
+f1 = open("data/applies_for.csv", 'w')
+f2 = open("data/shortlist.csv", 'w')
+f3 = open("data/offer.csv", 'w')
+f1.write("student_rno, jaf_id, resume_id, date_time\n")
+f2.write("student_rno, jaf_id, date_time\n")
+f3.write("student_rno, jaf_id, date_time\n")
+for i in range(numStudents):
+    for j in range(numJafs):
+        if jafs[j].opened_on != "NULL" and j in deptToJaf[students[i].dept_id-1] and j in progToJaf[students[i].prog_id-1]:
+            r = random.random()
+            if r < 0.6:
+                t1 = getTime(jafs[j].opened_on, jafs[j].closed_on)
+                f1.write(f"{i+1}, {j+1}, {random.choice(studToResume[i])}, {t1}\n")
+                if r < 0.0075:
+                    t2 = getTime(jafs[j].closed_on, end)
+                    f2.write(f"{i+1}, {j+1}, {t2}\n")
+                    if r < 0.0002:
+                        t3 = getTime(t2, end)
+                        if students[i].allocJaf == "NULL" or students[i].allocTime > t3:
+                            f3.write(f"{i+1}, {j+1}, {t3}\n")
+                            if students[i].allocJaf == "NULL":
+                                students[i].allocJaf = j+1
+                                students[i].allocTime = getTime(t3, end)
+f3.close()
+f2.close()
+f1.close()
+
+# writing students' data
+f = open("data/students.csv", 'w')
+f.write("student_rno, student_password, student_name, student_gender, student_dob, student_email, student_contact, year_of_enrollment, student_current_year, student_cpi, student_incentive_points, department_id, program_id, allocated_jaf, allocated_time\n")
+for i in range(len(students)):
+    f.write(f"{students[i].rno}, {students[i].pswd}, {students[i].name}, {students[i].gndr}, {students[i].dob}, {students[i].mail}, {students[i].cntct}, {students[i].yr_enrl}, {students[i].curr_yr}, {students[i].cpi}, {students[i].ip}, {students[i].dept_id}, {students[i].prog_id}, {students[i].allocJaf}, {students[i].allocTime}\n")
+f.close()
 
 # def read_counter():
 #     return loads(open("counter.json", "r").read()) + 1 if path.exists("counter.json") else 0
@@ -428,65 +501,6 @@ f.close()
 
 # counter = read_counter()
 # atexit.register(write_counter)
-
-
-# def randGender():
-#     p = np.random.rand()
-#     if p > 0.5:
-#         return "M"
-#     else:
-#         return "F"
-
-# F = ['1 StudentTemplate.xlsx', '2 APC Template.xlsx', '3 ComPOCTemplate.xlsx', '4 IRFTemplate.xlsx', '5 RoundTemplate.xlsx', '6 InterviewShortlistTemplate.xlsx', '9.CommonVolunteerMappingTemplate.xlsx']
-
-# for i in range(len(F)):
-#     copy2('/home/badola/APC/IIT Bombay Data Templates/' + F[i], F[i])
-
-# N = 70        # total students
-# C = 10          # total firms
-# C_1 = 10
-# C_2 = 0
-# C_3 = C - C_1 - C_2
-# numAPC = 20     # total APCs
-# numPOC = 36     # total ComPOCs
-
-# f3 = open("firmNameDataset.txt", 'r')
-
-# C1 = []
-# C2 = []
-# C3 = []
-
-
-# wb = load_workbook(filename='IPT Contacts 2021-22.xlsx')
-# ws = wb['ICs']
-# for i in range(2, 2+numPOC):
-#     C1.append(ws.cell(row=i, column=1).value)
-#     C2.append(ws.cell(row=i, column=7).value)
-#     C3.append(ws.cell(row=i, column=4).value)
-# wb.save('IPT Contacts 2021-22.xlsx')
-
-
-# br = "--------------------------------------------------------------------"
-# print(br)
-# print("Number of total students: ", N)
-# print("Number of firms: ", C)
-# print(br)
-
-# # Student Details
-# firstName = np.random.choice(D1, N)
-# lastName = np.random.choice(D2, N)
-# email = []
-# regNum = []
-# contactNum = []
-# gender = []
-# for i in range(N):
-#     regNum.append("iitb_" + str(i))
-#     email.append(firstName[i].lower() + "." + lastName[i].lower() + "@iitb.ac.in")
-#     contactNum.append(randPhNo())
-#     gender.append(randGender())
-
-# print("\nStarting to write in .xlsx files...\n\n")
-
 
 # # 1 StudentTemplate
 
@@ -499,207 +513,3 @@ f.close()
 #     ws.cell(row=i, column=4).value = contactNum[i-2]
 #     ws.cell(row=i, column=5).value = gender[i-2]
 # wb.save(F[0])
-
-
-# # 2 APC Template
-
-# wb = load_workbook(filename = F[1])
-# ws = wb['Sheet1']
-# ws.cell(row=i, column=1).value = C1[0]
-# ws.cell(row=i, column=2).value = C2[0]
-# ws.cell(row=i, column=3).value = C3[0]
-# wb.save(F[1])
-
-
-# # 3 ComPOCTemplate
-
-# wb = load_workbook(filename = F[2])
-# ws = wb['Sheet1']
-# for i in range(2, 2+numPOC):
-#     ws.cell(row=i, column=1).value = C1[i-2]
-#     ws.cell(row=i, column=2).value = C2[i-2]
-#     ws.cell(row=i, column=3).value = C3[i-2]
-# wb.save(F[2])
-
-
-# random.shuffle(C2)
-
-# # 4 InterviewTemplate
-
-# firmName = np.random.choice(D3, C, replace=False)
-# roles1 = ["Consult", "BA", "Finance", "APM", "FMCG"]
-# roles2 = ["DS", "Analytics", "Quant", "IT"]
-# roles3 = ["Operations", "Core"]
-# firmEmail = []
-# jobRole = []
-# pocEmail = []
-# numPanels = []
-# numRounds = []
-# J = 0
-# for i in range(C_1):
-#     firmEmail.append(firmName[i].strip().split()[0].lower() + "@gmail.com")
-#     jobRole.append(roles1[np.random.randint(0,5)])
-#     pocEmail.append(C2[i+J])
-#     # pocEmail.append(C2[np.random.randint(0,numAPC)])
-#     # numPanels.append(3)
-#     numPanels.append(np.random.randint(3,4))
-#     numRounds.append(np.random.randint(2,4))
-# J += C_1
-# for i in range(C_2):
-#     firmEmail.append(firmName[i].strip().split()[0].lower() + "@gmail.com")
-#     jobRole.append(roles2[np.random.randint(0,4)])
-#     pocEmail.append(C2[i+J])
-#     # pocEmail.append(C2[np.random.randint(0,numAPC)])
-#     # numPanels.append(3)
-#     numPanels.append(np.random.randint(3,4))
-#     numRounds.append(np.random.randint(2,4))
-# J += C_2
-# for i in range(C_3):
-#     firmEmail.append(firmName[i].strip().split()[0].lower() + "@gmail.com")
-#     jobRole.append(roles3[np.random.randint(0,2)])
-#     pocEmail.append(C2[i+J])
-#     # pocEmail.append(C2[np.random.randint(0,numAPC)])
-#     # numPanels.append(3)
-#     numPanels.append(np.random.randint(3,4))
-#     numRounds.append(np.random.randint(2,4))
-
-# wb = load_workbook(filename = F[3])
-# ws = wb['Sheet1']
-# for i in range(2, 2+C):
-#     ws.cell(row=i, column=1).value = firmName[i-2]
-#     ws.cell(row=i, column=2).value = firmEmail[i-2]
-#     ws.cell(row=i, column=3).value = jobRole[i-2]
-#     ws.cell(row=i, column=4).value = pocEmail[(i-2)]
-#     ws.cell(row=i, column=5).value = X2[(i-2)%20]
-#     ws.cell(row=i, column=6).value = numPanels[i-2]
-#     ws.cell(row=i, column=7).value = "2021-11-30"
-#     # ws.cell(row=i, column=8).value = "01:30:00"
-#     k = i-2
-#     if 0 <= k and k < C_1:
-#         ws.cell(row=i, column=9).value = np.random.choice([10])
-#         ws.cell(row=i, column=8).value = "16:45:00"
-#     elif k < (C_1 + C_2):
-#         ws.cell(row=i, column=9).value = np.random.choice([10])
-#         ws.cell(row=i, column=8).value = "01:50:00"
-#     else:
-#         ws.cell(row=i, column=9).value = np.random.choice([10])
-#         ws.cell(row=i, column=8).value = "02:10:00"
-#     tmp = "PI Round 1"
-#     for j in range(numRounds[i-2]):
-#         tmp += ","
-#         tmp += "PI Round " + str(j+2)
-#     ws.cell(row=i, column=10).value = tmp
-#     # ws.cell(row=i, column=13).value = "PI Round 1"
-#     # ws.cell(row=i, column=14).value = "0"
-# wb.save(F[3])
-
-
-# # 5 RoundTemplate
-
-# wb = load_workbook(filename = F[4])
-# ws = wb['Sheet1']
-# curr_row = 2
-# for i in range(2, 2+C):
-#     # p = 3
-#     p = np.random.randint(2,5)
-#     for j in range(numRounds[i-2]):
-#         ws.cell(row=curr_row, column=1).value = firmName[i-2] + "(" + jobRole[i-2] + ")"
-#         ws.cell(row=curr_row, column=2).value = str(j+1)
-#         ws.cell(row=curr_row, column=3).value = "PI Round " + str(j+1)
-#         ws.cell(row=curr_row, column=4).value = "0"
-#         curr_row += 1
-# wb.save(F[4])
-
-
-# # 6 InterviewShortlistTemplate
-
-# J = 0
-
-# numShortlists = []
-# for i in range(C):
-#     # numShortlists.append(12)
-#     if 0 <= i and i < C_1:
-#         numShortlists.append(np.random.randint(7,20))
-#     elif i < (C_1 + C_2):
-#         numShortlists.append(np.random.randint(6,10))
-#     else:
-#         numShortlists.append(np.random.randint(7,10))
-
-# commonStudents = []
-# for i in range(C-1):
-#     mini = min(numShortlists[i], numShortlists[i+1])
-#     if 0 <= i and i < (C_1-1):
-#         commonStudents.append(int(0.8*mini))
-#     elif i < C_1:
-#         commonStudents.append(int(0.50*mini))
-#     elif i < (C_1 + C_2-1):
-#         commonStudents.append(int(0.70*mini))
-#     elif i < (C_1 + C_2 + 1):
-#         commonStudents.append(int(mini))
-#     else:
-#         commonStudents.append(int(0.80*mini))
-#     # p = np.random.rand()
-#     # if p > 0:
-#     #     commonStudents.append(np.random.randint(0, 6))
-#     # else:
-#     #     commonStudents.append(0)
-
-# wb = load_workbook(F[6])
-# ws = wb['Sheet1']
-# curr_row = 2
-# for i in range(2, 2+C):
-#     ws.cell(row=i, column=1).value = firmName[i-2]
-#     ws.cell(row=i, column=2).value = pocEmail[i-2]
-# wb.save(F[6])
-
-# print("\n", br)
-# print("Number of shorlists:", numShortlists)
-# print("Total shortlist: ", np.sum(np.array(numShortlists)))
-# print("Overlapping students:", commonStudents)
-# print(br)
-
-# finalShortlist = []
-# wb = load_workbook(filename = F[5])
-# ws = wb['Sheet1']
-# # curr_row = 2
-# sum = 0
-# for i in range(C):
-#     sum += numShortlists[i]
-#     if i < (C-1):
-#         sum -= commonStudents[i]
-# allShortlist = np.random.choice(regNum, sum, replace=False)
-# curr = 0
-# for i in range(2, 2+C):
-#     tmp = allShortlist[curr:(curr+numShortlists[i-2])]
-#     curr += numShortlists[i-2]
-#     if i <= C:
-#         curr -= commonStudents[i-2]
-#     finalShortlist.append(list(set(tmp)))
-
-# # for i in range(C):
-# #     allShortlist = np.random.choice(regNum, numShortlists[i], replace=False)
-# #     if i > 0 and i < 10:
-# #         possible = int(min(numShortlists[i]/2, numShortlists[i-1]/2))
-# #         allShortlist[0:possible] = finalShortlist[-1][0:possible]
-# #     allShortlist = list(set(allShortlist))
-# #     numShortlists[i] = len(allShortlist)
-# #     finalShortlist.append(allShortlist)
-
-# for i in range(2, 2+C):
-#     for j in range(numShortlists[i-2]):
-#         ws.cell(row=curr_row, column=1).value = firmName[i-2] + "(" + jobRole[i-2] + ")"
-#         ws.cell(row=curr_row, column=2).value = finalShortlist[i-2][j]
-#         ws.cell(row=curr_row, column=3).value = "SHORTLIST"
-#         ws.cell(row=curr_row, column=4).value = 1
-#         ws.cell(row=curr_row, column=5).value = "PI Round 1"
-#         curr_row += 1
-# wb.save(F[5])
-
-# print("\nSimulation completed.")
-
-# os.mkdir('/home/badola/APC/t' + str(counter))
-# for i in range(len(F)):
-#     copy2(F[i], '/home/badola/APC/t' + str(counter) + '/' + F[i])
-# make_archive('/home/badola/APC/t' + str(counter), 'zip', root_dir='/home/badola/APC/t' + str(counter))
-
-# print("\nDataset {} generation completed.\n\n".format(counter))
