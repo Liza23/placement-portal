@@ -25,18 +25,75 @@ app.listen(port, () => {
   console.log(`App running on port ${port}.`);
 });
 
-// calling the functions: view_jaf
-app.get("/view_jaf", (req, res) => {
-    console.log(req.params.id);
-    queries
-      .view_jaf(req.params.id)
-      .then((response) => {
-        console.log(response);
-        res.status(200).send(response);
-      })
-      .catch((error) => {
-        console.log(error);
-        res.status(500).send(error);
-      });
-  });
-  
+// calling the functions: view_recuriter_profile
+app.get("/view_recuriter_profile/:id", (req, res) => {
+  console.log(req.params.id);
+  queries
+    .view_recuriter_profile(req.params.id)
+    .then((response) => {
+      console.log(response);
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send(error);
+    });
+});
+
+// calling the functions: view_student_profile
+app.get("/view_student_profile/:id", (req, res) => {
+  console.log(req.params.id);
+  queries
+    .view_student_profile(req.params.id)
+    .then((response) => {
+      console.log(response);
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send(error);
+    });
+});
+
+// calling the functions: view_coordinator_profile
+app.get("/view_coordinator_profile/:id", (req, res) => {
+  console.log(req.params.id);
+  queries
+    .view_coordinator_profile(req.params.id)
+    .then((response) => {
+      console.log(response);
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send(error);
+    });
+});
+
+// calling the functions: view_applicants
+app.get("/view_applicants/:jid/:rid", (req, res) => {
+  queries
+    .view_applicants(req.params.jid, req.params.rid)
+    .then((response) => {
+      console.log(response);
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send(error);
+    });
+});
+
+// calling the functions: view_applicants
+app.get("/view_company_coordinator/:cid", (req, res) => {
+  queries
+    .view_company_coordinator(req.params.cid)
+    .then((response) => {
+      console.log(response);
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send(error);
+    });
+});
