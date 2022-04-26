@@ -1,5 +1,6 @@
 const { query } = require("express");
-
+const jwt = require("jsonwebtoken");
+// const User = require("user/model")
 // define a client
 const Client = require("pg").Client;
 
@@ -17,6 +18,12 @@ const client = new Client(credentials);
 client.connect();
 
 // function returns
+
+// const signup = (username, password, role) => {
+
+// }
+
+
 
 const view_jaf = (jaf_id, company_id, role) => {
   return new Promise(function(resolve, reject) => {
@@ -69,6 +76,23 @@ const view_student_profile = (student_id) => {
     });
   });
 };
+
+const edit_student_profile = (student_id, name, gender, dob, contact) => {
+    return new Promise(function (resolve, reject) => {
+        var query = `UPDATE STUDENT SET STUDENT.student_name = ${name}, SET STUDENT.gender = ${gender}, SET STUDENT.dob = ${dob}, SET STUDENT.contact = ${contact} WHERE  STUDENT.student_rno = ${student_id};`;
+        client.query(query, (error, results) => {
+            if(error){
+                console.log("Error in edit student profile\n");
+                console.log(error);
+            }
+            else{
+                resolve(results.rows);
+            }
+        });
+    });
+}
+
+
 
 // function returns coordinator profile
 const view_coordinator_profile = (coordinator_id) => {
@@ -155,5 +179,5 @@ module.exports = {
   view_company_coordinator,
   view_jaf,
   sign_jaf,
-  
+
 };
