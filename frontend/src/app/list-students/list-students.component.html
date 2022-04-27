@@ -1,0 +1,29 @@
+<div class="container">
+    <h1>PLacement Portal, IIT Bombay</h1>
+    <h3><br>Student Information and Statistics</h3>
+    <table>
+      <tr>
+        <td>Roll Number</td>
+        <td>Student Name</td>
+      </tr>
+      <tr *ngFor="let m of student | paginate: { itemsPerPage: count, currentPage: p }">
+        <td>{{m.student_rno}}</td>
+        <td>
+            <br>
+            <a [routerLink] = "['/matches' , m.student_rno]"> 
+            {{m.student_name}}<br>
+            </a>
+            <p>
+                {{m.program_name}} {{m.department_name}}<br>
+                {{m.student_email}}
+            </p>          
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <pagination-controls class="test" (pageChange)="p = $event"></pagination-controls>
+        </td>
+      </tr>
+    </table>
+  </div>
