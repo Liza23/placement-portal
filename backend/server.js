@@ -97,3 +97,7 @@ app.get("/view_company_coordinator/:cid", (req, res) => {
       res.status(500).send(error);
     });
 });
+
+app.get("/view_jaf/:jid/:cid/:role", (req, res) => {
+  
+})

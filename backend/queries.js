@@ -300,11 +300,102 @@ const create_jaf = (jaf_details) => {
 	});
 };
 
-// const add_eligibility = (jaf_id, eligibility) => {
-// 	return new Promise(function(resolve, reject) => {
+const add_eligibility = (jaf_id, dep_ids, prog_ids) => {
+	return new Promise(function(resolve, reject) {
+		eligibility_details = [];
+		for(let i=0;i<dep_ids.length;i++){
+			eligibility_details.push([jaf_id, dep_ids[i], prog_ids[i]]);
+		}
+		query = `INSERT into ELIGIBLE (jaf_id, department_id, program_id) VALUES \%L`;
+		client.query(format(query, eligibility_details), (error, results) => {
+			if(error){
+				console.log("Error in adding eligibility_details", error);
+				reject(error);
+			}
+			else{
+				resolve(results.rows);
+			}
+		});
+	});
+};
 
-// 	})
-// }
+const create_company = (name, origin, coordinator_id) => {
+	return new Promise(function(resolve,reject){
+		query = `INSERT INTO COMPANY VALUES(company_name, company_origin, company_coordinator) VALUES (${name}, ${origin}, ${coordinator_id});`;
+		client.query(query, (error, results) => {
+			if(error){
+				console.log("Error in creating company", error);
+				reject(error);
+			}
+			else
+			{
+				resolve(results.rows);
+			}
+		});
+	});
+};
+
+const assign_company = (recruiter_id, company_id) => {
+	return new Promise(function(resolve, reject) {
+		query = `UPDATE RECRUITER SET recruiter_company=${company_id} WHERE recruiter_id=${recruiter_id};`;
+		client.query(query, (error,results)=>{
+			if(error){
+				console.log("Error in assigning company", error);
+				reject(error);
+			}
+			else
+				resolve(error.rows);
+
+		});
+	});
+};
+
+const open_jaf = (jaf_id, open_time) => {
+	return new Promise(function(resolve, reject) {
+		query = `UPDATE JAF SET jaf_opened_on=to_timestamp(${open_time}/1000.0);`;
+		client.query(query, (error, results) => {
+			if(error){
+				console.log("Cannot Open JAF", error);
+				reject(error);
+			}
+			else{
+				resolve(results.rows);
+			}
+		});
+	});
+};
+
+const close_jaf = (jaf_id, close_time) => {
+	return new Promise(function(resolve, reject) {
+		query = `UPDATE JAF SET jaf_closed_on=to_timestamp(${close_time}/1000.0);`;
+		client.query(query, (error, results) => {
+			if(error){
+				console.log("Cannot Close JAF", error);
+				reject(error);
+			}
+			else{
+				resolve(results.rows);
+			}
+		});
+	});
+};
+
+const add_slot = (jaf_id, slot) => {
+	return new Promise(function(resolve, reject) {
+		query = `UPDATE JAF SET jaf_slot=slot;`;
+		client.query(query, (error, results) => {
+			if(error){
+				console.log("Cannot Add slot", error);
+				reject(error);
+			}
+			else{
+				resolve(results.rows);
+			}
+		});
+	});
+};
+
+
 
 
 module.exports = {
