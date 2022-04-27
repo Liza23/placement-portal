@@ -19,24 +19,21 @@ const credentials = {
 const client = new Client(credentials);
 client.connect();
 
-// function returns
-
-// const signup = (username, password, role) => {
-
-// }
-
 
 
 const view_jaf = (jaf_id, company_id, role) => {
 	return new Promise(function(resolve, reject){
 		if(role == "student" || role == "coordinator" || role == "recruiter"){
-				query = `SELECT company.company_name, profile.profile_name, profile.profile_description, jaf.jaf_jd, jaf.jaf_bond_duration, jaf.jaf_location_of_posting, jaf.jaf_currency, jaf.jaf_gross, jaf.jaf_gross, jaf.jaf_cpi from jaf inner join company on jaf.company_id = company.company_id inner join profile on profile.profile_id = jaf.profile_id where jaf.jaf_id = ${jaf_id} AND company.company_id=${company_id};`;
+				var query = `SELECT company.company_name, profile.profile_name, profile.profile_description, jaf.jaf_jd, jaf.jaf_bond_duration, jaf.jaf_location_of_posting, jaf.jaf_currency, jaf.jaf_gross, jaf.jaf_gross, jaf.jaf_cpi from jaf inner join company on jaf.company_id = company.company_id inner join profile on profile.profile_id = jaf.profile_id where jaf.jaf_id = ${jaf_id} AND company.company_id=${company_id};`;
+				console.log("Query incoming");
+				console.log(query);
 				client.query(query, (error, results) => {
 						if(error) {
 								console.log("Error in view List JAFs :", error);
 								reject(error);
 						}
 						else{
+								console.log(results.rows);
 								resolve(results.rows);
 						}
 				});
@@ -45,9 +42,20 @@ const view_jaf = (jaf_id, company_id, role) => {
 		}
 	});
 };
-
-
-// function returns recuriter profile
+const view_eligibility = (jaf_id, company_id) => {
+	return new Promise(function(resolve,reject){
+		var query = `SELECT DEPARTMENT.department_id, DEPARTMENT.department_name, PROGRAM.program_id, PROGRAM.program_name from ELIGIBLE inner join DEPARTMENT on DEPARTMENT.department_id = ELIGIBLE.department_id INNER JOIN program on program.program_id = ELIGIBLE.program_id WHERE jaf_id = ${jaf_id};`;
+		client.query(query, (error, results) => {
+			if(error){
+				console.log("Error in viewing eligibility_details", error);
+				reject(error);
+			}
+			else{
+				resolve(results.rows);
+			}
+		})
+	});
+};
 const view_recuriter_profile = (recruiter_id) => {
 	return new Promise(function (resolve, reject) {
 		var query = "select * from recruiter where recruiter_id = " + recruiter_id;
@@ -62,8 +70,6 @@ const view_recuriter_profile = (recruiter_id) => {
 		});
 	});
 };
-
-// function returns student profile
 const view_student_profile = (student_id) => {
 	return new Promise(function (resolve, reject) {
 		var query = "select * from student where student_rno = " + student_id;
@@ -78,10 +84,9 @@ const view_student_profile = (student_id) => {
 		});
 	});
 };
-
 const edit_student_profile = (student_id, name, gender, dob, contact) => {
 		return new Promise(function (resolve, reject) {
-				var query = `UPDATE STUDENT SET STUDENT.student_name = ${name}, SET STUDENT.gender = ${gender}, SET STUDENT.dob = ${dob}, SET STUDENT.contact = ${contact} WHERE  STUDENT.student_rno = ${student_id};`;
+				var query = `UPDATE STUDENT SET student_name = '${name}', gender = '${gender}', dob = ${dob}, contact = ${contact} WHERE  STUDENT.student_rno = ${student_id};`;
 				client.query(query, (error, results) => {
 						if(error){
 								console.log("Error in edit student profile\n");
@@ -94,11 +99,9 @@ const edit_student_profile = (student_id, name, gender, dob, contact) => {
 				});
 		});
 };
-
-
 const student_view_resume = (student_id, resume_id) => {
 	return new Promise(function(resolve, reject) {
-		var query = `SELECT * from RESUME WHERE RESUME.student_rno = ${student_id} AND RESUME.resume_id = ${resume_id};`;
+		var query = `SELECT * from RESUME WHERE student_rno = ${student_id} AND resume_id = ${resume_id};`;
 		client.query(query, (error, results) => {
 			if(error){
 				console.log("Error in view resume", error);
@@ -110,12 +113,13 @@ const student_view_resume = (student_id, resume_id) => {
 		});
 	});
 };
-
 const student_upload_resume = (student_id, resume_id, resume_url) => {
 	return new Promise(function(resolve, reject) {
-		var query = `UPDATE RESUME SET RESUME.resume_url = ${resume_url} WHERE RESUME.resume_id = ${resume_id} AND RESUME.student_rno = ${student_id};`;
-		var ins_query = `INSERT INTO RESUME (resume_id, student_rno, resume_url) VALUES (${resume_id}, ${student_id}, ${resume_url});`;
-		client.query(var_ins_query, (error, results) => {
+
+		var query = `UPDATE RESUME SET resume_url=${resume_url} WHERE resume_id=${resume_id} AND student_rno=${student_id}; INSERT INTO RESUME (student_rno, resume_id, resume_url) VALUES(${student_id}, ${resume_id}, ${resume_url}) WHERE NOT EXISTS (SELECT 1 FROM RESUME WHERE resume_id=${resume_id} AND student_rno=${student_id});`
+		// var query = `UPDATE RESUME SET resume_url = ${resume_url} WHERE resume_id = ${resume_id} AND student_rno = ${student_id};`;
+		// var ins_query = `INSERT INTO RESUME (resume_id, student_rno, resume_url) VALUES (${resume_id}, ${student_id}, ${resume_url});`;
+		client.query(query, (error, results) => {
 			if(error){
 				console.log("INSERTING RESUME GIVES ERROR\n");
 				console.log(error);
@@ -127,10 +131,6 @@ const student_upload_resume = (student_id, resume_id, resume_url) => {
 		});
 	});
 };
-
-
-
-// function returns coordinator profile
 const view_coordinator_profile = (coordinator_id) => {
 	return new Promise(function (resolve, reject) {
 		var query =
@@ -146,8 +146,6 @@ const view_coordinator_profile = (coordinator_id) => {
 		});
 	});
 };
-
-// function returns student applied to a jaf
 const view_applicants = (jaf_id, recuriter_id) => {
 	return new Promise(function (resolve, reject) {
 		var query =
@@ -167,8 +165,6 @@ const view_applicants = (jaf_id, recuriter_id) => {
 		});
 	});
 };
-
-// function returns all companies allotted to a coordinator
 const view_company_coordinator = (coordinator_id) => {
 	return new Promise(function (resolve, reject) {
 		var query =
@@ -186,14 +182,14 @@ const view_company_coordinator = (coordinator_id) => {
 		});
 	});
 };
-
 const sign_jaf = (jaf_id, company_id, rno, resume_id, role) => {
 		return new Promise(function(resolve, reject)  {
 				if(role != "student"){
 						console.log("Error in sign_jaf :: role not student");
 				}
 
-				query = `INSERT into APPLIES_FOR (student_rollno, jaf_id, resume_id) VALUES (${rno}, ${jaf_id}, ${resume_id});`;
+				var query = `INSERT into APPLIES_FOR (student_rno, jaf_id, resume_id, date_time) VALUES (${rno}, ${jaf_id}, ${resume_id}, current_timestamp);`;
+				console.log(query);
 				client.query(query, (error, results) => {
 						if(error){
 								console.log("Error in Applying for JAF::", error);
@@ -205,10 +201,9 @@ const sign_jaf = (jaf_id, company_id, rno, resume_id, role) => {
 				});
 		});
 };
-
 const view_shortlists = (student_id) => {
 	return new Promise(function(resolve, reject)  {
-		query = `SELECT APPLIES_FOR.jaf_id, JAF.company_id FROM APPLIES_FOR INNER JOIN JAF on JAF.jaf_id = APPLIES_FOR.jaf_id WHERE APPLIES_FOR.student_rno = ${student_id};`;
+		var query = `SELECT APPLIES_FOR.jaf_id, JAF.company_id FROM APPLIES_FOR INNER JOIN JAF on JAF.jaf_id = APPLIES_FOR.jaf_id WHERE APPLIES_FOR.student_rno = ${student_id};`;
 		client.query(query, (error, results) => {
 			if(error){
 				console.log("Error in viewing shortlists, ", error);
@@ -220,10 +215,9 @@ const view_shortlists = (student_id) => {
 		});
 	});
 };
-
 const view_offers = (student_id) => {
 	return new Promise(function(resolve, reject) {
-		query = `SELECT OFFERS.jaf_id, OFFERS.company_id from OFFERS INNER JOIN JAF on JAF.jaf_id = OFFERS.jaf_id WHERE OFFERS.student_rno = ${student_id};`;
+		var query = `SELECT OFFERS.jaf_id, OFFERS.company_id from OFFERS INNER JOIN JAF on JAF.jaf_id = OFFERS.jaf_id WHERE OFFERS.student_rno = ${student_id};`;
 		client.query(query, (error, results) => {
 			if(error){
 				console.log("View offers has error", error);
@@ -235,14 +229,13 @@ const view_offers = (student_id) => {
 		});
 	});
 };
-
 const create_shortlist = (jaf_id, student_ids) => {
 	return new Promise(function(resolve, reject) {
 		student_and_jaf_data = [];
 		student_ids.forEach(function(v) {
 			student_and_jaf_data.push([v, jaf_id]);
 		});
-		query = "INSERT INTO SHORTLIST (student_rno, jaf_id) VALUES \%L";
+		var query = "INSERT INTO SHORTLIST (student_rno, jaf_id) VALUES \%L";
 		client.query(format(query, student_and_jaf_data), (error, results)=> {
 			if(error){
 				console.log(error);
@@ -255,14 +248,13 @@ const create_shortlist = (jaf_id, student_ids) => {
 		});
 	});
 };
-
 const create_offers = (jaf_id, student_ids) => {
 	return new Promise(function(resolve, reject) {
 		student_and_jaf_data = [];
 		student_ids.forEach(function(v)  {
 			student_and_jaf_data.push([v, jaf_id]);
 		});
-		query = "INSERT INTO OFFERS (student_rno, jaf_id) VALUES \%L";
+		var query = "INSERT INTO OFFER (student_rno, jaf_id) VALUES \%L";
 		client.query(format(query, student_and_jaf_data), (error, results)=> {
 			if(error){
 				console.log(error);
@@ -275,19 +267,20 @@ const create_offers = (jaf_id, student_ids) => {
 		});
 	});
 };
-
 const create_jaf = (jaf_details) => {
-	profile_id = jaf_details["profile_id"];
-	company_id = jaf_details["company_id"];
-	jaf_jd = jaf_details["jd"];
-	jaf_bond_duration = jaf_details["bond_duration"];
-	jaf_location = jaf_details["location"];
-	jaf_ctc = jaf_details["currency"];
-	jaf_gross = jaf_details["gross"];
-	jaf_cpi = jaf_details["cpi"];
-	jaf_bonus_allowed = jaf_details["bonus_allowed"];
-	return Promise(function(resolve, reject) {
-		query = `INSERT INTO JAF (profile_id, company_id, jaf_jd, jaf_bond_duration, jaf_location, jaf_ctc, jaf_gross, jaf_cpi, jaf_bonus_allowed) VALUES (${profile_id}, ${company_id}, ${jaf_jd}, ${jaf_bond_duration}, ${jaf_location}, ${jaf_ctc}, ${jaf_gross}, ${jaf_cpi}, ${jaf_bonus_allowed});`;
+	profile_id = jaf_details.profile_id;
+	company_id = jaf_details.company_id;
+	jaf_jd = jaf_details.jd;
+	jaf_bond_duration = jaf_details.bond_duration;
+	jaf_location = jaf_details.location;
+	jaf_ctc = jaf_details.ctc;
+	jaf_gross = jaf_details.gross;
+	jaf_cpi = jaf_details.cpi;
+	jaf_bonus_allowed = jaf_details.bonus_allowed;
+	jaf_currency = jaf_details.currency;
+	return new Promise(function(resolve, reject) {
+		var query = `INSERT INTO JAF (profile_id, company_id, jaf_jd, jaf_bond_duration, jaf_location_of_posting, jaf_ctc, jaf_gross, jaf_cpi, jaf_bonus_allowed, jaf_currency) VALUES (${profile_id}, ${company_id}, '${jaf_jd}', ${jaf_bond_duration}, '${jaf_location}', ${jaf_ctc}, ${jaf_gross}, ${jaf_cpi}, '${jaf_bonus_allowed}', '${jaf_currency}');`;
+		console.log(query);
 		client.query(query, (error, results) => {
 			if(error){
 				console.log("Error creating JAF", error);
@@ -299,14 +292,13 @@ const create_jaf = (jaf_details) => {
 		});
 	});
 };
-
 const add_eligibility = (jaf_id, dep_ids, prog_ids) => {
 	return new Promise(function(resolve, reject) {
 		eligibility_details = [];
 		for(let i=0;i<dep_ids.length;i++){
 			eligibility_details.push([jaf_id, dep_ids[i], prog_ids[i]]);
 		}
-		query = `INSERT into ELIGIBLE (jaf_id, department_id, program_id) VALUES \%L`;
+		var query = `DELETE FROM ELIGIBLE WHERE jaf_id = ${jaf_id}; INSERT into ELIGIBLE (jaf_id, department_id, program_id) VALUES \%L`;
 		client.query(format(query, eligibility_details), (error, results) => {
 			if(error){
 				console.log("Error in adding eligibility_details", error);
@@ -318,10 +310,14 @@ const add_eligibility = (jaf_id, dep_ids, prog_ids) => {
 		});
 	});
 };
-
 const create_company = (name, origin, coordinator_id) => {
 	return new Promise(function(resolve,reject){
-		query = `INSERT INTO COMPANY VALUES(company_name, company_origin, company_coordinator) VALUES (${name}, ${origin}, ${coordinator_id});`;
+		var query = `INSERT INTO COMPANY(company_name, company_origin, company_coordinator) VALUES ('${name}', '${origin}', ${coordinator_id});`;
+		console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		console.log(query);
 		client.query(query, (error, results) => {
 			if(error){
 				console.log("Error in creating company", error);
@@ -334,25 +330,23 @@ const create_company = (name, origin, coordinator_id) => {
 		});
 	});
 };
-
 const assign_company = (recruiter_id, company_id) => {
 	return new Promise(function(resolve, reject) {
-		query = `UPDATE RECRUITER SET recruiter_company=${company_id} WHERE recruiter_id=${recruiter_id};`;
+		var query = `UPDATE RECRUITER SET recruiter_company=${company_id} WHERE recruiter_id=${recruiter_id};`;
 		client.query(query, (error,results)=>{
 			if(error){
 				console.log("Error in assigning company", error);
 				reject(error);
 			}
 			else
-				resolve(error.rows);
+				resolve(results.rows);
 
 		});
 	});
 };
-
 const open_jaf = (jaf_id, open_time) => {
 	return new Promise(function(resolve, reject) {
-		query = `UPDATE JAF SET jaf_opened_on=to_timestamp(${open_time}/1000.0);`;
+		var query = `UPDATE JAF SET jaf_opened_on=to_timestamp(${open_time}/1000.0);`;
 		client.query(query, (error, results) => {
 			if(error){
 				console.log("Cannot Open JAF", error);
@@ -364,10 +358,9 @@ const open_jaf = (jaf_id, open_time) => {
 		});
 	});
 };
-
 const close_jaf = (jaf_id, close_time) => {
 	return new Promise(function(resolve, reject) {
-		query = `UPDATE JAF SET jaf_closed_on=to_timestamp(${close_time}/1000.0);`;
+		var query = `UPDATE JAF SET jaf_closed_on=to_timestamp(${close_time}/1000.0);`;
 		client.query(query, (error, results) => {
 			if(error){
 				console.log("Cannot Close JAF", error);
@@ -379,10 +372,9 @@ const close_jaf = (jaf_id, close_time) => {
 		});
 	});
 };
-
 const add_slot = (jaf_id, slot) => {
 	return new Promise(function(resolve, reject) {
-		query = `UPDATE JAF SET jaf_slot=slot;`;
+		var query = `UPDATE JAF SET jaf_slot=${slot};`;
 		client.query(query, (error, results) => {
 			if(error){
 				console.log("Cannot Add slot", error);
@@ -394,9 +386,20 @@ const add_slot = (jaf_id, slot) => {
 		});
 	});
 };
-
-
-
+const view_student_list = () => {
+	return new Promise(function(resolve,reject) {
+		var query = `SELECT student_rno, student_name, student_cpi, program.program_name, department.department_name from STUDENT INNER JOIN PROGRAM ON STUDENT.program_id = PROGRAM.program_id INNER JOIN DEPARTMENT ON STUDENT.department_id = DEPARTMENT.department_id;`;
+		client.query(query, (error, results) => {
+			if(error){
+				console.log("Error while viewing student list", error);
+				reject(error);
+			}
+			else{
+				resolve(results.rows);
+			}
+		});
+	});
+};
 
 module.exports = {
 	view_recuriter_profile,
@@ -406,5 +409,19 @@ module.exports = {
 	view_company_coordinator,
 	view_jaf,
 	sign_jaf,
-
+	view_student_list,
+	add_slot,
+	close_jaf, 
+	open_jaf,
+	assign_company,
+	create_company,
+	add_eligibility, 
+	create_jaf,
+	create_offers,
+	create_shortlist,
+	view_offers,
+	view_shortlists,
+	student_upload_resume,
+	student_view_resume,
+	edit_student_profile,
 };
