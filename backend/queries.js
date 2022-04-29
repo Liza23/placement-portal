@@ -133,9 +133,10 @@ const view_program = (program_id) => {
 	});
 };
 
-const edit_student_profile = (student_id, name, gender, dob, contact) => {
+const edit_student_profile = (student_id, name, gender, contact) => {
 		return new Promise(function (resolve, reject) {
-				var query = `UPDATE STUDENT SET student_name = '${name}', gender = '${gender}', dob = ${dob}, contact = ${contact} WHERE  STUDENT.student_rno = ${student_id};`;
+				var query = `UPDATE STUDENT SET student_name = '${name}', gender = '${gender}', contact = ${contact} WHERE  STUDENT.student_rno = ${student_id};`;
+				console.log(query);
 				client.query(query, (error, results) => {
 						if(error){
 								console.log("Error in edit student profile\n");

@@ -35,11 +35,11 @@ export class Student {
 export class StudentInfoComponent implements OnInit {
 
   user = this.fb.group({
-    student_name: [, [Validators.required]],
-    student_gender: [, [Validators.required]],
-    student_dob: [, [Validators.required]],
-    student_email: [, [Validators.required]],
-    student_contact: [, [Validators.required]],
+    student_name: [ ],
+    student_gender: [ ],
+    student_dob: [ ],
+    student_email: [ ],
+    student_contact: [ ],
   });
 
   private base_url: string = 'http://localhost:5000/';
@@ -61,13 +61,14 @@ export class StudentInfoComponent implements OnInit {
     this.http.get<any>(this.base_url + 'view_student_profile/' + this.student_rno).subscribe(
       response => {
         console.log(response);
-        this.student = response;
+        this.student = response[0];
       }
     );
   }
 
   onSubmit() {
     if(this.user.valid){
+      console.log("stud", this.student);
       this.updateDetails(this.student)
       .subscribe(
         data => {console.log(data), window.alert("Submitted successfully!")},
@@ -82,8 +83,9 @@ export class StudentInfoComponent implements OnInit {
   updateDetails(student: Student):Observable<any> {
     const headers = { 'content-type': 'application/json' };
     const body = JSON.stringify(student);
+    console.log("body", body);
     console.log(body);
-    return this.http.post<Student>(this.base_url + '' + this.student_rno + '/details', body, {'headers': headers});
+    return this.http.post<Student>(this.base_url + 'edit_student_profile', body, {'headers': headers});
   }
 
 }

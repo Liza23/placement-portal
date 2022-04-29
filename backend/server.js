@@ -344,6 +344,7 @@ app.get("/view_resume", (req, res) => {
 });
 
 app.post("/edit_student_profile", (req,res) => {
+  console.log("eweeeeeeeeeeeeeeeeeee", res);
 	queries.edit_student_profile(req.body.student_id, req.body.name, req.body.gender, req.body.gender, req.body.dob, req.body.contact)
 	.then((response)=>{
   		console.log(response);

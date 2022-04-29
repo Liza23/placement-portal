@@ -1,7 +1,7 @@
 <div class="container">
     <h1>{{student.student_name}}'s Home Page</h1>
-    <h3>Roll No. : {{student_rno}}</h3>
-    <p><button class="mi" [routerLink] = "['/students/', this.student_rno, '/edit-details']">Edit Personal Info</button></p>
+    <h3>Roll No. : {{this.student_rno}}</h3>
+    <p><button class="mi" [routerLink] = "['/students', student_rno, 'edit-details']">Edit Personal Info</button></p>
 
     <!-- public year_of_enrollment: number = 0,
     public student_current_year: number = 0,

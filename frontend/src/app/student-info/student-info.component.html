@@ -30,7 +30,7 @@
         [(ngModel)]="student.student_email"
         type="text"
         placeholder="{{student.student_email}}"
-        formControlName="student.student_email">
+        formControlName="student_email">
   </div>
   <div class="two">
     <label class="one">
@@ -40,8 +40,8 @@
         [(ngModel)]="student.student_contact"
         type="text"
         placeholder="{{student.student_contact}}"
-        formControlName="student.student_contact">
+        formControlName="student_contact">
   </div>
   <p><button class="ni" (click)="onSubmit()">Submit</button></p>
-  <p><button class="mi" [routerLink] = "['/students/', this.student_rno, '/home']">Home</button></p>
+  <p><button class="mi" [routerLink] = "['/students', this.student_rno, 'home']">Home</button></p>
 </form>

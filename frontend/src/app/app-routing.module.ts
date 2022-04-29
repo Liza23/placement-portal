@@ -39,7 +39,7 @@ const routes: Routes = [
   {path: 'recruiters/:recruiter_id/home', component: RecruiterHomeComponent},
   {path: 'recruiters/:recruiter_id/edit-details', component: RecruiterInfoComponent},
   {path: 'coordinators/:coordinator_id/jafs/:jaf_id/slot', component: FirmSlotComponent},
-  {path: '**', redirectTo: 'students', pathMatch: 'full'},
+  // {path: '**', redirectTo: 'students', pathMatch: 'full'},
 ];
 
 @NgModule({
