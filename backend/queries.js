@@ -1,5 +1,6 @@
 const { query } = require("express");
 const jwt = require("jsonwebtoken");
+import Helper from "./helper";
 // const User = require("user/model")
 // define a client
 const Client = require("pg").Client;
@@ -19,6 +20,148 @@ const credentials = {
 const client = new Client(credentials);
 client.connect();
 
+
+/*
+################################################################
+################################################################
+#### Signup Queries for Coordinator, student and recruiter ####
+################################################################
+################################################################
+*/
+
+
+const student_signup = (rno, pwd, details) => {
+	return new Promise(function(resolve, reject) {
+		if(!Helper.isValidEmail(details.email)){
+			reject("No Valid Mail");
+		}
+		const hashpass = Helper.hashPassword(pwd);
+		var query = `INSERT INTO STUDENT (student_rno, student_password, student_name, student_gender, student_dob, student_email, program_id, department_id) VALUES(${rno}, '${hashpass}', '${details.name}', '${details.gender}', to_timestamp(${details.dob}/1000.0), '${details.email}', ${details.program}, ${details.department});`;
+		client.query(query, (error, results) => {
+			if(error){
+				console.log("ERROR IN STUDENT SIGNUP\n");
+				console.log(error);
+				reject(error);
+			}
+			else{
+				resolve(results.rows);
+			}
+		});
+	});
+};
+
+const recruiter_signup = (pwd, details) => {
+	return new Promise(function(resolve, reject) => {
+		if(!Helper.isValidEmail(details.email)){
+			reject("No Valid Mail");
+		}
+		const hashpass = Helper.hashPassword(pwd);
+		var query = `INSERT INTO RECRUITER (recruiter_password, recruiter_name, recruiter_email, recruiter_contact) VALUES ('${hashpass}', '${details.name}', '${details.email}', ${details.contact});`;
+		client.query(query, (error, results) => {
+			if(error){
+				console.log("ERROR IN RECRUITER SIGNUP\n");
+				console.log(error);
+				reject(error);
+			}
+			else{
+				resolve(results.rows);
+			}
+		});
+	});
+};
+
+
+const coordinator_signup = (pwd, details) => {
+	return new Promise(function(resolve, reject) => {
+		if(!Helper.isValidEmail(details.email)){
+			reject("No Valid Mail");
+		}
+		const hashpass = Helper.hashPassword(pwd);
+		var query = `INSERT INTO COORDINATOR (coordinator_password, coordinator_name, coordinator_email, coordinator_contact) VALUES ('${hashpass}', '${details.name}', '${details.email}', ${details.contact});`;
+		client.query(query, (error, results) => {
+			if(error){
+				console.log("ERROR IN COORDINATOR SIGNUP\n");
+				console.log(error);
+				reject(error);
+			}
+			else{
+				resolve(results.rows);
+			}
+		});
+	});
+};
+
+
+/*
+################################################################
+################################################################
+#### Login Queries for Coordinator, student and recruiter ####
+################################################################
+################################################################
+*/
+
+async student_login(req, res){
+	var rno = req.body.rno;
+	var pwd = req.body.pwd;
+
+	var q1 = 'SELECT * from STUDENTS where student_rno=$1';
+	try{
+		const { rows } = await client.query(q1, [rno]);
+		if(!rows[0]){
+			return res.status(400).send({"message" : "No such student Exists"});
+		}
+		if(!Helper.comparePassword(rows[0].student_password, pwd)){
+			return res.status(400).send({"message" : "Password incorrect"});
+		}
+		const token = Helper.generateToken(rno);
+		return res.status(200).send({ token });
+	}
+	catch(error){
+		return res.status(400).send(error);
+	}
+}
+
+async coordinator_login(req, res){
+	var email = req.body.email;
+	var pwd = req.body.pwd;
+
+	var q1 = 'SELECT * from COORDNATOR where coordinator_email=$1';
+	try{
+		const { rows } = await client.query(q1, [email]);
+		if(!rows[0]){
+			return res.status(400).send({"message" : "No such student Exists"});
+		}
+		if(!Helper.comparePassword(rows[0].coordinator_password, pwd)){
+			return res.status(400).send({"message" : "Password incorrect"});
+		}
+		const token = Helper.generateToken(rno);
+		return res.status(200).send({ token });
+	}
+	catch(error){
+		return res.status(400).send(error);
+	}
+}
+
+async recruiter_login(req, res){
+	var email = req.body.email;
+	var pwd = req.body.pwd;
+
+	var q1 = 'SELECT * from RECRUITER where recruiter_email=$1';
+	try{
+		const { rows } = await client.query(q1, [email]);
+		if(!rows[0]){
+			return res.status(400).send({"message" : "No such student Exists"});
+		}
+		if(!Helper.comparePassword(rows[0].recruiter_password, pwd)){
+			return res.status(400).send({"message" : "Password incorrect"});
+		}
+		const token = Helper.generateToken(rno);
+		return res.status(200).send({ token });
+	}
+	catch(error){
+		return res.status(400).send(error);
+	}
+}
 
 
 const view_jaf = (jaf_id, company_id, role) => {
