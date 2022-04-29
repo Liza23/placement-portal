@@ -62,12 +62,12 @@ export class Resume {
 })
 export class StudentComponent implements OnInit {
 
-  private base_url: string = 'http://localhost:8081/';
+  private base_url: string = 'http://localhost:5000/';
   p: number = 1;
   count: number = 50;
   p2: number = 1;
   count2: number = 50;
-  student_id: any;
+  student_rno: any;
   student: Student = new Student();
   open_jafs: JAF[] = [];
   elig_jafs: JAF[] = [];
@@ -80,7 +80,7 @@ export class StudentComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
-      this.student_id = params.get('student_id');
+      this.student_rno = params.get('student_rno');
       this.getStudent();
       this.getResumes();
       this.getActiveJafs();
@@ -90,16 +90,16 @@ export class StudentComponent implements OnInit {
   }
 
   getStudent() {
-    this.http.get<any>(this.base_url + 'students/' + this.student_id + '/details').subscribe(
+    this.http.get<any>(this.base_url + 'view_student_profile/' + this.student_rno).subscribe(
       response => {
         console.log(response);
-        this.student = response;
+        this.student = response[0];
       }
     );
   }
 
   getResumes() {
-    this.http.get<any>(this.base_url + 'students/' + this.student_id + '/resumes').subscribe(
+    this.http.get<any>(this.base_url + 'students/' + this.student_rno + '/resumes').subscribe(
       response => {
         console.log(response);
         this.resumes = response;
@@ -108,7 +108,7 @@ export class StudentComponent implements OnInit {
   }
 
   getActiveJafs() {
-    this.http.get<any>(this.base_url + 'open-jafs').subscribe(
+    this.http.get<any>(this.base_url + '/student/open_jafs').subscribe(
       response => {
         console.log(response);
         this.open_jafs = response;
@@ -117,7 +117,7 @@ export class StudentComponent implements OnInit {
   }
 
   getEligibleJafs() {
-    this.http.get<any>(this.base_url + 'open-jafs/' + this.student_id).subscribe(
+    this.http.get<any>(this.base_url + 'open-jafs/' + this.student_rno).subscribe(
       response => {
         console.log(response);
         this.elig_jafs = response;
@@ -129,7 +129,7 @@ export class StudentComponent implements OnInit {
   }
 
   getAppliedJafs() {
-    this.http.get<any>(this.base_url + 'students/' + this.student_id + '/applied-jafs').subscribe(
+    this.http.get<any>(this.base_url + 'students/' + this.student_rno + '/applied-jafs').subscribe(
       response => {
         console.log(response);
         this.applied_jafs = response;

@@ -108,9 +108,37 @@ app.get("/view_applicants/:jid/:rid", (req, res) => {
 });
 
 // calling the functions: view_applicants
+app.get("/view_company/:cid", (req, res) => {
+  queries
+    .view_company_profile(req.params.cid)
+    .then((response) => {
+      console.log(response);
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send(error);
+    });
+});
+
+// calling the functions: view_applicants
 app.get("/view_company_coordinator/:cid", (req, res) => {
   queries
     .view_company_coordinator(req.params.cid)
+    .then((response) => {
+      console.log(response);
+      res.status(200).send(response);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send(error);
+    });
+});
+
+// calling the functions: view_applicants
+app.get("/view_company_recruiter/:cid", (req, res) => {
+  queries
+    .view_company_recruiter(req.params.cid)
     .then((response) => {
       console.log(response);
       res.status(200).send(response);

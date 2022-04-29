@@ -47,7 +47,7 @@ export class CoordinatorFirmComponent implements OnInit {
   company: Company = new Company();
   recruiters: Recruiter[] = [];
   jafs: JAF[] = [];
-  private url: string = 'http://localhost:8081/';
+  private url: string = 'http://localhost:5000/';
 
 
   constructor(private http: HttpClient, private route: ActivatedRoute) { }
@@ -62,16 +62,16 @@ export class CoordinatorFirmComponent implements OnInit {
   }
 
   getCompanyDetails() {
-    this.http.get<any>(this.url + '/firms/' + this.firm_id).subscribe(
+    this.http.get<any>(this.url + 'view_company/' + this.firm_id).subscribe(
       response => {
         console.log(response);
-        this.company = response;
+        this.company = response[0];
       },
     );
   }
 
   getRecruiters() {
-    this.http.get<any>(this.url + '/firms/' + this.firm_id + '/recruiters').subscribe(
+    this.http.get<any>(this.url + 'view_company_recruiter/' + this.firm_id).subscribe(
       response => {
         console.log(response);
         this.recruiters = response;
