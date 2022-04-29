@@ -71,7 +71,7 @@
                     <p><button class="mi" disabled>Already applied</button></p>
                 </div>
                 <div *ngIf="!applied_jaf_ids.includes(m.jaf_id)">
-                    <p><button class="mi" [routerLink] = "['/jafs/', m.jaf_id, '/sign']">Apply</button></p>
+                    <p><button class="mi" [routerLink] = "['/students/', student_rno, '/jafs/', m.jaf_id, '/sign']">Apply</button></p>
                 </div>
             </div>
             <div *ngIf="!elig_jaf_ids.includes(m.jaf_id)">

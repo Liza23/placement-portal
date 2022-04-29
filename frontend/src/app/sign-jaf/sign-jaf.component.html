@@ -1,1 +1,9 @@
-<p>sign-jaf works!</p>
+<div class="container">
+    <h1>Sign for JAF {{jaf_id}}</h1>
+    <h3>Roll No. : {{student_rno}}</h3>
+</div>
+<select *ngFor="let r of resumes" name="resume_id">
+    <option value="r.resume_id">r.resume_id</option>
+</select>
+  <p><button class="ni" (click)="onSubmit()">Submit</button></p>
+  <p><button class="mi" [routerLink] = "['/students/', this.student_rno, '/home']">Home</button></p>

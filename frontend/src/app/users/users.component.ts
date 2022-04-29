@@ -27,7 +27,7 @@ export class UsersComponent implements OnInit {
   constructor(private http: HttpClient, private fb: FormBuilder, private router: Router) { }
   current : Userss = new Userss();
   selectedTab: number=0;
-  private base_url: string = 'http://localhost:8081/auth/';
+  private base_url: string = 'http://localhost:5000/auth/';
 
   student = this.fb.group({
     username: [, [Validators.required]],
@@ -40,7 +40,7 @@ export class UsersComponent implements OnInit {
   
   onSubmitStudent(){
     if(this.student.valid){
-      this.http.post<loggedin>(this.base_url, JSON.stringify(this.current), {'headers': { 'content-type': 'application/json' }})
+      this.http.post<loggedin>(this.base_url, JSON.stringify(this.current) + '/login', {'headers': { 'content-type': 'application/json' }})
       .subscribe(
         data => {console.log('User', data); sessionStorage.setItem('token',data.token); this.router.navigateByUrl('/student/'+data.id+'/home'); window.alert("Logged In successfully!");},
         error => { console.log('Error: ', error) ; sessionStorage.setItem('token',''); window.alert("Login Failed");}
