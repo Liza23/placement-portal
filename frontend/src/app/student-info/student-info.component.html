@@ -1,0 +1,47 @@
+<div class="container">
+    <h1>View/Edit Personal Details</h1>
+</div>
+<form novalidate [formGroup]="user">
+  <div class="two">
+    <label class="one">
+        <span>Name :</span><br>
+    </label>
+        <input class="one"
+        [(ngModel)]="student.student_name"
+        type="text"
+        placeholder="{{student.student_name}}"
+        formControlName="student_name">
+  </div>
+  <div class="two">
+    <label class="one">
+        <span>Gender :</span><br>
+    </label>
+        <input class="one"
+        [(ngModel)]="student.student_gender"
+        type="text"
+        placeholder="{{student.student_gender}}"
+        formControlName="student_gender">
+  </div>
+  <div class="two">
+    <label class="one">
+        <span>Email Address :</span><br>
+    </label>
+        <input class="one"
+        [(ngModel)]="student.student_email"
+        type="text"
+        placeholder="{{student.student_email}}"
+        formControlName="student.student_email">
+  </div>
+  <div class="two">
+    <label class="one">
+        <span>Contact No. :</span><br>
+    </label>
+        <input class="one"
+        [(ngModel)]="student.student_contact"
+        type="text"
+        placeholder="{{student.student_contact}}"
+        formControlName="student.student_contact">
+  </div>
+  <p><button class="ni" (click)="onSubmit()">Submit</button></p>
+  <p><button class="mi" [routerLink] = "['/students/', this.student_id, '/home']">Home</button></p>
+</form>
