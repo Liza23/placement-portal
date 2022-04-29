@@ -10,6 +10,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from "@angular/material/dialog";
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -19,6 +20,10 @@ import { CoordinatorInfoComponent } from './coordinator-info/coordinator-info.co
 import { CoordinatorFirmComponent } from './coordinator-firm/coordinator-firm.component';
 import { ViewJafComponent } from './view-jaf/view-jaf.component';
 import { EditJafComponent } from './edit-jaf/edit-jaf.component';
+import { RecruiterHomeComponent } from './recruiter-home/recruiter-home.component';
+import { RecruiterInfoComponent } from './recruiter-info/recruiter-info.component';
+import { DepartmentComponent } from './department/department.component';
+import { ProgramComponent } from './program/program.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +33,11 @@ import { EditJafComponent } from './edit-jaf/edit-jaf.component';
     CoordinatorInfoComponent,
     CoordinatorFirmComponent,
     ViewJafComponent,
-    EditJafComponent
+    EditJafComponent,
+    RecruiterHomeComponent,
+    RecruiterInfoComponent,
+    DepartmentComponent,
+    ProgramComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +47,7 @@ import { EditJafComponent } from './edit-jaf/edit-jaf.component';
     MatCardModule,
     MatTableModule,
     MatButtonModule,
+    MatDialogModule,
     MatCheckboxModule,
     FormsModule,
     ReactiveFormsModule,

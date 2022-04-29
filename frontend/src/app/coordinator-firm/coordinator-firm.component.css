@@ -201,3 +201,21 @@ a:hover {
   left: 5px;
   top: 5px;
 }
+
+.ni {
+  border: none;
+  border-radius: 3px;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: tomato;
+  text-align: center;
+  cursor: pointer;
+  font-family: "Georama", sans-serif;
+  margin-right: 2px;
+  font-size: small;
+}
+.ni:hover {
+  background-color: rgb(144, 3, 3);
+}

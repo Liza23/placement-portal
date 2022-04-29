@@ -12,6 +12,9 @@
   font-weight: 600;
   z-index: -1;
 }
+/* body {
+  overflow: hidden;
+} */
 .bg {
   position: fixed;
   z-index: -1;
@@ -19,10 +22,7 @@
   bottom: -1%;
   width: 200%;
 }
-/*.bg > img {
-  width: 100%;
-}
-*/.logo {
+.logo {
   position: fixed;
   right: 6%;
   top: 3%;
@@ -34,7 +34,7 @@
 }
 table {
   width: 73%;
-  height: 61vh;
+  /* height: 61vh; */
   font-family: Georama, sans-serif;
   background: white;
   border-collapse: collapse;
@@ -54,6 +54,27 @@ table {
   font-size: x-large;
   font-weight: 600;
 }
+.container > h5 {
+  color: rgb(0 0 0 / 19%);
+  font-family: "Georama", sans-serif;
+  margin-top: 5px;
+  font-size: larger;
+  font-weight: 600;
+  text-align: justify;
+}
+.graph{
+  margin-left: 150px;
+}
+.center{
+  margin-left: 500px;
+}
+.alpha {
+  margin-bottom: -3px;
+  margin-left: 150px;
+}
+.beta {
+  margin-bottom: -10px;
+}
 td {
   height: 40px;
   padding: 0 20px 0 20px;
@@ -64,75 +85,6 @@ td {
   border-top: none;
   border: 1px solid transparent;
   border-bottom: 1px solid #0000003d;
-}
-td:nth-child(1) {
-  width: 12%;
-}
-td:nth-child(2) {
-  width: 64%;
-}
-.test {
-  text-align: right;
-}
-/* td:nth-child(1) {
-  width: 24%;
-}
-td:nth-child(2) {
-  width: 40%;
-}
-tr:nth-child(1) {
-  background: tomato;
-  color: white;
-  font-family: "Georama", sans-serif;
-}
-tr:nth-child(1) td:nth-child(2) {
-  text-align: end;
-}
-tr:nth-child(2)
-  td:is(:nth-child(2), :nth-child(3), :nth-child(4), :nth-child(5), :nth-child(6)),
-tr:is(:nth-child(3), :nth-child(4), :nth-child(5), :nth-child(6), :nth-child(7), :nth-child(8))
-  td:is(:nth-child(3), :nth-child(4), :nth-child(5), :nth-child(6), :nth-child(7)) {
-  text-align: center;
-}
-tr:nth-child(2) td:nth-child(2) {
-  width: 8%;
-}
-tr:nth-child(2) td:nth-child(6) {
-  width: 12%;
-}
-tr:is(:nth-child(3), :nth-child(4), :nth-child(5), :nth-child(6), :nth-child(7), :nth-child(8))
-  td:nth-child(2) {
-  color: #8282829c;
-} */
-tr:nth-child(1) {
-  background: tomato;
-  color: white;
-  font-family: "Georama", sans-serif;
-  font-size: larger;
-}
-a {
-  text-decoration: none;
-  color: #2f80ed;
-}
-a:hover {
-  text-decoration: underline;
-}
-.details {
-  position: absolute;
-  border: 1px solid transparent;
-  height: 100%;
-  width: 100%;
-  margin: -8px;
-  top: 1%;
-  backdrop-filter: blur(2px) brightness(0.4);
-  opacity: 0;
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  justify-content: center;
-  align-items: center;
-  transition: 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
-  z-index: -1;
 }
 .head {
   background: tomato;
@@ -147,7 +99,11 @@ a:hover {
   text-align: center;
 }
 .c {
-  height: 60px;
+  height: 6px;
+}
+.c1 {
+  margin-left: 150px;
+  width: 30%;
 }
 th.mat-header-cell,
 td.mat-footer-cell {
@@ -159,6 +115,22 @@ td.mat-footer-cell {
 }
 td.mat-cell {
   text-align: left;
+}
+.b {
+  color: tomato;
+  font-weight: bolder;
+  font-size: 140%;
+}
+.d {
+  color: tomato;
+  font-weight: bolder;
+}
+a {
+  text-decoration: none;
+  color: #2f80ed;
+}
+a:hover {
+  text-decoration: underline;
 }
 .details {
   position: absolute;
@@ -207,11 +179,29 @@ td.mat-cell {
   
 .column {
   float: left;
-  width: 500px;
-  margin-left: -5px;
-  margin-right: -5px;
-  /* padding: 5px; */
+  width: 50%;
+  padding: 5px;
 }
+
+.input-color {
+  position: relative;
+}
+.abc {
+  margin-left: 50%;
+}
+.input-color input {
+  padding-left: 20px;
+}
+.input-color .color-box {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  background-color: #ccc;
+  position: absolute;
+  left: 5px;
+  top: 5px;
+}
+
 .ni {
   border: none;
   border-radius: 3px;
@@ -233,18 +223,6 @@ td.mat-cell {
   background-color: rgb(144, 3, 3);
 }
 
-/* .ni {
-  background: tomato;
-  color: white;
-  font-family: "Georama", sans-serif;
-  font-size: x-large;
-  text-align: left;
-}
-.ni:hover {
-  background: white;
-  color: red;
-} */
-
 .mi {
   border: none;
   border-radius: 3px;
@@ -256,8 +234,8 @@ td.mat-cell {
   text-align: center;
   cursor: pointer;
   /* margin-left: 5%; */
-  margin-right: 10px;
-  width: 300px;
+  /* margin-right: 7.5%; */
+  /* width: 300px; */
   font-family: "Georama", sans-serif;
   font-size: larger;
 }

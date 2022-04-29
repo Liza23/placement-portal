@@ -51,7 +51,7 @@ export class CoordinatorInfoComponent implements OnInit {
     if(this.user.valid){
       this.updateDetails(this.coordie)
       .subscribe(
-        data => {console.log('User', data), window.alert("Submitted successfully!")},
+        data => {console.log(data), window.alert("Submitted successfully!")},
         error => { console.log('Error: ', error) , window.alert("Invalid Data! Please enter correct information.")}
         );
       }
@@ -64,7 +64,7 @@ export class CoordinatorInfoComponent implements OnInit {
     const headers = { 'content-type': 'application/json' };
     const body = JSON.stringify(coordie);
     console.log(body);
-    return this.http.post<Coordie>(this.base_url, body, {'headers': headers});
+    return this.http.post<Coordie>(this.base_url + '' + this.coordinator_id + '/details', body, {'headers': headers});
   }
 
 }

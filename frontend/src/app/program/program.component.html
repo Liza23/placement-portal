@@ -1,0 +1,52 @@
+<div class="container">
+    <h1>{{program_id}} : {{program_name}}</h1>
+
+    <h3><br><br>Unplaced Students</h3>
+    <table>
+      <tr>
+        <td>Roll Number</td>
+        <td>Student Name</td>
+        <td>Department enrolled in</td>
+      </tr>
+      <tr *ngFor="let m of placedStudents | paginate: { itemsPerPage: count1, currentPage: p1 }">
+        <td>{{m.student_rno}}</td>
+        <td>
+            <a [routerLink] = "['/students/' , m.student_rno]"> 
+            {{m.student_name}}
+            </a>
+        </td>
+        <td><a [routerLink] = "['/depts/', m.department_id]"> {{m.department_name}}</a></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="2">
+          <pagination-controls class="test" (pageChange)="p1 = $event"></pagination-controls>
+        </td>
+      </tr>
+    </table>
+
+    <h3><br><br><br>Placed Students</h3>
+    <table>
+      <tr>
+        <td>Roll Number</td>
+        <td>Student Name</td>
+        <td>Department enrolled in</td>
+      </tr>
+      <tr *ngFor="let m of placedStudents | paginate: { itemsPerPage: count2, currentPage: p2 }">
+        <td>{{m.student_rno}}</td>
+        <td>
+            <a [routerLink] = "['/students/' , m.student_rno]"> 
+            {{m.student_name}}
+            </a>
+        </td>
+        <td><a [routerLink] = "['/depts/', m.department_id]"> {{m.department_name}}</a></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="2">
+          <pagination-controls class="test" (pageChange)="p2 = $event"></pagination-controls>
+        </td>
+      </tr>
+    </table>
+    
+</div>

@@ -15,7 +15,9 @@ export class Student {
     public student_current_year: number,
     public student_cpi: number,
     public student_incentive_points: number,
+    public program_id: number,
     public program_name: string,
+    public department_id: number,
     public department_name: string,
     public allocated_jaf: number,
     public allocated_timestamp: Date

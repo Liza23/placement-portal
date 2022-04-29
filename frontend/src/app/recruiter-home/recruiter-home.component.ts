@@ -6,7 +6,7 @@ export class Company {
   constructor(
     public company_id: number = 0,
     public company_name: string = '',
-    public company_origin: string = '',
+    public company_origin: string = ''
   ){}
 }
 
@@ -28,40 +28,47 @@ export class JAF {
     public company_name: string,
     public jaf_opened_on: Date,
     public jaf_closed_on: Date,
-    public jaf_slot: string
+    public jaf_status: string
   ){}
 }
 
 @Component({
-  selector: 'app-coordinator-firm',
-  templateUrl: './coordinator-firm.component.html',
-  styleUrls: ['./coordinator-firm.component.css']
+  selector: 'app-recruiter-home',
+  templateUrl: './recruiter-home.component.html',
+  styleUrls: ['./recruiter-home.component.css']
 })
-export class CoordinatorFirmComponent implements OnInit {
+export class RecruiterHomeComponent implements OnInit {
 
-  p: number = 1;
-  count: number = 10;
-  coordinator_id: any;
-  firm_id: any;
+  recruiter_id: any;
+  recruiter_name: any;
   company: Company = new Company();
   recruiters: Recruiter[] = [];
   jafs: JAF[] = [];
-  private url: string = 'http://localhost:8081/';
-
+  private base_url: string = 'http://localhost:8081/';
 
   constructor(private http: HttpClient, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
-      this.firm_id = params.get('firm_id');
-      this.getCompanyDetails();
+      this.recruiter_id = params.get('recruiter_id');
+      this.getName();
+      this.getCompany();
       this.getRecruiters();
       this.getJafs();
     })
   }
 
-  getCompanyDetails() {
-    this.http.get<any>(this.url + '/firms/' + this.firm_id).subscribe(
+  getName() {
+    this.http.get<any>(this.base_url + 'recruiters/' + this.recruiter_id + '/details').subscribe(
+      response => {
+        console.log(response);
+        this.recruiter_name = response.name;
+      },
+    );
+  }
+  
+  getCompany() {
+    this.http.get<any>(this.base_url + 'recruiters/' + this.recruiter_id + '/firm').subscribe(
       response => {
         console.log(response);
         this.company = response;
@@ -70,7 +77,7 @@ export class CoordinatorFirmComponent implements OnInit {
   }
 
   getRecruiters() {
-    this.http.get<any>(this.url + '/firms/' + this.firm_id + '/recruiters').subscribe(
+    this.http.get<any>(this.base_url + '/firms/' + this.company.company_id + '/recruiters').subscribe(
       response => {
         console.log(response);
         this.recruiters = response;
@@ -79,7 +86,7 @@ export class CoordinatorFirmComponent implements OnInit {
   }
 
   getJafs() {
-    this.http.get<any>(this.url + '/firms/' + this.firm_id + '/jafs').subscribe(
+    this.http.get<any>(this.base_url + '' + this.recruiter_id + '/firms/' + this.company.company_id + '/jafs').subscribe(
       response => {
         console.log(response);
         this.jafs = response;
@@ -88,9 +95,10 @@ export class CoordinatorFirmComponent implements OnInit {
   }
 
   deleteJaf(jaf_id: number) {
-    this.http.delete(this.url + '/firms/' + this.firm_id + '/jafs/' + jaf_id).subscribe(
-        data => {console.log(data); window.alert("Deleted successfully!")},
-        error => {console.log(error); window.alert("Deletion failed! Try again later.")}
+    this.http.delete(this.base_url + '' + this.recruiter_id + '/firms/' + this.company.company_id + '/jafs/' + jaf_id).subscribe(
+        data => {
+        console.log(data);
+      }
     );
   }
   

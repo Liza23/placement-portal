@@ -10,11 +10,11 @@
         <td>{{m.student_rno}}</td>
         <td>
             <br>
-            <a [routerLink] = "['/students' , m.student_rno]"> 
+            <a [routerLink] = "['/students/' , m.student_rno]"> 
             {{m.student_name}}<br>
             </a>
             <p>
-                {{m.program_name}} {{m.department_name}}<br>
+                <a [routerLink] = "['/progs/' , m.program_id]">{{m.program_name}}</a> <a [routerLink] = "['/depts/' , m.department_id]">{{m.department_name}}</a><br>
                 {{m.student_email}}
             </p>          
         </td>
