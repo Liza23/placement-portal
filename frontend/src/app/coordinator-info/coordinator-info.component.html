@@ -1,0 +1,37 @@
+<div class="container">
+    <h1>View/Edit Personal Details</h1>
+</div>
+<form novalidate [formGroup]="user">
+  <div class="two">
+    <label class="one">
+        <span>Name :</span><br>
+    </label>
+        <input class="one"
+        [(ngModel)]="coordie.coordinator_name"
+        type="text"
+        placeholder="{{coordie.coordinator_name}}"
+        formControlName="coordinator_name">
+  </div>
+  <div class="two">
+    <label class="one">
+        <span>Email Address :</span><br>
+    </label>
+        <input class="one"
+        [(ngModel)]="coordie.coordinator_email"
+        type="text"
+        placeholder="{{coordie.coordinator_email}}"
+        formControlName="coordinator_email">
+  </div>
+  <div class="two">
+    <label class="one">
+        <span>Contact No. :</span><br>
+    </label>
+        <input class="one"
+        [(ngModel)]="coordie.coordinator_contact"
+        type="text"
+        placeholder="{{coordie.coordinator_contact}}"
+        formControlName="coordinator_contact">
+  </div>
+  <p><button class="ni" (click)="onSubmit()">Submit</button></p>
+  <p><button class="mi" [routerLink] = "['/coordinators/', this.coordinator_id, '/home']">Home</button></p>
+</form>

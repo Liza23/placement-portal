@@ -11,7 +11,7 @@ def get_csv_data(path, relation):
         for row in parser:
             row = [None if ele == "NULL" else ele for ele in row]
             rows.append(tuple(row))                                                             # https://www.geeksforgeeks.org/python-convert-a-list-into-a-tuple/
-    print(header, rows)
+    # print(header, rows)
     return header, rows
 
 parser = argparse.ArgumentParser()
