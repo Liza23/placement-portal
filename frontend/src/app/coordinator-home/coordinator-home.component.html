@@ -1,5 +1,7 @@
 <div class="container">
     <h1>{{coordinator_name}}'s Home Page</h1>
+    <p><button class="mi" [routerLink] = "['/coordinators/', this.coordinator_id, '/edit-details']">Edit Personal Info</button> <button class="mi" [routerLink] = "['/students']">View Students' Data</button> <button class="mi" [routerLink] = "['/stats']">View Placement Stats</button></p>
+
     <!-- <h3><br><br>Alloted Firms</h3>
     <table mat-table [dataSource]="companies">
       <ng-container matColumnDef='company_id'>
@@ -15,18 +17,15 @@
         <td mat-cell *matCellDef="let element"> {{element.company_origin}} </td>
       </ng-container>
     </table> -->
-
     <h3><br><br>Alloted Firms</h3>
     <table>
       <tr>
         <td>ID</td>
         <td>Company Name</td>
-        <td>Country of Origin</td>
       </tr>
       <tr *ngFor="let m of companies">
         <td>{{m.company_id}}</td>
-        <td><a [routerLink] = "['/coordinators/', this.coordinator_id, '/firms/' , m.company_id]">{{m.company_name}}</a></td>
-        <td>{{m.company_origin}}</td>
+        <td><a [routerLink] = "['/firms/' , m.company_id]">{{m.company_name}}</a></td>
       </tr>
     </table>
     
@@ -40,7 +39,7 @@
         <td>Closing On</td>
       </tr>
       <tr *ngFor="let m of open_jafs | paginate: { itemsPerPage: count, currentPage: p }">
-        <td>{{m.jaf_id}}</td>
+        <td><a [routerLink] = "['/jafs/', m.jaf_id, '/view']">{{m.jaf_id}}</a></td>
         <td>{{m.jaf_title}} ({{m.profile_name}})</td>
         <td>{{m.company_name}}</td>
         <td>{{m.jaf_opened_on}}</td>

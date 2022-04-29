@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 
 export class Company {
   constructor(
@@ -28,7 +29,7 @@ export class JAF {
     public company_name: string,
     public jaf_opened_on: Date,
     public jaf_closed_on: Date,
-    public jaf_status: string
+    public jaf_slot: string
   ){}
 }
 
@@ -46,13 +47,13 @@ export class CoordinatorFirmComponent implements OnInit {
   company: Company = new Company();
   recruiters: Recruiter[] = [];
   jafs: JAF[] = [];
-  private base_url: string = 'http://localhost:8081/coordinators/';
+  private url: string = 'http://localhost:8081/';
+
 
   constructor(private http: HttpClient, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
-      this.coordinator_id = params.get('coordinator_id');
       this.firm_id = params.get('firm_id');
       this.getCompanyDetails();
       this.getRecruiters();
@@ -61,7 +62,7 @@ export class CoordinatorFirmComponent implements OnInit {
   }
 
   getCompanyDetails() {
-    this.http.get<any>(this.base_url + '' + this.coordinator_id + '/firms/' + this.firm_id).subscribe(
+    this.http.get<any>(this.url + '/firms/' + this.firm_id).subscribe(
       response => {
         console.log(response);
         this.company = response;
@@ -70,7 +71,7 @@ export class CoordinatorFirmComponent implements OnInit {
   }
 
   getRecruiters() {
-    this.http.get<any>(this.base_url + '' + this.coordinator_id + '/firms/' + this.firm_id + '/recruiters').subscribe(
+    this.http.get<any>(this.url + '/firms/' + this.firm_id + '/recruiters').subscribe(
       response => {
         console.log(response);
         this.recruiters = response;
@@ -79,7 +80,7 @@ export class CoordinatorFirmComponent implements OnInit {
   }
 
   getJafs() {
-    this.http.get<any>(this.base_url + '' + this.coordinator_id + '/firms/' + this.firm_id + '/jafs').subscribe(
+    this.http.get<any>(this.url + '/firms/' + this.firm_id + '/jafs').subscribe(
       response => {
         console.log(response);
         this.jafs = response;
@@ -88,10 +89,9 @@ export class CoordinatorFirmComponent implements OnInit {
   }
 
   deleteJaf(jaf_id: number) {
-    this.http.delete(this.base_url + '' + this.coordinator_id + '/firms/' + this.firm_id + '/jafs' + jaf_id).subscribe(
-        data => {
-        console.log(data);
-      }
+    this.http.delete(this.url + '/firms/' + this.firm_id + '/jafs/' + jaf_id).subscribe(
+        data => {console.log(data); window.alert("Deleted successfully!")},
+        error => {console.log(error); window.alert("Deletion failed! Try again later.")}
     );
   }
   

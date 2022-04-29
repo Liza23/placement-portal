@@ -19,7 +19,6 @@ export class JAF {
     public company_name: string,
     public jaf_opened_on: Date,
     public jaf_closed_on: Date,
-    public jaf_status: string
   ){}
 }
 
@@ -68,7 +67,7 @@ export class CoordinatorHomeComponent implements OnInit {
   }
 
   getActiveJafs() {
-    this.http.get<any>(this.base_url + '/open-jafs').subscribe(
+    this.http.get<any>(this.base_url + 'open-jafs').subscribe(
       response => {
         console.log(response);
         this.open_jafs = response;

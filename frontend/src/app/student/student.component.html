@@ -1,0 +1,115 @@
+<div class="container">
+    <h1>{{student.student_name}}'s Home Page</h1>
+    <h3>Roll No. : {{student.student_rno}}</h3>
+    <p><button class="mi" [routerLink] = "['/students/', this.student_id, '/edit-details']">Edit Personal Info</button></p>
+
+    <!-- public year_of_enrollment: number = 0,
+    public student_current_year: number = 0,
+    public student_cpi: number = 0,
+    public student_incentive_points: number = 0,
+    public program_id: number = 0,
+    public program_name: string = '',
+    public department_id: number = 0,
+    public department_name: string = '', -->
+    
+    <table>
+        <tr class="c">
+          <td colspan="2"><strong class="d">Department :</strong> {{this.student.department_name}}</td>
+        </tr>
+        <tr class="c">
+          <td colspan="2"><strong class="d">Program :</strong> {{this.student.program_name}}</td>
+        </tr>     
+        <tr class="c">
+          <td colspan="2"><strong class="d">CPI :</strong> {{this.student.student_cpi}}</td>
+        </tr>        
+      <tr class="c">
+          <td colspan="2"><strong class="d">Year of Enrollment :</strong> {{this.student.year_of_enrollment}}</td>
+        </tr>
+        <tr class="c">
+          <td colspan="2"><strong class="d">Current Year :</strong> {{this.student.student_current_year}}</td>
+        </tr>
+        <tr class="c">
+          <td colspan="2"><strong class="d">Incentive Points :</strong> {{this.student.student_incentive_points}}</td>
+        </tr>
+    </table>
+
+<h3><br><br>Resumes</h3>
+<div *ngFor="let r of resumes" class="container">
+  <h4><br>Resume {{r.resume_id}}</h4>
+  <pdf-viewer [src]="r.resume_url"
+  [render-text]="true"
+  [original-size]="false"
+  style="width: 400px; height: 500px">
+  </pdf-viewer>
+</div>
+    
+    <div class="container" *ngIf="student.allocated_jaf != null">
+      <h3>
+          You are already allocated JAF ID {{student.allocated_jaf}} at {{student.allocated_timestamp}}.
+      </h3>
+    </div>
+    <div class="container" *ngIf="student.allocated_jaf == null">
+    <h3><br><br>Active JAFs</h3>
+    <table>
+      <tr>
+        <td>JAF ID</td>
+        <td>Job Role</td>
+        <td>Company</td>
+        <td>Opened On</td>
+        <td>Closing On</td>
+        <td>Sign JAF</td>
+      </tr>
+      <tr *ngFor="let m of open_jafs | paginate: { itemsPerPage: count, currentPage: p }">
+        <td><a [routerLink] = "['/jafs/', m.jaf_id, '/view']">{{m.jaf_id}}</a></td>
+        <td>{{m.jaf_title}} ({{m.profile_name}})</td>
+        <td>{{m.company_name}}</td>
+        <td>{{m.jaf_opened_on}}</td>
+        <td>{{m.jaf_closed_on}}</td>
+        <td>
+            <div *ngIf="elig_jaf_ids.includes(m.jaf_id)">
+                <div *ngIf="applied_jaf_ids.includes(m.jaf_id)">
+                    <p><button class="mi" disabled>Already applied</button></p>
+                </div>
+                <div *ngIf="!applied_jaf_ids.includes(m.jaf_id)">
+                    <p><button class="mi" [routerLink] = "['/jafs/', m.jaf_id, '/sign']">Apply</button></p>
+                </div>
+            </div>
+            <div *ngIf="!elig_jaf_ids.includes(m.jaf_id)">
+                <p><button class="mi" disabled>Ineligible</button></p>
+            </div>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td colspan="3"><pagination-controls class="test" (pageChange)="p = $event"></pagination-controls></td>
+      </tr>
+    </table>
+
+    <h3><br><br><br>Applied JAFs</h3>
+    <table>
+      <tr>
+        <td>JAF ID</td>
+        <td>Job Role</td>
+        <td>Company</td>
+        <td>Signed On</td>
+      </tr>
+      <tr *ngFor="let m of applied_jafs | paginate: { itemsPerPage: count2, currentPage: p2 }">
+        <td><a [routerLink] = "['/jafs/', m.jaf_id, '/view']">{{m.jaf_id}}</a></td>
+        <td>{{m.jaf_title}} ({{m.profile_name}})</td>
+        <td>{{m.company_name}}</td>
+        <td>{{m.jaf_signed_on}}</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><pagination-controls class="test" (pageChange)="p2 = $event"></pagination-controls></td>
+      </tr>
+    </table>
+    
+    </div>
+    <br>
+
+</div>

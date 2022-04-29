@@ -1,4 +1,8 @@
 // connecting to express backend
+// import 'dotenv/config' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+require('dotenv').config()
+console.log(process.env) // remove this after you've confirmed it working
+
 const { query } = require("express");
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -7,6 +11,10 @@ const port = 5000;
 
 // load all queries
 const queries = require("./queries");
+const users = require("./users");
+
+const auths = require("./auth");
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -28,8 +36,16 @@ app.listen(port, () => {
   console.log(`App running on port ${port}.`);
 });
 
+app.post("/auth/student/signup", users.student_signup);
+app.post("/auth/recruiter/signup", users.recruiter_signup);
+
+app.post("/auth/recruiter/login", users.recruiter_login);
+app.post("/auth/student/login", users.student_login);
+app.post("/auth/coordinator/login", users.coordinator_login);
+
+
 // calling the functions: view_recuriter_profile
-app.get("/view_recuriter_profile/:id", (req, res) => {
+app.get("/recruiter/view_recuriter_profile/:id", auths.verifyRecruiter, (req, res) => {
   console.log(req.params.id);
   queries
     .view_recuriter_profile(req.params.id)
@@ -42,6 +58,10 @@ app.get("/view_recuriter_profile/:id", (req, res) => {
       res.status(500).send(error);
     });
 });
+
+
+// app.get("/coordinator/view_recuriter_profile/:id", auth.verifyCoordinator,)
+
 
 // calling the functions: view_student_profile
 app.get("/view_student_profile/:id", (req, res) => {
@@ -307,14 +327,37 @@ app.post("/edit_student_profile", (req,res) => {
     });
 });
 
-app.post("/student_department_stat", (req,res) => {
-	queries.student_dept_stat()
-	.then((response)=>{
-  		console.log(response);
-  		res.status(200).send(response);
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).send(error);
-    });
+
+app.get("/student/open_jafs", (req, res) => {
+	queries.list_open_jafs().then((response) => {
+		console.log(response);
+		res.status(200).send(response);
+	})
+	.catch((error) => {
+		console.log(error);
+		res.status(500).send(error);
+	});
 });
+
+app.get("/student/eligible_jafs", (req, res) => {
+	queries.list_eligible_jafs(req.body.rno).then((response) => {
+		console.log(response);
+		res.status(200).send(response);
+	})
+	.catch((error) => {
+		console.log(error);
+		res.status(500).send(error);
+	});
+});
+
+app.get("/student/applied_jafs", (req, res) => {
+	queries.list_applied_jafs(req.body.rno).then((response) => {
+		console.log(response);
+		res.status(200).send(response);
+	})
+	.catch((error) => {
+		console.log(error);
+		res.status(500).send(error);
+	});
+});
+

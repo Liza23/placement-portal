@@ -6,10 +6,16 @@ import { AppComponent } from './app.component';
 import { ListStudentsComponent } from './list-students/list-students.component';
 import { CoordinatorHomeComponent } from './coordinator-home/coordinator-home.component';
 import { MatTabsModule} from "@angular/material/tabs";
+import {
+  NgxMatDatetimePickerModule, 
+  NgxMatNativeDateModule, 
+  NgxMatTimepickerModule 
+} from '@angular-material-components/datetime-picker';
 import { MatListModule } from '@angular/material/list'; 
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from "@angular/material/dialog";
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -22,6 +28,15 @@ import { EditJafComponent } from './edit-jaf/edit-jaf.component';
 import { PlacementStatsComponent } from './placement-stats/placement-stats.component';
 import { UsersComponent } from './users/users.component';
 import { SignupComponent } from './signup/signup.component';
+import { RecruiterHomeComponent } from './recruiter-home/recruiter-home.component';
+import { RecruiterInfoComponent } from './recruiter-info/recruiter-info.component';
+import { DepartmentComponent } from './department/department.component';
+import { ProgramComponent } from './program/program.component';
+import { StudentComponent } from './student/student.component';
+import { StudentInfoComponent } from './student-info/student-info.component';
+import { SignJafComponent } from './sign-jaf/sign-jaf.component';
+import { ResumeUploadComponent } from './resume-upload/resume-upload.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -34,7 +49,15 @@ import { SignupComponent } from './signup/signup.component';
     EditJafComponent,
     PlacementStatsComponent,
     UsersComponent,
-    SignupComponent
+    SignupComponent,
+    RecruiterHomeComponent,
+    RecruiterInfoComponent,
+    DepartmentComponent,
+    ProgramComponent,
+    StudentComponent,
+    StudentInfoComponent,
+    SignJafComponent,
+    ResumeUploadComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,13 +67,18 @@ import { SignupComponent } from './signup/signup.component';
     MatCardModule,
     MatTableModule,
     MatButtonModule,
+    MatDialogModule,
     MatCheckboxModule,
     FormsModule,
     ReactiveFormsModule,
     NgxPaginationModule,
     BrowserAnimationsModule,
     MatTableModule,
-    MatTabsModule
+    MatTabsModule,
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
+    NgxMatNativeDateModule,
+    PdfViewerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

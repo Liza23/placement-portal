@@ -244,3 +244,23 @@ td.mat-cell {
   background: white;
   color: red;
 } */
+
+.mi {
+  border: none;
+  border-radius: 3px;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: tomato;
+  text-align: center;
+  cursor: pointer;
+  /* margin-left: 5%; */
+  margin-right: 10px;
+  width: 300px;
+  font-family: "Georama", sans-serif;
+  font-size: larger;
+}
+.mi:hover {
+  background-color: rgb(144, 3, 3);
+}

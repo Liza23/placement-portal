@@ -65,13 +65,13 @@ td {
   border: 1px solid transparent;
   border-bottom: 1px solid #0000003d;
 }
-td:nth-child(1) {
+/*td:nth-child(1) {
   width: 12%;
 }
 td:nth-child(2) {
   width: 64%;
 }
-.test {
+*/.test {
   text-align: right;
 }
 /* td:nth-child(1) {

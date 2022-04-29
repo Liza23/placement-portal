@@ -1,0 +1,55 @@
+<div class="container">
+    <h1>{{this.recruiter_name}}'s Home Page</h1>
+    <p><button class="mi" [routerLink] = "['/recruiters/', this.recruiter_id, '/edit-details']">Edit Details</button></p>
+    <table>
+        <tr class="c">
+          <td colspan="2"><strong class="d">Company ID :</strong> {{this.company.company_id}}</td>
+        </tr>
+        <tr class="c">
+          <td colspan="2"><strong class="d">Company Name :</strong> {{this.company.company_name}}</td>
+        </tr>
+        <tr class="c">
+          <td colspan="2"><strong class="d">Country of Origin :</strong> {{this.company.company_origin}}</td>
+        </tr>
+    </table>
+
+    <h3><br><br>Other Recruiters</h3>
+    <table>
+      <tr>
+        <td>ID</td>
+        <td>Recruiter Name</td>
+        <td>Email Address</td>
+        <td>Contact No.</td>
+    </tr>
+      <tr *ngFor="let m of recruiters">
+        <div *ngIf="m.recruiter_id != recruiter_id">
+            <td>{{m.recruiter_id}}</td>
+            <td>{{m.recruiter_name}}</td>
+            <td>{{m.recruiter_email}}</td>
+            <td>{{m.recruiter_contact}}</td>
+        </div>
+      </tr>
+    </table>
+    
+    <h3><br><br><br>Created JAFs</h3>
+    <table>
+      <tr>
+        <td>JAF ID</td>
+        <td>Job Role</td>
+        <td>Company</td>
+        <td>Opened On</td>
+        <td>Closing On</td>
+        <td>Actions</td>
+      </tr>
+      <tr *ngFor="let m of jafs">
+        <td>{{m.jaf_id}}</td>
+        <td><a  [routerLink] = "['/recruiters/', this.recruiter_id, '/firms/' , this.company.company_id, '/jafs/', m.jaf_id]">{{m.jaf_title}} ({{m.profile_name}})</a></td>
+        <td>{{m.company_name}}</td>
+        <td>{{m.jaf_opened_on}}</td>
+        <td>{{m.jaf_closed_on}}</td>
+        <td><button class="ni" [routerLink] = "['/recruiters/', this.recruiter_id, '/firms/' , this.company.company_id, '/jafs/', m.jaf_id, '/edit']">Edit</button><button class="ni" (click)="deleteJaf(m.jaf_id)">Delete</button></td>
+      </tr>
+    </table>
+    <br>
+
+</div>

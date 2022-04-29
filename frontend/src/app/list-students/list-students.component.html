@@ -5,18 +5,20 @@
       <tr>
         <td>Roll Number</td>
         <td>Student Name</td>
+        <td>Program Name</td>
+        <td>Department Name</td>
       </tr>
       <tr *ngFor="let m of student | paginate: { itemsPerPage: count, currentPage: p }">
         <td>{{m.student_rno}}</td>
         <td>
-            <br>
-            <a [routerLink] = "['/students' , m.student_rno]"> 
-            {{m.student_name}}<br>
-            </a>
-            <p>
-                {{m.program_name}} {{m.department_name}}<br>
-                {{m.student_email}}
-            </p>          
+            <a [routerLink] = "['/students/' , m.student_rno]"> 
+            {{m.student_name}}            </a>
+          </td>
+          <td>
+                <a [routerLink] = "['/progs/' , m.program_id]">{{m.program_name}}</a>
+          </td>      
+          <td>
+                <a [routerLink] = "['/depts/' , m.department_id]">{{m.department_name}}</a>
         </td>
       </tr>
       <tr>
