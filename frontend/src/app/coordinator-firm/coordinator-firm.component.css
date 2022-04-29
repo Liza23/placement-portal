@@ -219,3 +219,21 @@ a:hover {
 .ni:hover {
   background-color: rgb(144, 3, 3);
 }
+
+.mi {
+  border: none;
+  border-radius: 3px;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: grey;
+  text-align: center;
+  cursor: pointer;
+  font-family: "Georama", sans-serif;
+  margin-right: 2px;
+  font-size: small;
+}
+.mi:hover {
+  background-color: darkgrey;
+}

@@ -33,6 +33,7 @@ import { StudentInfoComponent } from './student-info/student-info.component';
 import { SignJafComponent } from './sign-jaf/sign-jaf.component';
 import { ResumeUploadComponent } from './resume-upload/resume-upload.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { FirmSlotComponent } from './firm-slot/firm-slot.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     StudentInfoComponent,
     SignJafComponent,
     ResumeUploadComponent,
+    FirmSlotComponent,
   ],
   imports: [
     BrowserModule,

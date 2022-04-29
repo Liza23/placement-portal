@@ -28,7 +28,6 @@ export class JAF {
     public company_name: string,
     public jaf_opened_on: Date,
     public jaf_closed_on: Date,
-    public jaf_status: string
   ){}
 }
 

@@ -67,7 +67,7 @@ export class StudentComponent implements OnInit {
   count: number = 50;
   p2: number = 1;
   count2: number = 50;
-  student_id: any;
+  student_rno: any;
   student: Student = new Student();
   open_jafs: JAF[] = [];
   elig_jafs: JAF[] = [];
@@ -80,7 +80,7 @@ export class StudentComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
-      this.student_id = params.get('student_id');
+      this.student_rno = params.get('student_rno');
       this.getStudent();
       this.getResumes();
       this.getActiveJafs();
@@ -90,7 +90,7 @@ export class StudentComponent implements OnInit {
   }
 
   getStudent() {
-    this.http.get<any>(this.base_url + 'students/' + this.student_id + '/details').subscribe(
+    this.http.get<any>(this.base_url + 'students/' + this.student_rno + '/details').subscribe(
       response => {
         console.log(response);
         this.student = response;
@@ -99,7 +99,7 @@ export class StudentComponent implements OnInit {
   }
 
   getResumes() {
-    this.http.get<any>(this.base_url + 'students/' + this.student_id + '/resumes').subscribe(
+    this.http.get<any>(this.base_url + 'students/' + this.student_rno + '/resumes').subscribe(
       response => {
         console.log(response);
         this.resumes = response;
@@ -117,7 +117,7 @@ export class StudentComponent implements OnInit {
   }
 
   getEligibleJafs() {
-    this.http.get<any>(this.base_url + 'open-jafs/' + this.student_id).subscribe(
+    this.http.get<any>(this.base_url + 'open-jafs/' + this.student_rno).subscribe(
       response => {
         console.log(response);
         this.elig_jafs = response;
@@ -129,7 +129,7 @@ export class StudentComponent implements OnInit {
   }
 
   getAppliedJafs() {
-    this.http.get<any>(this.base_url + 'students/' + this.student_id + '/applied-jafs').subscribe(
+    this.http.get<any>(this.base_url + 'students/' + this.student_rno + '/applied-jafs').subscribe(
       response => {
         console.log(response);
         this.applied_jafs = response;

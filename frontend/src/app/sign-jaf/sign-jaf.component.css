@@ -1,0 +1,300 @@
+@import url("https://fonts.googleapis.com/css2?family=Georama:wght@500&display=swap");
+
+.about-section {
+    margin-top: 10px;
+    margin-bottom: 50px;
+    margin-left: 10%;
+    margin-right: 10%;
+    padding: 10px;
+    width: 80%;
+    border-radius: 75px;
+    background-color: #6DB966;
+  }
+
+  .heading1 {
+      color: white;
+      font-size: 30px;
+      font-family: 'Times New Roman', Times, serif;
+      padding-top: 8px;
+      text-align: center;
+  }
+
+  .button {
+    border: none;
+    border-radius: 3px;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 7.5%;
+    margin-right: 7.5%;
+    width: 200px;
+  }
+  
+  .button:hover {
+    background-color: #555;
+  }
+
+  .one {
+      margin-left: 5%;
+      margin-right: 1%;
+      margin-top: 0.5%;
+  }
+
+  .two {
+      margin-top: 2%;
+      margin-bottom: 2%;
+      zoom: 120%;
+
+      font-family: "Georama", sans-serif;
+      font-size: larger;
+    }
+
+  .three {
+      margin-top: 40px;
+      margin-left: 20px;
+      font-size: medium;
+      font-weight: 500;
+      font-family: Courier;
+  }
+
+  .four {
+      margin-left: 2px;
+      margin-right: 10px;
+  }
+
+  .textarea1 {
+      height: 100px;
+      width: 60%;
+  }
+
+  .footer {
+    display: flex;
+    flex-direction: row;
+    align-content: flex-end;
+    position: relative;
+    top: 40px;
+    margin-left: 80px;
+    font-size: 18px;
+    font-family: Nunito;
+    font-style: normal;
+    font-weight: 600;
+    z-index: -1;
+  }
+  /* body {
+    overflow: hidden;
+  } */
+  .bg {
+    position: fixed;
+    z-index: -1;
+    left: 80%;
+    bottom: -1%;
+    width: 200%;
+  }
+  .logo {
+    position: fixed;
+    right: 6%;
+    top: 3%;
+  }
+  .container {
+    border: 1px solid transparent;
+    margin-left: 80px;
+    margin-top: 54px;
+  }
+  table {
+    width: 73%;
+    /* height: 61vh; */
+    font-family: Georama, sans-serif;
+    background: white;
+    border-collapse: collapse;
+    box-shadow: -7px 1px 20px 0px rgb(0 0 0 / 19%);
+  }
+  .container > h1 {
+    font-family: "Georama", sans-serif;
+    text-transform: uppercase;
+    font-size: xxx-large;
+    text-shadow: 2px 5px 8px rgb(0 0 0 / 52%);
+    font-weight: 600;
+  }
+  .container > h3 {
+    color: #707070;
+    font-family: "Georama", sans-serif;
+    margin-top: -25px;
+    font-size: x-large;
+    font-weight: 600;
+  }
+  .container > h5 {
+    color: rgb(0 0 0 / 19%);
+    font-family: "Georama", sans-serif;
+    margin-top: 5px;
+    font-size: larger;
+    font-weight: 600;
+    text-align: justify;
+  }
+  .graph{
+    margin-left: 150px;
+  }
+  .center{
+    margin-left: 500px;
+  }
+  .alpha {
+    margin-bottom: -3px;
+    margin-left: 150px;
+  }
+  .beta {
+    margin-bottom: -3px;
+  }
+  .gamma {
+    margin-bottom: -10px;
+    margin-left: 400px;
+  }
+  td {
+    height: 40px;
+    padding: 0 20px 0 20px;
+    font-size: larger;
+    font-family: "Georama", sans-serif;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border: 1px solid transparent;
+    border-bottom: 1px solid #0000003d;
+  }
+  .head {
+    background: tomato;
+    color: white;
+    font-family: "Georama", sans-serif;
+    font-size: larger;
+  }
+  .head2 {
+    background: blueviolet;
+    color: white;
+    font-family: "Georama", sans-serif;
+    text-align: center;
+  }
+  .c {
+    height: 60px;
+  }
+  th.mat-header-cell,
+  td.mat-footer-cell {
+    background: tomato;
+    color: white;
+    font-family: "Georama", sans-serif;
+    font-size: x-large;
+    text-align: left;
+  }
+  td.mat-cell {
+    text-align: left;
+  }
+  .b {
+    color: tomato;
+    font-weight: bolder;
+    font-size: 140%;
+  }
+  .d {
+    color: tomato;
+    font-weight: bolder;
+  }
+  a {
+    text-decoration: none;
+    color: #2f80ed;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  .details {
+    position: absolute;
+    border: 1px solid transparent;
+    height: 100%;
+    width: 100%;
+    margin: -8px;
+    top: 1%;
+    backdrop-filter: blur(2px) brightness(0.4);
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+    z-index: -1;
+  }
+  .color-switches {
+    width: 60%;
+    margin-left: 80px;
+    margin-top: 20px;
+    color: #707070;
+    font-family: "Georama", sans-serif;
+    font-size: x-large;
+    font-weight: 600;
+  }
+  .pi {
+    width: 50%;
+    margin-left: 80px;
+    margin-top: 20px;
+    color: #707070;
+    font-family: "Georama", sans-serif;
+    font-size: x-large;
+    font-weight: 600;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  .row {
+    margin-left:-5px;
+    margin-right:-5px;
+  }
+    
+  .column {
+    float: left;
+    width: 500px;
+    margin-left: -5px;
+    margin-right: -5px;
+    /* padding: 5px; */
+  }
+
+  .ni {
+    border: none;
+    border-radius: 3px;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: tomato;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 40px;
+    margin-left: 5%;
+    margin-right: 7.5%;
+    width: 300px;
+    font-family: "Georama", sans-serif;
+    font-size: larger;
+  }
+  .ni:hover {
+    background-color: rgb(144, 3, 3);
+  }
+  
+  .mi {
+    border: none;
+    border-radius: 3px;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: tomato;
+    text-align: center;
+    cursor: pointer;
+    margin-left: 5%;
+    margin-right: 7.5%;
+    width: 300px;
+    font-family: "Georama", sans-serif;
+    font-size: larger;
+  }
+  .mi:hover {
+    background-color: rgb(144, 3, 3);
+  }

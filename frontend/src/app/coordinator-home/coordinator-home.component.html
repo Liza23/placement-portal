@@ -25,7 +25,7 @@
       </tr>
       <tr *ngFor="let m of companies">
         <td>{{m.company_id}}</td>
-        <td><a [routerLink] = "['/firms/' , m.company_id]">{{m.company_name}}</a></td>
+        <td><a [routerLink] = "['/coordinators/', coordinator_id, '/firms/', m.company_id]">{{m.company_name}}</a></td>
       </tr>
     </table>
     

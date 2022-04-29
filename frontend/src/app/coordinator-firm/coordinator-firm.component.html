@@ -39,13 +39,13 @@
       </tr>
       <tr *ngFor="let m of jafs; let i=index">
         <td>{{m.jaf_id}}</td>
-        <td><a  [routerLink] = "['/firms/', this.firm_id, '/jafs/', m.jaf_id, '/view']">{{m.jaf_title}} ({{m.profile_name}})</a></td>
+        <td><a  [routerLink] = "['/jafs/', m.jaf_id, '/view']">{{m.jaf_title}} ({{m.profile_name}})</a></td>
         <td>{{m.company_name}}</td>
-        <td>{{m.jaf_opened_on}}</td>
-        <td>{{m.jaf_closed_on}}</td>
+        <td><button class="mi">{{m.jaf_opened_on}}</button></td>
+        <td><button class="mi">{{m.jaf_closed_on}}</button></td>
         <td>
-          <button class="ni" [routerLink] = "['/firms/' , this.firm_id, '/jafs/', m.jaf_id, '/edit']">Edit JAF</button><button class="ni" (click)="deleteJaf(m.jaf_id)">Delete JAF</button>
-          <button class="ni" [routerLink] = "['/firms/' , this.firm_id, '/jafs/', m.jaf_id, '/applicants']">View Applicants</button><button class="ni" [routerLink] = "['/firms/', this.firm_id, '/jafs/', m.jaf_id, '/slot']">Assign Slot</button>
+          <button class="ni" [routerLink] = "['/jafs/', m.jaf_id, '/edit']">Edit JAF</button><button class="ni" (click)="deleteJaf(m.jaf_id)">Delete JAF</button>
+          <button class="ni" [routerLink] = "['/jafs/', m.jaf_id, '/applicants']">View Applicants</button><button class="ni" [routerLink] = "['/coordinators', this.coordinator_id, '/jafs/', m.jaf_id, '/slot']">Assign Slot</button>
         </td>
       </tr>
     </table>

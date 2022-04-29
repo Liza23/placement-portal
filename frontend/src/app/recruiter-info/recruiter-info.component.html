@@ -1,1 +1,37 @@
-<p>recruiter-info works!</p>
+<div class="container">
+    <h1>View/Edit Personal Details</h1>
+</div>
+<form novalidate [formGroup]="user">
+  <div class="two">
+    <label class="one">
+        <span>Name :</span><br>
+    </label>
+        <input class="one"
+        [(ngModel)]="recruit.recruiter_name"
+        type="text"
+        placeholder="{{recruit.recruiter_name}}"
+        formControlName="recruiter_name">
+  </div>
+  <div class="two">
+    <label class="one">
+        <span>Email Address :</span><br>
+    </label>
+        <input class="one"
+        [(ngModel)]="recruit.recruiter_email"
+        type="text"
+        placeholder="{{recruit.recruiter_email}}"
+        formControlName="recruiter_email">
+  </div>
+  <div class="two">
+    <label class="one">
+        <span>Contact No. :</span><br>
+    </label>
+        <input class="one"
+        [(ngModel)]="recruit.recruiter_contact"
+        type="text"
+        placeholder="{{recruit.recruiter_contact}}"
+        formControlName="recruiter_contact">
+  </div>
+  <p><button class="ni" (click)="onSubmit()">Submit</button></p>
+  <p><button class="mi" [routerLink] = "['/recruiters/', this.recruiter_id, '/home']">Home</button></p>
+</form>

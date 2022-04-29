@@ -14,6 +14,7 @@ import { ProgramComponent } from './program/program.component';
 import { StudentComponent } from './student/student.component';
 import { StudentInfoComponent } from './student-info/student-info.component';
 import { ResumeUploadComponent } from './resume-upload/resume-upload.component';
+import { FirmSlotComponent } from './firm-slot/firm-slot.component';
 
 const routes: Routes = [
   {path: 'students', component: ListStudentsComponent},
@@ -22,15 +23,16 @@ const routes: Routes = [
   {path: 'students/:student_rno/upload-resume', component: ResumeUploadComponent},
   {path: 'coordinators/:coordinator_id/home', component: CoordinatorHomeComponent},
   {path: 'coordinators/:coordinator_id/edit-details', component: CoordinatorInfoComponent},
-  {path: 'firms/:firm_id', component: CoordinatorFirmComponent},
+  {path: 'coordinators/:coordinator_id/firms/:firm_id', component: CoordinatorFirmComponent},
   {path: 'depts/:department_id', component: DepartmentComponent},
   {path: 'progs/:program_id', component: ProgramComponent},
   {path: 'jafs/:jaf_id/view', component: ViewJafComponent},
   {path: 'jafs/:jaf_id/edit', component: EditJafComponent},
-  {path: 'jafs/:jaf_id/sign', component: SignJafComponent},
+  {path: 'students/:student_rno/jafs/:jaf_id/sign', component: SignJafComponent},
   {path: 'recruiters/:recruiter_id/home', component: RecruiterHomeComponent},
   {path: 'recruiters/:recruiter_id/edit-details', component: RecruiterInfoComponent},
-  // {path: '**', redirectTo: 'students', pathMatch: 'full'},
+  {path: 'coordinators/:coordinator_id/jafs/:jaf_id/slot', component: FirmSlotComponent},
+  {path: '**', redirectTo: 'students', pathMatch: 'full'},
 ];
 
 @NgModule({
