@@ -118,6 +118,21 @@ const view_department = (department_id) => {
 	});
 };
 
+const view_program = (program_id) => {
+	return new Promise(function (resolve, reject) {
+		var query = "select * from program where program_id = " + program_id;
+		console.log("query: ", query);
+		client.query(query, (error, results) => {
+			if (error) {
+				console.log("err: ", error);
+				reject(error);
+			} else {
+				resolve(results.rows);
+			}
+		});
+	});
+};
+
 const edit_student_profile = (student_id, name, gender, dob, contact) => {
 		return new Promise(function (resolve, reject) {
 				var query = `UPDATE STUDENT SET student_name = '${name}', gender = '${gender}', dob = ${dob}, contact = ${contact} WHERE  STUDENT.student_rno = ${student_id};`;
@@ -441,7 +456,7 @@ const add_slot = (jaf_id, slot) => {
 };
 const view_student_list = () => {
 	return new Promise(function(resolve,reject) {
-		var query = `SELECT student_rno, student_name, student_cpi, program.program_name, department.department_name from STUDENT INNER JOIN PROGRAM ON STUDENT.program_id = PROGRAM.program_id INNER JOIN DEPARTMENT ON STUDENT.department_id = DEPARTMENT.department_id;`;
+		var query = `SELECT * from STUDENT INNER JOIN PROGRAM ON STUDENT.program_id = PROGRAM.program_id INNER JOIN DEPARTMENT ON STUDENT.department_id = DEPARTMENT.department_id;`;
 		client.query(query, (error, results) => {
 			if(error){
 				console.log("Error while viewing student list", error);
@@ -617,6 +632,7 @@ module.exports = {
 	view_coordinator_profile,
 	view_applicants,
 	view_department,
+	view_program,
 	view_company_profile,
 	view_company_coordinator,
 	view_company_recruiter,

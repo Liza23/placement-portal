@@ -64,7 +64,7 @@ export class DepartmentComponent implements OnInit {
   }
 
   getPlacedStudents() {
-    this.http.get<any>(this.url + this.department_id + '/placed_students').subscribe(
+    this.http.get<any>(this.url + this.department_id + '/dept_placed_students').subscribe(
       response => {
         console.log(response);
         this.placedStudents = response;
@@ -73,7 +73,7 @@ export class DepartmentComponent implements OnInit {
   }
 
   getUnplacedStudents() {
-    this.http.get<any>(this.url + this.department_id + '/unplaced_students').subscribe(
+    this.http.get<any>(this.url + this.department_id + '/dept_unplaced_students').subscribe(
       response => {
         console.log(response);
         this.unplacedStudents = response;

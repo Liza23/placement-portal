@@ -11,7 +11,7 @@
       <tr *ngFor="let m of unplacedStudents | paginate: { itemsPerPage: count1, currentPage: p1 }">
         <td>{{m.student_rno}}</td>
         <td>
-            <a [routerLink] = "['/students/' , m.student_rno]"> 
+            <a [routerLink] = "['/students/' , m.student_rno,'/home']"> 
             {{m.student_name}}
             </a>
         </td>
@@ -35,7 +35,7 @@
       <tr *ngFor="let m of placedStudents | paginate: { itemsPerPage: count2, currentPage: p2 }">
         <td>{{m.student_rno}}</td>
         <td>
-            <a [routerLink] = "['/students/' , m.student_rno]"> 
+            <a [routerLink] = "['/students/' , m.student_rno,'/home']"> 
             {{m.student_name}}
             </a>
         </td>

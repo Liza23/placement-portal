@@ -40,20 +40,31 @@ export class ProgramComponent implements OnInit {
   p2: number = 1;
   count2: number = 50;
   
-  private url: string = 'http://localhost:8081/progs/';
+  private url: string = 'http://localhost:5000/';
 
   constructor(private http: HttpClient, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.program_id = params.get('program_id');
+      this.getProgramDetails();
       this.getPlacedStudents();
       this.getUnplacedStudents();
     })
   }
 
+  getProgramDetails() {
+    this.http.get<any>(this.url + this.program_id + '/view_program').subscribe(
+      response => {
+        console.log(response);
+        this.program_id = response[0].program_id;
+        this.program_name = response[0].program_name;
+      }
+    );
+  }
+
   getPlacedStudents() {
-    this.http.get<any>(this.url + this.program_id + '/students-placed').subscribe(
+    this.http.get<any>(this.url + this.program_id + '/prog_placed_students').subscribe(
       response => {
         console.log(response);
         this.placedStudents = response;
@@ -62,7 +73,7 @@ export class ProgramComponent implements OnInit {
   }
 
   getUnplacedStudents() {
-    this.http.get<any>(this.url + this.program_id + '/students-unplaced').subscribe(
+    this.http.get<any>(this.url + this.program_id + '/prog_unplaced_students').subscribe(
       response => {
         console.log(response);
         this.unplacedStudents = response;
