@@ -1,3 +1,6 @@
+require('dotenv').config()
+console.log(process.env) // remove this after you've confirmed it working
+
 const { query } = require("express");
 const jwt = require("jsonwebtoken");
 // const User = require("user/model")
@@ -19,7 +22,7 @@ const credentials = {
 const client = new Client(credentials);
 client.connect();
 
-const verifyStudents = (req, res) => {
+var verifyStudents = async function(req, res, next) {
 	const token = req.headers['x-access-token'];
 	if(!token){
 		return res.status(400).send({"message" : "No Token provided"});
@@ -36,9 +39,9 @@ const verifyStudents = (req, res) => {
 	} catch(error) {
 		return res.status(400).send(error);
 	}
-}
+};
 
-const verifyRecruiter = (req, res) => {
+var verifyRecruiter = async (req, res, next) => {
 	const token = req.headers['x-access-token'];
 	if(!token){
 		return res.status(400).send({"message" : "No Token provided"});
@@ -55,10 +58,10 @@ const verifyRecruiter = (req, res) => {
 	} catch(error) {
 		return res.status(400).send(error);
 	}
-}
+};
 
 
-const verifyCoordinator = (req, res) => {
+var verifyCoordinator = async function(req, res, next) {
 	const token = req.headers['x-access-token'];
 	if(!token){
 		return res.status(400).send({"message" : "No Token provided"});
@@ -75,11 +78,13 @@ const verifyCoordinator = (req, res) => {
 	} catch(error) {
 		return res.status(400).send(error);
 	}
-}
+};
 
 
-module.exports = [
+
+
+module.exports = {
 	verifyStudents,
-	verifyCoordinator,
 	verifyRecruiter,
-]
+	verifyCoordinator
+}

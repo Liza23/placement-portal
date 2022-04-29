@@ -1,5 +1,15 @@
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+// import bcrypt from 'bcrypt';
+// import jwt from 'jsonwebtoken';
+bcrypt = require('bcrypt');
+jwt = require('jsonwebtoken');
+// import 'dotenv/config' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+
+require('dotenv').config();
+console.log(process.env) // remove this after you've confirmed it working
+
+// bcrypt = require('bcrypt');
+// jwt = require('jsonwebtoken');
+
 
 const Helper = {
   /**
@@ -42,4 +52,4 @@ const Helper = {
   }
 }
 
-export default Helper;
+module.exports = {Helper}
