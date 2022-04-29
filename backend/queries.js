@@ -543,6 +543,20 @@ const view_student_list = () => {
 		});
 	});
 };
+const student_dept_stats = () => {
+	return new Promise(function(resolve,reject) {
+		var query = `select department_name, count(*) as tot_students from student inner join department on student.department_id = department.department_id group by department_name`;
+		client.query(query, (error, results) => {
+			if(error){
+				console.log("Error while viewing student department stats", error);
+				reject(error);
+			}
+			else{
+				resolve(results.rows);
+			}
+		});
+	});
+};
 
 module.exports = {
 	view_recuriter_profile,
@@ -567,4 +581,5 @@ module.exports = {
 	student_upload_resume,
 	student_view_resume,
 	edit_student_profile,
+	student_dept_stats,
 };

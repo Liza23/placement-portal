@@ -306,3 +306,15 @@ app.post("/edit_student_profile", (req,res) => {
       res.status(500).send(error);
     });
 });
+
+app.post("/student_department_stat", (req,res) => {
+	queries.student_dept_stat()
+	.then((response)=>{
+  		console.log(response);
+  		res.status(200).send(response);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send(error);
+    });
+});

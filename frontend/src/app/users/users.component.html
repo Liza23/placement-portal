@@ -1,0 +1,87 @@
+<!-- <div class="container-fluid"> -->
+	
+	<mat-tab-group [selectedIndex]="selectedTab" (selectedTabChange)="tabChanged($event)">
+		
+		<!-- #enddocregion align-start -->
+		  <mat-tab label="Student">
+			<form novalidate [formGroup]="student">
+			  <div class="two">
+				<label class="one">
+					<span>username:</span><br>
+				</label>
+					<input class="one"
+					[(ngModel)]="current.username"
+					type="number"
+					placeholder="{{current.username}}"
+					formControlName="username">
+			  </div>
+			  <div class="two">
+				<label class="one">
+					<span>password :</span><br>
+				</label>
+					<input class="one"
+					[(ngModel)]="current.password"
+					type="password"
+					placeholder="{{current.password}}"
+					formControlName="password">
+			  </div>
+			  <p><button class="ni" (click)="onSubmitStudent()">Submit</button></p>
+			  <div class="t">Not Already Registered ? <a href="/signup">Signup</a></div>
+			  <!-- <p><button class="mi" [routerLink] = "['/coordinators/', this.coordinator_id, '/home']">Home</button></p> -->
+			</form></mat-tab>
+		  <mat-tab label="Recruiter">
+			<form novalidate [formGroup]="other">
+				<div class="two">
+				  <label class="one">
+					  <span>username:</span><br>
+				  </label>
+					  <input class="one"
+					  [(ngModel)]="current.username"
+					  type="text"
+					  placeholder="{{current.username}}"
+					  formControlName="username">
+				</div>
+				<div class="two">
+				  <label class="one">
+					  <span>password :</span><br>
+				  </label>
+					  <input class="one"
+					  [(ngModel)]="current.password"
+					  type="password"
+					  placeholder="{{current.password}}"
+					  formControlName="password">
+				</div>
+				<p><button class="ni" (click)="onSubmitRecruiter()">Submit</button></p>
+				<div class="t">Not Already Registered ? <a href="/signup">Signup</a></div>
+				<!-- <p><button class="mi" [routerLink] = "['/coordinators/', this.coordinator_id, '/home']">Home</button></p> -->
+			  </form>
+		  </mat-tab>
+		  <mat-tab label="Coordinator">
+			<form novalidate [formGroup]="other">
+				<div class="two">
+				  <label class="one">
+					  <span>username:</span><br>
+				  </label>
+					  <input class="one"
+					  [(ngModel)]="current.username"
+					  type="text"
+					  placeholder="{{current.username}}"
+					  formControlName="username">
+				</div>
+				<div class="two">
+				  <label class="one">
+					  <span>password :</span><br>
+				  </label>
+					  <input class="one"
+					  [(ngModel)]="current.password"
+					  type="password"
+					  placeholder="{{current.password}}"
+					  formControlName="password">
+				</div>
+				<p><button class="ni" (click)="onSubmitCoordinator()">Submit</button></p>
+				<!-- <p><button class="mi" [routerLink] = "['/coordinators/', this.coordinator_id, '/home']">Home</button></p> -->
+			  </form>
+		  </mat-tab>
+	</mat-tab-group>
+	
+<!-- </div> -->
