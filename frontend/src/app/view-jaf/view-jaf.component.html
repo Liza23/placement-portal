@@ -1,0 +1,44 @@
+<div class="container">
+    <h1>JAF {{this.jaf_id}} : {{this.jaf.profile_name}}</h1>
+    
+    <table>
+        <tr class="c">
+          <td colspan="2"><strong class="d">Company Name :</strong> {{this.jaf.company_name}}</td>
+        </tr>
+        <tr class="c">
+          <td colspan="2"><strong class="d">Bond Duration :</strong> {{this.jaf.jaf_bond_duration}} months</td>
+        </tr>
+        <tr class="c">
+          <td colspan="2"><strong class="d">Location of Posting :</strong> {{this.jaf.jaf_location_of_posting}}</td>
+        </tr>
+        <tr class="c">
+          <td colspan="2" *ngIf="this.jaf.jaf_bonus_allowed"><strong class="d">Bonus Allowed :</strong> Yes</td>
+          <td colspan="2" *ngIf="!this.jaf.jaf_bonus_allowed"><strong class="d">Bonus Allowed :</strong> No</td>
+        </tr>
+    </table>
+
+    <h3><br><br><br>Job Description</h3>
+    <span [innerHTML]="jaf.jaf_jd"></span>    
+    
+    <h3><br><br><br>Eligibility Criterion</h3>    
+    <table>
+      <tr>
+        <td></td>
+        <td *ngFor="let d of depts">{{d}}</td>
+      </tr>
+      <tr *ngFor="let p of progs; let j=index">
+        <td>{{p}}</td>
+        <td *ngFor="let d of depts; let i=index"><input type="checkbox" [checked]="isEligible[j][j] == true" disabled></td>
+      </tr>
+    </table>
+  
+    <h3><br><br><br>Compensation</h3>    
+    <table>
+        <tr class="c">
+          <td colspan="2"><strong class="d">Cost-to-company (CTC) :</strong> {{this.jaf.jaf_ctc}} {{this.jaf.jaf_currency}}</td>
+        </tr>
+        <tr class="c">
+          <td colspan="2"><strong class="d">Gross Compensation :</strong> {{this.jaf.jaf_gross}} {{this.jaf.jaf_currency}}</td>
+        </tr>
+    </table>
+</div>
