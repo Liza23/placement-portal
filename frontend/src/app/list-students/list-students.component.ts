@@ -32,7 +32,7 @@ export class Student {
 export class ListStudentsComponent implements OnInit {
 
   student: Student[] = [];
-  private list_students: string = 'http://localhost:8081/students';
+  private list_students: string = 'http://localhost:5000/view_student_list';
   p: number = 1;
   count: number = 50;
 
