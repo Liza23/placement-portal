@@ -40,20 +40,31 @@ export class DepartmentComponent implements OnInit {
   p2: number = 1;
   count2: number = 50;
   
-  private url: string = 'http://localhost:8081/depts/';
+  private url: string = 'http://localhost:5000/';
 
   constructor(private http: HttpClient, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.department_id = params.get('department_id');
+      this.getDepartmentDetails();
       this.getPlacedStudents();
       this.getUnplacedStudents();
     })
   }
 
+  getDepartmentDetails() {
+    this.http.get<any>(this.url + this.department_id + '/view_department').subscribe(
+      response => {
+        console.log(response);
+        this.department_id = response[0].department_id;
+        this.department_name = response[0].department_name;
+      }
+    );
+  }
+
   getPlacedStudents() {
-    this.http.get<any>(this.url + this.department_id + '/students-placed').subscribe(
+    this.http.get<any>(this.url + this.department_id + '/placed_students').subscribe(
       response => {
         console.log(response);
         this.placedStudents = response;
@@ -62,7 +73,7 @@ export class DepartmentComponent implements OnInit {
   }
 
   getUnplacedStudents() {
-    this.http.get<any>(this.url + this.department_id + '/students-unplaced').subscribe(
+    this.http.get<any>(this.url + this.department_id + '/unplaced_students').subscribe(
       response => {
         console.log(response);
         this.unplacedStudents = response;

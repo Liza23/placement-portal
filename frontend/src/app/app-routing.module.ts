@@ -30,7 +30,6 @@ const routes: Routes = [
   {path: 'coordinators/:coordinator_id/firms/:firm_id', component: CoordinatorFirmComponent},
   {path: 'jafs/:jaf_id', component: ViewJafComponent},
   {path: 'stats', component: DeptStudentStatsComponent},
-  {path: '**', redirectTo: 'students', pathMatch: 'full'},
   {path: 'firms/:firm_id', component: CoordinatorFirmComponent},
   {path: 'depts/:department_id', component: DepartmentComponent},
   {path: 'progs/:program_id', component: ProgramComponent},
@@ -39,7 +38,7 @@ const routes: Routes = [
   {path: 'jafs/:jaf_id/sign', component: SignJafComponent},
   {path: 'recruiters/:recruiter_id/home', component: RecruiterHomeComponent},
   {path: 'recruiters/:recruiter_id/edit-details', component: RecruiterInfoComponent},
-  // {path: '**', redirectTo: 'students', pathMatch: 'full'},
+  {path: '**', redirectTo: 'students', pathMatch: 'full'},
 ];
 
 @NgModule({

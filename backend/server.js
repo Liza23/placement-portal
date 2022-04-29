@@ -389,3 +389,38 @@ app.get("/student/applied_jafs", (req, res) => {
 	});
 });
 
+
+app.get("/:did/placed_students", (req, res) => {
+	queries.placed_students_for_depID(req.params.did).then((response) => {
+		console.log(response);
+		res.status(200).send(response);
+	})
+	.catch((error) => {
+		console.log(error);
+		res.status(500).send(error);
+	});
+});
+
+app.get("/:did/unplaced_students", (req, res) => {
+	queries.unplaced_students_for_depID(req.params.did).then((response) => {
+		console.log(response);
+		res.status(200).send(response);
+	})
+	.catch((error) => {
+		console.log(error);
+		res.status(500).send(error);
+	});
+});
+
+app.get("/:did/view_department", (req, res) => {
+	queries.view_department(req.params.did).then((response) => {
+		console.log(response);
+		res.status(200).send(response);
+	})
+	.catch((error) => {
+		console.log(error);
+		res.status(500).send(error);
+	});
+});
+
+

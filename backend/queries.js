@@ -102,6 +102,22 @@ const view_student_profile = (student_id) => {
 		});
 	});
 };
+
+const view_department = (department_id) => {
+	return new Promise(function (resolve, reject) {
+		var query = "select * from department where department_id = " + department_id;
+		console.log("query: ", query);
+		client.query(query, (error, results) => {
+			if (error) {
+				console.log("err: ", error);
+				reject(error);
+			} else {
+				resolve(results.rows);
+			}
+		});
+	});
+};
+
 const edit_student_profile = (student_id, name, gender, dob, contact) => {
 		return new Promise(function (resolve, reject) {
 				var query = `UPDATE STUDENT SET student_name = '${name}', gender = '${gender}', dob = ${dob}, contact = ${contact} WHERE  STUDENT.student_rno = ${student_id};`;
@@ -600,6 +616,7 @@ module.exports = {
 	view_student_profile,
 	view_coordinator_profile,
 	view_applicants,
+	view_department,
 	view_company_profile,
 	view_company_coordinator,
 	view_company_recruiter,

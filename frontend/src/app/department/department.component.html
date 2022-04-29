@@ -6,16 +6,16 @@
       <tr>
         <td>Roll Number</td>
         <td>Student Name</td>
-        <td>Program enrolled in</td>
+        <td>Student Email ID</td>
       </tr>
-      <tr *ngFor="let m of placedStudents | paginate: { itemsPerPage: count1, currentPage: p1 }">
+      <tr *ngFor="let m of unplacedStudents | paginate: { itemsPerPage: count1, currentPage: p1 }">
         <td>{{m.student_rno}}</td>
         <td>
             <a [routerLink] = "['/students/' , m.student_rno]"> 
             {{m.student_name}}
             </a>
         </td>
-        <td><a [routerLink] = "['/progs/', m.program_id]"> {{m.program_name}}</a></td>
+        <td><a> {{m.student_email}}</a></td>
       </tr>
       <tr>
         <td></td>
