@@ -7,6 +7,9 @@ import { RecruiterHomeComponent } from './recruiter-home/recruiter-home.componen
 import { RecruiterInfoComponent } from './recruiter-info/recruiter-info.component';
 import { ListStudentsComponent } from './list-students/list-students.component';
 import { ViewJafComponent } from './view-jaf/view-jaf.component';
+import { DeptStudentStatsComponent } from './dept-student-stats/dept-student-stats.component';
+import { UsersComponent } from './users/users.component';
+import { SignupComponent } from './signup/signup.component';
 import { EditJafComponent } from './edit-jaf/edit-jaf.component';
 import { SignJafComponent } from './sign-jaf/sign-jaf.component';
 import { DepartmentComponent } from './department/department.component';
@@ -16,12 +19,18 @@ import { StudentInfoComponent } from './student-info/student-info.component';
 import { ResumeUploadComponent } from './resume-upload/resume-upload.component';
 
 const routes: Routes = [
+  {path: 'signup', component: SignupComponent},
+  {path: 'login', component: UsersComponent},
   {path: 'students', component: ListStudentsComponent},
   {path: 'students/:student_rno/home', component: StudentComponent},
   {path: 'students/:student_rno/edit-details', component: StudentInfoComponent},
   {path: 'students/:student_rno/upload-resume', component: ResumeUploadComponent},
   {path: 'coordinators/:coordinator_id/home', component: CoordinatorHomeComponent},
   {path: 'coordinators/:coordinator_id/edit-details', component: CoordinatorInfoComponent},
+  {path: 'coordinators/:coordinator_id/firms/:firm_id', component: CoordinatorFirmComponent},
+  {path: 'jafs/:jaf_id', component: ViewJafComponent},
+  {path: 'stats', component: DeptStudentStatsComponent},
+  {path: '**', redirectTo: 'students', pathMatch: 'full'},
   {path: 'firms/:firm_id', component: CoordinatorFirmComponent},
   {path: 'depts/:department_id', component: DepartmentComponent},
   {path: 'progs/:program_id', component: ProgramComponent},
