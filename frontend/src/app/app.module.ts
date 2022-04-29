@@ -5,7 +5,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ListStudentsComponent } from './list-students/list-students.component';
 import { CoordinatorHomeComponent } from './coordinator-home/coordinator-home.component';
-
+import {
+  NgxMatDatetimePickerModule, 
+  NgxMatNativeDateModule, 
+  NgxMatTimepickerModule 
+} from '@angular-material-components/datetime-picker';
 import { MatListModule } from '@angular/material/list'; 
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
@@ -24,6 +28,11 @@ import { RecruiterHomeComponent } from './recruiter-home/recruiter-home.componen
 import { RecruiterInfoComponent } from './recruiter-info/recruiter-info.component';
 import { DepartmentComponent } from './department/department.component';
 import { ProgramComponent } from './program/program.component';
+import { StudentComponent } from './student/student.component';
+import { StudentInfoComponent } from './student-info/student-info.component';
+import { SignJafComponent } from './sign-jaf/sign-jaf.component';
+import { ResumeUploadComponent } from './resume-upload/resume-upload.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -38,6 +47,10 @@ import { ProgramComponent } from './program/program.component';
     RecruiterInfoComponent,
     DepartmentComponent,
     ProgramComponent,
+    StudentComponent,
+    StudentInfoComponent,
+    SignJafComponent,
+    ResumeUploadComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,7 +65,11 @@ import { ProgramComponent } from './program/program.component';
     FormsModule,
     ReactiveFormsModule,
     NgxPaginationModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
+    NgxMatNativeDateModule,
+    PdfViewerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
