@@ -403,6 +403,149 @@ const view_student_list = () => {
 	});
 };
 
+// dep wise number of students
+// program wise number of students
+// dep program mein list of students placed and unplaced
+// dep mein list of students placed, unplaced
+
+const student_count_by_department = () => {
+	return new Promise(function(resolve, reject){
+		var query = `select dc*1.0/(select count(*) from student), department_id from (select count(*) as dc, department_id from student group by department_id) as df1;`;
+		client.query(query, (error, results) => {
+			if(error) {
+				console.log("Error while viewing students numbers");
+				reject(error);
+			}
+			else{
+				resolve(results.rows);
+			}
+		});
+	});
+};
+
+const student_count_by_program = () => {
+	return new Promise(function(resolve, reject){
+		var query = `select dc*1.0/(select count(*) from student), program_id from (select count(*) as dc, program_id from student group by program_id) as df1;`;
+		client.query(query, (error, results) => {
+			if(error) {
+				console.log("Error while viewing students numbers");
+				reject(error);
+			}
+			else{
+				resolve(results.rows);
+			}
+		});
+	});
+};
+
+const placed_students_for_depID = (department_id) => {
+	return new Promise(function(resolve,reject) {
+		var query = `select student_name, student_rno, student_email from student where allocated_jaf is not null and department_id = ${department_id};`;
+		client.query(query, (error, results) => {
+			if(error){
+				console.log("Error in getting placed students");
+				reject(error);
+			}
+			else{
+				resolve(results.rows);
+			}
+		});
+	});
+};
+
+const unplaced_students_for_depID = (department_id) => {
+	return new Promise(function(resolve,reject) {
+		var query = `select student_name, student_rno, student_email from student where allocated_jaf is null and department_id = ${department_id};`;
+		client.query(query, (error, results) => {
+			if(error){
+				console.log("Error in getting placed students");
+				reject(error);
+			}
+			else{
+				resolve(results.rows);
+			}
+		});
+	});
+};
+
+
+const placed_students_for_progID = (program_id) => {
+	return new Promise(function(resolve,reject) {
+		var query = `select student_name, student_rno, student_email from student where allocated_jaf is not null and program_id = ${program_id};`;
+		client.query(query, (error, results) => {
+			if(error){
+				console.log("Error in getting placed students");
+				reject(error);
+			}
+			else{
+				resolve(results.rows);
+			}
+		});
+	});
+};
+
+const unplaced_students_for_programID = (program_id) => {
+	return new Promise(function(resolve,reject) {
+		var query = `select student_name, student_rno, student_email from student where allocated_jaf is null and program_id = ${program_id};`;
+		client.query(query, (error, results) => {
+			if(error){
+				console.log("Error in getting placed students");
+				reject(error);
+			}
+			else{
+				resolve(results.rows);
+			}
+		});
+	});
+};
+
+const list_open_jafs = () => {
+	return new Promise(function(resolve, reject){
+		var query = `select jaf.jaf_id, jaf.company_id, company.company_name, jaf.jaf_jd, jaf.jaf_opened_on, jaf.jaf_closed_on from jaf inner join company on company.company_id = jaf.company_id where jaf.jaf_opened_on is not null and jaf.jaf_opened_on < current_timestamp AND (jaf.jaf_closed_on is null or jaf.jaf_closed_on > current_timestamp);`;
+		client.query(query, (error, results) => {
+			if(error){
+				console.log("Error in list open jafs");
+				reject(error);
+			}
+			else{
+				resolve(results.rows);
+			}
+		});
+
+	});
+};
+
+const list_eligible_jafs = (rno) => {
+	return new Promise(function(resolve, reject){
+		var query = `select jaf.jaf_id, jaf.company_id, company.company_name, jaf.jaf_jd, jaf.jaf_opened_on, jaf.jaf_closed_on from jaf inner join company on company.company_id = jaf.company_id inner join eligible on jaf.jaf_id = ELIGIBLE.jaf_id inner join student on student.program_id = ELIGIBLE.program_id AND student.department_id = eligible.department_id where jaf.jaf_opened_on is not null and jaf.jaf_opened_on < current_timestamp AND (jaf.jaf_closed_on is null or jaf.jaf_closed_on > current_timestamp) and student.student_rno = ${rno} and (jaf.jaf_cpi is null or student.student_cpi >= jaf.jaf_cpi);`;
+			client.query(query, (error, results) => {
+			if(error){
+				console.log("Error in list open jafs");
+				reject(error);
+			}
+			else{
+				resolve(results.rows);
+			}
+		});
+
+	});
+};
+
+const list_applied_jafs = (rno) => {
+	return new Promise(function(resolve, reject){
+		var query = `select APPLIES_FOR.jaf_id, jaf.jaf_jd, jaf.company_id, company.company_name from APPLIES_FOR inner join jaf on APPLIES_FOR.jaf_id = jaf.jaf_id inner join company on company.company_id = jaf.company_id where APPLIES_FOR.student_rno=${rno};`;
+		client.query(query, (error, results) => {
+			if(error){
+				reject(error);
+			}
+			else{
+				resolve(results.rows);
+			}
+		});
+	});
+};
+
+
 module.exports = {
 	view_recuriter_profile,
 	view_student_profile,
@@ -426,5 +569,13 @@ module.exports = {
 	student_upload_resume,
 	student_view_resume,
 	edit_student_profile,
-	
+	list_applied_jafs,
+	list_eligible_jafs,
+	list_open_jafs,
+	unplaced_students_for_programID,
+	placed_students_for_progID,
+	unplaced_students_for_depID,
+	placed_students_for_depID,
+	student_count_by_department,
+	student_count_by_program
 };

@@ -326,3 +326,38 @@ app.post("/edit_student_profile", (req,res) => {
       res.status(500).send(error);
     });
 });
+
+
+app.get("/student/open_jafs", (req, res) => {
+	queries.list_open_jafs().then((response) => {
+		console.log(response);
+		res.status(200).send(response);
+	})
+	.catch((error) => {
+		console.log(error);
+		res.status(500).send(error);
+	});
+});
+
+app.get("/student/eligible_jafs", (req, res) => {
+	queries.list_eligible_jafs(req.body.rno).then((response) => {
+		console.log(response);
+		res.status(200).send(response);
+	})
+	.catch((error) => {
+		console.log(error);
+		res.status(500).send(error);
+	});
+});
+
+app.get("/student/applied_jafs", (req, res) => {
+	queries.list_applied_jafs(req.body.rno).then((response) => {
+		console.log(response);
+		res.status(200).send(response);
+	})
+	.catch((error) => {
+		console.log(error);
+		res.status(500).send(error);
+	});
+});
+
