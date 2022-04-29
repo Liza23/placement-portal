@@ -58,6 +58,22 @@ const view_eligibility = (jaf_id, company_id) => {
 		})
 	});
 };
+
+const view_company_profile = (company_id) => {
+	return new Promise(function (resolve, reject) {
+		var query = "select * from company where company_id = " + company_id;
+		console.log("query: ", query);
+		client.query(query, (error, results) => {
+			if (error) {
+				console.log("err: ", error);
+				reject(error);
+			} else {
+				resolve(results.rows);
+			}
+		});
+	});
+};
+
 const view_recuriter_profile = (recruiter_id) => {
 	return new Promise(function (resolve, reject) {
 		var query = "select * from recruiter where recruiter_id = " + recruiter_id;
@@ -74,7 +90,7 @@ const view_recuriter_profile = (recruiter_id) => {
 };
 const view_student_profile = (student_id) => {
 	return new Promise(function (resolve, reject) {
-		var query = "select * from student where student_rno = " + student_id;
+		var query = "select * from student inner join department on student.department_id = department.department_id inner join program on student.program_id = program.program_id where student_rno = " + student_id;
 		console.log("query: ", query);
 		client.query(query, (error, results) => {
 			if (error) {
@@ -170,7 +186,7 @@ const view_applicants = (jaf_id, recuriter_id) => {
 const view_company_coordinator = (coordinator_id) => {
 	return new Promise(function (resolve, reject) {
 		var query =
-			"select company_name from company where company_coordinator = " +
+			"select * from company where company_coordinator = " +
 			coordinator_id +
 			"";
 		console.log("query: ", query);
@@ -184,6 +200,25 @@ const view_company_coordinator = (coordinator_id) => {
 		});
 	});
 };
+
+const view_company_recruiter = (company_id) => {
+	return new Promise(function (resolve, reject) {
+		var query =
+			"select recruiter_id, recruiter_name, recruiter_email, recruiter_contact from company inner join recruiter on company.company_coordinator = recruiter.recruiter_id where company_id = " +
+			company_id +
+			"";
+		console.log("query: ", query);
+		client.query(query, (error, results) => {
+			if (error) {
+				console.log("err: ", error);
+				reject(error);
+			} else {
+				resolve(results.rows);
+			}
+		});
+	});
+};
+
 const sign_jaf = (jaf_id, company_id, rno, resume_id, role) => {
 		return new Promise(function(resolve, reject)  {
 				if(role != "student"){
@@ -402,6 +437,20 @@ const view_student_list = () => {
 		});
 	});
 };
+const student_dept_stats = () => {
+	return new Promise(function(resolve,reject) {
+		var query = `select department_name, count(*) as tot_students from student inner join department on student.department_id = department.department_id group by department_name`;
+		client.query(query, (error, results) => {
+			if(error){
+				console.log("Error while viewing student department stats", error);
+				reject(error);
+			}
+			else{
+				resolve(results.rows);
+			}
+		});
+	});
+};
 
 // dep wise number of students
 // program wise number of students
@@ -551,7 +600,9 @@ module.exports = {
 	view_student_profile,
 	view_coordinator_profile,
 	view_applicants,
+	view_company_profile,
 	view_company_coordinator,
+	view_company_recruiter,
 	view_jaf,
 	sign_jaf,
 	view_student_list,

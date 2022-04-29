@@ -35,7 +35,7 @@ export class CoordinatorHomeComponent implements OnInit {
   coordinator_name: any;
   companies: Company[] = [];
   open_jafs: JAF[] = [];
-  private base_url: string = 'http://localhost:8081/';
+  private base_url: string = 'http://localhost:5000/';
 
   constructor(private http: HttpClient, private route: ActivatedRoute) { }
 
@@ -49,16 +49,16 @@ export class CoordinatorHomeComponent implements OnInit {
   }
 
   getName() {
-    this.http.get<any>(this.base_url + 'coordinators/' + this.coordinator_id + '/details').subscribe(
+    this.http.get<any>(this.base_url + 'view_coordinator_profile/' + this.coordinator_id).subscribe(
       response => {
         console.log(response);
-        this.coordinator_name = response.name;
+        this.coordinator_name = response[0].coordinator_name;
       },
     );
   }
   
   getCompanies() {
-    this.http.get<any>(this.base_url + 'coordinators/' + this.coordinator_id + '/firms').subscribe(
+    this.http.get<any>(this.base_url + 'view_company_coordinator/' + this.coordinator_id).subscribe(
       response => {
         console.log(response);
         this.companies = response;
@@ -67,7 +67,7 @@ export class CoordinatorHomeComponent implements OnInit {
   }
 
   getActiveJafs() {
-    this.http.get<any>(this.base_url + 'open-jafs').subscribe(
+    this.http.get<any>(this.base_url + '/student/open_jafs').subscribe(
       response => {
         console.log(response);
         this.open_jafs = response;

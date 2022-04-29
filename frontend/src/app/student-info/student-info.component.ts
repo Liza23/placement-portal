@@ -42,22 +42,23 @@ export class StudentInfoComponent implements OnInit {
     student_contact: [, [Validators.required]],
   });
 
-  private base_url: string = 'http://localhost:8081/';
+  private base_url: string = 'http://localhost:5000/';
   doc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
-  student_id: any;
+  student_rno: any;
   student: Student = new Student();
 
   constructor(private http: HttpClient, private fb: FormBuilder, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
-      this.student_id = params.get('student_id');
+      this.student_rno = params.get('student_rno');
+      console.log(this.student_rno);
       this.getStudent();
       })    
   }
 
   getStudent() {
-    this.http.get<any>(this.base_url + 'students/' + this.student_id + '/details').subscribe(
+    this.http.get<any>(this.base_url + 'view_student_profile/' + this.student_rno).subscribe(
       response => {
         console.log(response);
         this.student = response;
@@ -82,7 +83,7 @@ export class StudentInfoComponent implements OnInit {
     const headers = { 'content-type': 'application/json' };
     const body = JSON.stringify(student);
     console.log(body);
-    return this.http.post<Student>(this.base_url + '' + this.student_id + '/details', body, {'headers': headers});
+    return this.http.post<Student>(this.base_url + '' + this.student_rno + '/details', body, {'headers': headers});
   }
 
 }

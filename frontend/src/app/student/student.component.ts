@@ -62,7 +62,7 @@ export class Resume {
 })
 export class StudentComponent implements OnInit {
 
-  private base_url: string = 'http://localhost:8081/';
+  private base_url: string = 'http://localhost:5000/';
   p: number = 1;
   count: number = 50;
   p2: number = 1;
@@ -90,10 +90,10 @@ export class StudentComponent implements OnInit {
   }
 
   getStudent() {
-    this.http.get<any>(this.base_url + 'students/' + this.student_rno + '/details').subscribe(
+    this.http.get<any>(this.base_url + 'view_student_profile/' + this.student_rno).subscribe(
       response => {
         console.log(response);
-        this.student = response;
+        this.student = response[0];
       }
     );
   }
@@ -108,7 +108,7 @@ export class StudentComponent implements OnInit {
   }
 
   getActiveJafs() {
-    this.http.get<any>(this.base_url + 'open-jafs').subscribe(
+    this.http.get<any>(this.base_url + '/student/open_jafs').subscribe(
       response => {
         console.log(response);
         this.open_jafs = response;

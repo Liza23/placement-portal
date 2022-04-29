@@ -43,7 +43,7 @@ export class RecruiterHomeComponent implements OnInit {
   company: Company = new Company();
   recruiters: Recruiter[] = [];
   jafs: JAF[] = [];
-  private base_url: string = 'http://localhost:8081/';
+  private base_url: string = 'http://localhost:5000/';
 
   constructor(private http: HttpClient, private route: ActivatedRoute) { }
 
@@ -58,7 +58,7 @@ export class RecruiterHomeComponent implements OnInit {
   }
 
   getName() {
-    this.http.get<any>(this.base_url + 'recruiters/' + this.recruiter_id + '/details').subscribe(
+    this.http.get<any>(this.base_url + 'recruiter/view_recuriter_profile/' + this.recruiter_id).subscribe(
       response => {
         console.log(response);
         this.recruiter_name = response.name;
