@@ -39,7 +39,6 @@
         <td>Company</td>
         <td>Opened On</td>
         <td>Closing On</td>
-        <td>Actions</td>
       </tr>
       <tr *ngFor="let m of jafs; let i=index">
         <td>{{m.jaf_id}}</td>
@@ -47,10 +46,7 @@
         <td>{{m.company_name}}</td>
         <td>{{m.jaf_opened_on}}</td>
         <td>{{m.jaf_closed_on}}</td>
-        <td>
-          <button class="ni" [routerLink] = "['/firms/' , this.company.company_id, '/jafs/', m.jaf_id, '/edit']">Edit JAF</button><button class="ni" (click)="deleteJaf(m.jaf_id)">Delete JAF</button>
-          <button class="ni" [routerLink] = "['/firms/' , this.company.company_id, '/jafs/', m.jaf_id, '/applicants']">View Applicants</button>
-        </td>
+        
       </tr>
     </table>
     <br>

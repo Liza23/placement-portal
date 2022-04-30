@@ -33,9 +33,9 @@ client.connect();
 		rno = req.body.rno;
 		pwd = req.body.pwd;
 		const hashpass = Helper.hashPassword(pwd);
-		var query = 'INSERT INTO STUDENT (student_rno, student_password, student_name, student_gender, student_dob, student_email, program_id, department_id) VALUES($1, $2, $3, $4, to_timestamp($5), $6, $7, $8) returning *;';
+		var query = 'INSERT INTO STUDENT (student_rno, student_password, student_email) VALUES($1, $2, $3) returning *;';
 		try{
-			const { rows } = await client.query(query, [rno, hashpass, req.body.name, req.body.gender, req.body.dob, req.body.email, req.body.program_id, req.body.department_id]);
+			const { rows } = await client.query(query, [rno, hashpass, req.body.email]);
 			if(!rows[0]){
 				return res.status(400).send({"message" : "cannot insert row"});
 			}

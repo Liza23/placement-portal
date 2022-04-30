@@ -680,8 +680,16 @@ const list_applied_jafs = (rno) => {
 const list_created_jafs = (rid) => {
 	return new Promise(function(resolve, reject){
 		var query = `select jaf.jaf_id, jaf.profile_id, profile.profile_name, company.company_name, jaf.jaf_opened_on, jaf.jaf_closed_on from jaf inner join recruiter on jaf.company_id = recruiter.recruiter_company inner join company on recruiter.recruiter_company=company.company_id inner join profile on jaf.profile_id=profile.profile_id where recruiter.recruiter_id=${rid};`;
-	})
-}
+		client.query(query,(error,results) => {
+			if(error){
+				reject(error);
+			}
+			else{
+				resolve(results.rows);
+			}
+		});
+	});
+};
 
 
 module.exports = {
