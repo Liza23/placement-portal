@@ -39,10 +39,11 @@ export class UsersComponent implements OnInit {
   });
   
   onSubmitStudent(){
+    console.log(this.student);
     if(this.student.valid){
-      this.http.post<loggedin>(this.base_url, JSON.stringify(this.current) + '/login', {'headers': { 'content-type': 'application/json' }})
+      this.http.post<loggedin>(this.base_url + 'student/login', JSON.stringify(this.current), {'headers': { 'content-type': 'application/json' }})
       .subscribe(
-        data => {console.log('User', data); sessionStorage.setItem('token',data.token); this.router.navigateByUrl('/student/'+data.id+'/home'); window.alert("Logged In successfully!");},
+        data => {console.log('User', data); sessionStorage.setItem('token',data.token); this.router.navigateByUrl('/students/'+data.id+'/home'); window.alert("Logged In successfully!");},
         error => { console.log('Error: ', error) ; sessionStorage.setItem('token',''); window.alert("Login Failed");}
         );
       }
@@ -53,9 +54,9 @@ export class UsersComponent implements OnInit {
   }
   onSubmitRecruiter(){
     if(this.other.valid){
-      this.http.post<loggedin>(this.base_url, JSON.stringify(this.current), {'headers': { 'content-type': 'application/json' }})
+      this.http.post<loggedin>(this.base_url + 'recruiter/login' ,JSON.stringify(this.current), {'headers': { 'content-type': 'application/json' }})
       .subscribe(
-        data => {console.log('User', data);sessionStorage.setItem('token',data.token); this.router.navigateByUrl('/recruiter/'+data.id+'/home'); window.alert("Logged In successfully!");},
+        data => {console.log('User', data);sessionStorage.setItem('token',data.token); this.router.navigateByUrl('/recruiters/'+data.id+'/home'); window.alert("Logged In successfully!");},
         error => { console.log('Error: ', error);sessionStorage.setItem('token',''); window.alert("Login Failed");}
         );
       }
@@ -66,9 +67,9 @@ export class UsersComponent implements OnInit {
    }
    onSubmitCoordinator(){
     if(this.other.valid){
-      this.http.post<loggedin>(this.base_url, JSON.stringify(this.current), {'headers': { 'content-type': 'application/json' }})
+      this.http.post<loggedin>(this.base_url + 'coordinator/login', JSON.stringify(this.current), {'headers': { 'content-type': 'application/json' }})
       .subscribe(
-        data => {console.log('User', data);sessionStorage.setItem('token',data.token); this.router.navigateByUrl('/coordinator/'+data.id+'/home'); window.alert("Logged In successfully!")},
+        data => {console.log('User', data);sessionStorage.setItem('token',data.token); this.router.navigateByUrl('/coordinators/'+data.id+'/home'); window.alert("Logged In successfully!")},
         error => { console.log('Error: ', error); sessionStorage.setItem('token',''); window.alert("Login Failed")}
         );
       }

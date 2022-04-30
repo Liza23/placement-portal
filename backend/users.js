@@ -47,13 +47,16 @@ client.connect();
 	};
 
 	var recruiter_signup = async function(req, res) {
-		if(!Helper.isValidEmail(req.body.email)){
+		if(!Helper.Helper.isValidEmail(req.body.email)){
 			return res.status(400).send({"message" : "invalid email"});
 		}
-		const hashpass = Helper.hashPassword(req.body.pwd);
-		var query = 'INSERT INTO RECRUITER (recruiter_password, recruiter_name, recruiter_email, recruiter_contact) VALUES ($1,$2,$3,$4) returning *;';
+		console.log(req.body);
+		const hashpass = Helper.Helper.hashPassword(req.body.password);
+		var query = 'INSERT INTO RECRUITER (recruiter_email, recruiter_password, recruiter_name, recruiter_contact, recruiter_company) VALUES ($1, $2, $3, $4, $5) returning *;';
+		console.log(query);
 		try{
-			const { rows } = await client.query(query, [hashpass, req.body.name, req.body.email, req.body.contact]);
+			const { rows } = client.query(query, [req.body.email, hashpass, req.body.name, 9999999999, 0]);
+			console.log(rows);
 			if(!rows[0]){
 				return res.status(400).send({"message" : "Cannot sign up the user"});
 			}
@@ -74,8 +77,24 @@ client.connect();
 	*/
 
 	var student_login = async function(req, res) {
-		var rno = req.body.rno;
-		var pwd = req.body.pwd;
+		console.log(req.body);
+		var rno = req.body.username;
+		var pwd = req.body.password;
+
+		return new Promise(function(resolve,reject) {
+			var query = `SELECT * from STUDENT where student_rno= '${rno}';`;
+			console.log(query);
+			client.query(query, (error, results) => {
+				if(error){
+					console.log("Error in getting placed students");
+					reject(error);
+				}
+				else{
+					const token = Helper.Helper.generateToken(results.rows[0].student_rno);
+					return res.status(200).send({ 'token':token,'id':results.rows[0].student_rno});
+			  }
+			});
+		});
 
 		var q1 = 'SELECT * from STUDENTS where student_rno=$1';
 		try{
@@ -95,8 +114,23 @@ client.connect();
 	};
 
 	var coordinator_login = async function(req, res) {
-		var email = req.body.email;
-		var pwd = req.body.pwd;
+		var email = req.body.username;
+		var pwd = req.body.password;
+
+		return new Promise(function(resolve,reject) {
+			var query = `SELECT * from COORDINATOR where coordinator_email= '${email}';`;
+			console.log(query);
+			client.query(query, (error, results) => {
+				if(error){
+					console.log("Error in getting placed students");
+					reject(error);
+				}
+				else{
+					const token = Helper.Helper.generateToken(results.rows[0].coordinator_id);
+					return res.status(200).send({ 'token':token,'id':results.rows[0].coordinator_id});
+			  }
+			});
+		});
 
 		var q1 = 'SELECT * from COORDNATOR where coordinator_email=$1';
 		try{
@@ -116,14 +150,31 @@ client.connect();
 	};
 
 	var recruiter_login = async function(req, res){
-		var email = req.body.email;
-		var pwd = req.body.pwd;
+		var email = req.body.username;
+		var pwd = req.body.password;
 
+		return new Promise(function(resolve,reject) {
+			var query = `SELECT * from RECRUITER where recruiter_email= '${email}';`;
+			console.log(query);
+			client.query(query, (error, results) => {
+				if(error){
+					console.log("Error in getting placed students");
+					reject(error);
+				}
+				else{
+					console.log(results.rows[0].recuriter_id);
+					const token = Helper.Helper.generateToken(results.rows[0].recruiter_id);
+					return res.status(200).send({ 'token':token,'id':results.rows[0].recruiter_id});
+			  }
+			});
+		});
+	
 		var q1 = 'SELECT * from RECRUITER where recruiter_email=$1';
 		try{
-			const { rows } = await client.query(q1, [email]);
+			const { rows } = client.query(q1, [email]);
+			console.log(email);
 			if(!rows[0]){
-				return res.status(400).send({"message" : "No such student Exists"});
+				return res.status(400).send({"message" : "No such recuriter Exists"});
 			}
 			if(!Helper.comparePassword(rows[0].recruiter_password, pwd)){
 				return res.status(400).send({"message" : "Password incorrect"});

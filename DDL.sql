@@ -56,7 +56,7 @@ CREATE TABLE RECRUITER (
     recruiter_name VARCHAR(50) NOT NULL,
     recruiter_contact VARCHAR(20) NOT NULL,
     recruiter_email VARCHAR(50) NOT NULL UNIQUE,
-    recruiter_company INT NOT NULL,
+    recruiter_company INT,
     CONSTRAINT c1 FOREIGN KEY (recruiter_company) REFERENCES COMPANY(company_id) ON DELETE SET NULL
 );
 

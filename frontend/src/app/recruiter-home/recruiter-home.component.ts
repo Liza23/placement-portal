@@ -50,6 +50,7 @@ export class RecruiterHomeComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.recruiter_id = params.get('recruiter_id');
+      console.log("KKKK", sessionStorage["token"]);
       this.getName();
       this.getCompany();
       this.getRecruiters();
@@ -58,34 +59,35 @@ export class RecruiterHomeComponent implements OnInit {
   }
 
   getName() {
-    this.http.get<any>(this.base_url + 'recruiter/view_recuriter_profile/' + this.recruiter_id).subscribe(
+    this.http.get<any>(this.base_url + 'recruiter/view_recuriter_profile/' + this.recruiter_id, sessionStorage["token"]).subscribe(
       response => {
-        console.log(response);
-        this.recruiter_name = response.name;
+        console.log(response.type);
+        this.recruiter_name = response;
+        this.recruiter_name = this.recruiter_name[0].recruiter_name;
       },
     );
   }
   
   getCompany() {
-    this.http.get<any>(this.base_url + 'recruiters/' + this.recruiter_id + '/firm').subscribe(
+    this.http.get<any>(this.base_url + 'view_company_recruiter/' + this.recruiter_id).subscribe(
       response => {
-        console.log(response);
-        this.company = response;
+        console.log("hehe", response[0]);
+        this.company = response[0];
       },
     );
   }
 
   getRecruiters() {
-    this.http.get<any>(this.base_url + '/firms/' + this.company.company_id + '/recruiters').subscribe(
+    this.http.get<any>(this.base_url + 'view_all_recuriters/' + this.recruiter_id).subscribe(
       response => {
-        console.log(response);
+        console.log(">>>>>", response);
         this.recruiters = response;
       },
     );
   }
 
   getJafs() {
-    this.http.get<any>(this.base_url + '' + this.recruiter_id + '/firms/' + this.company.company_id + '/jafs').subscribe(
+    this.http.get<any>(this.base_url + '' +'view_created_jafs/' + this.recruiter_id).subscribe(
       response => {
         console.log(response);
         this.jafs = response;

@@ -27,7 +27,7 @@ export class CoordinatorInfoComponent implements OnInit {
   
   coordinator_id: any;
   coordie: Coordie = new Coordie();
-  private base_url: string = 'http://localhost:8081/coordinators/';
+  private base_url: string = 'http://localhost:5000/';
   
   constructor(private http: HttpClient, private fb: FormBuilder, private route: ActivatedRoute) { }
 
@@ -39,10 +39,10 @@ export class CoordinatorInfoComponent implements OnInit {
   }
 
   getDetails() {
-    this.http.get<any>(this.base_url + '' + this.coordinator_id + '/details').subscribe(
+    this.http.get<any>(this.base_url + 'view_coordinator_profile/' + this.coordinator_id).subscribe(
       response => {
         console.log(response);
-        this.coordie = response;
+        this.coordie = response[0];
       },
     );
   }
@@ -64,7 +64,7 @@ export class CoordinatorInfoComponent implements OnInit {
     const headers = { 'content-type': 'application/json' };
     const body = JSON.stringify(coordie);
     console.log(body);
-    return this.http.post<Coordie>(this.base_url + '' + this.coordinator_id + '/details', body, {'headers': headers});
+    return this.http.post<Coordie>(this.base_url + 'edit_coordinator_profile', body, {'headers': headers});
   }
 
 }

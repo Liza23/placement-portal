@@ -1,6 +1,6 @@
 <div class="container">
     <h1>{{this.recruiter_name}}'s Home Page</h1>
-    <p><button class="mi" [routerLink] = "['/recruiters/', this.recruiter_id, '/edit-details']">Edit Details</button></p>
+    <p><button class="mi" [routerLink] = "['/recruiters', this.recruiter_id, 'edit-details']">Edit Details</button></p>
     <table>
         <tr class="c">
           <td colspan="2"><strong class="d">Company ID :</strong> {{this.company.company_id}}</td>
@@ -22,12 +22,10 @@
         <td>Contact No.</td>
     </tr>
       <tr *ngFor="let m of recruiters">
-        <div *ngIf="m.recruiter_id != recruiter_id">
             <td>{{m.recruiter_id}}</td>
             <td>{{m.recruiter_name}}</td>
             <td>{{m.recruiter_email}}</td>
             <td>{{m.recruiter_contact}}</td>
-        </div>
       </tr>
     </table>
 

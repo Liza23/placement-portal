@@ -27,7 +27,7 @@ export class RecruiterInfoComponent implements OnInit {
   
   recruiter_id: any;
   recruit: Recruiter = new Recruiter();
-  private base_url: string = 'http://localhost:8081/recruiters/';
+  private base_url: string = 'http://localhost:5000/';
   
   constructor(private http: HttpClient, private fb: FormBuilder, private route: ActivatedRoute) { }
 
@@ -39,10 +39,10 @@ export class RecruiterInfoComponent implements OnInit {
   }
 
   getDetails() {
-    this.http.get<any>(this.base_url + '' + this.recruiter_id + '/details').subscribe(
+    this.http.get<any>(this.base_url + 'recruiter/view_recuriter_profile/' + this.recruiter_id).subscribe(
       response => {
-        console.log(response);
-        this.recruit = response;
+        console.log(response[0]);
+        this.recruit = response[0];
       },
     );
   }
@@ -63,8 +63,7 @@ export class RecruiterInfoComponent implements OnInit {
   updateDetails(recruit: Recruiter):Observable<any> {
     const headers = { 'content-type': 'application/json' };
     const body = JSON.stringify(recruit);
-    console.log(body);
-    return this.http.post<Recruiter>(this.base_url + '' + this.recruiter_id + '/details', body, {'headers': headers});
+    return this.http.post<Recruiter>(this.base_url + 'edit_recruiter_profile', body, {'headers': headers});
   }
 
 }

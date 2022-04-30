@@ -42,6 +42,16 @@
 		  <mat-tab label="Recruiter">
 			<form novalidate [formGroup]="recruiter">
 				<div class="two">
+					<label class="one">
+						<span>Name:</span><br>
+					</label>
+						<input class="one"
+						[(ngModel)]="currentrecruiter.name"
+						type="text"
+						placeholder="{{currentrecruiter.name}}"
+						formControlName="name">
+				  </div>
+				<div class="two">
 				  <label class="one">
 					  <span>Email:</span><br>
 				  </label>

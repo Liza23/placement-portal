@@ -1,6 +1,6 @@
 <div class="container">
     <h1>{{this.coordinator_name}}'s Home Page</h1>
-    <p><button class="mi" [routerLink] = "['/coordinators/', this.coordinator_id, '/edit-details']">Edit Personal Info</button> <button class="mi" [routerLink] = "['/students']">View Students' Data</button> <button class="mi" [routerLink] = "['/stats']">View Placement Stats</button></p>
+    <p><button class="mi" [routerLink] = "['/coordinators', this.coordinator_id, 'edit-details']">Edit Personal Info</button> <button class="mi" [routerLink] = "['/students']">View Students' Data</button> <button class="mi" [routerLink] = "['/stats']">View Placement Stats</button></p>
 
     <!-- <h3><br><br>Alloted Firms</h3>
     <table mat-table [dataSource]="companies">
@@ -25,7 +25,7 @@
       </tr>
       <tr *ngFor="let m of companies">
         <td>{{m.company_id}}</td>
-        <td><a [routerLink] = "['/coordinators/', coordinator_id, '/firms/', m.company_id]">{{m.company_name}}</a></td>
+        <td><a [routerLink] = "['/coordinators', coordinator_id, 'firms/', m.company_id]">{{m.company_name}}</a></td>
       </tr>
     </table>
     

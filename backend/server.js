@@ -45,8 +45,8 @@ app.post("/auth/coordinator/login", users.coordinator_login);
 
 
 // calling the functions: view_recuriter_profile
-app.get("/recruiter/view_recuriter_profile/:id", auths.verifyRecruiter, (req, res) => {
-  console.log(req.params.id);
+app.get("/recruiter/view_recuriter_profile/:id", (req, res) => {
+  console.log("<<<<", auths.verifyRecruiter);
   queries
     .view_recuriter_profile(req.params.id)
     .then((response) => {
@@ -344,8 +344,8 @@ app.get("/view_resume", (req, res) => {
 });
 
 app.post("/edit_student_profile", (req,res) => {
-  console.log("eweeeeeeeeeeeeeeeeeee", res);
-	queries.edit_student_profile(req.body.student_id, req.body.name, req.body.gender, req.body.gender, req.body.dob, req.body.contact)
+  console.log("eweeeeeeeeeeeeeeeeeee", req);
+	queries.edit_student_profile(req.body.student_rno, req.body.student_name, req.body.student_gender, req.body.student_contact)
 	.then((response)=>{
   		console.log(response);
   		res.status(200).send(response);
@@ -356,6 +356,31 @@ app.post("/edit_student_profile", (req,res) => {
     });
 });
 
+app.post("/edit_recruiter_profile", (req,res) => {
+  console.log("eweeeeeeeeeeeeeeeeeee", req);
+	queries.edit_recrutier_profile(req.body.recruiter_id, req.body.recruiter_name, req.body.recruiter_email, req.body.recruiter_contact)
+	.then((response)=>{
+  		console.log(response);
+  		res.status(200).send(response);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send(error);
+    });
+});
+
+app.post("/edit_coordinator_profile", (req,res) => {
+  console.log("eweeeeeeeeeeeeeeeeeee", req);
+	queries.edit_coordinator_profile(req.body.coordinator_id, req.body.coordinator_name, req.body.coordinator_email, req.body.coordinator_contact)
+	.then((response)=>{
+  		console.log(response);
+  		res.status(200).send(response);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send(error);
+    });
+});
 
 app.get("/student/open_jafs", (req, res) => {
 	queries.list_open_jafs().then((response) => {
@@ -455,4 +480,26 @@ app.get("/:pid/view_program", (req, res) => {
 		console.log(error);
 		res.status(500).send(error);
 	});
+});
+
+app.get("/view_all_recuriters/:rid", (req, res) => {
+	queries.view_all_recuriters(req.params.rid).then((response) => {
+		console.log(response);
+		res.status(200).send(response);
+	})
+	.catch((error) => {
+		console.log(error);
+		res.status(500).send(error);
+	});
+});
+
+app.get("/view_created_jafs/:rid", (req, res) => {
+  console.log("beginssss");
+  queries.list_created_jafs(req.params.rid).then((response) => {
+    console.log(response);
+    res.status(200).send(response);
+  }).catch((error) => {
+    console.log(error);
+    res.status(500).send(error);
+  });
 });
